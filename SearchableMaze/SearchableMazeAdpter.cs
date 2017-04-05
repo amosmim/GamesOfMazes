@@ -5,11 +5,11 @@ using MazeLib;
 
 namespace SearchAlgorithmsLib
 {
-    class SearchableMaze : ISearchable<Position>
+    class SearchableMazeAdpter : ISearchable<Position>
     {
         private Maze maze;
 
-        public SearchableMaze(Maze maz)
+        public SearchableMazeAdpter(Maze maz)
         {
             this.maze = maz;
         }
@@ -21,7 +21,7 @@ namespace SearchAlgorithmsLib
         public List<State<Position>> GetAllPossibleStates(State<Position> s)
         {
             List<State<Position>> list = new List<State<Position>>();
-            Position p = s.getTypeValue();
+            Position p = s.GetTypeValue();
             
             if ((p.Row > 0) && (maze[p.Row - 1, p.Col] == CellType.Free))//try to add left Neighbor.
             {
@@ -47,10 +47,12 @@ namespace SearchAlgorithmsLib
 
         private State<Position> CreateNewSon(State<Position> father,  int rowDif, int colDif)
         {
-            State<Position> son = new State<Position>(new Position(father.getTypeValue().Row + rowDif,
-                                                                   colDif + father.getTypeValue().Col));
-            son.CameFrom = father;
-            son.Cost = father.Cost + 1;
+            State<Position> son = new State<Position>(new Position(father.GetTypeValue().Row + rowDif,
+                                                                   colDif + father.GetTypeValue().Col))
+            {
+                CameFrom = father,
+                Cost = father.Cost + 1
+            };
             return son;
         }
 
@@ -106,5 +108,8 @@ namespace SearchAlgorithmsLib
             Console.WriteLine();
 
         }
+
+
+        
     }  
 }

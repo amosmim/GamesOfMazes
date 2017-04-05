@@ -6,8 +6,7 @@ namespace SearchAlgorithmsLib
     {
         public override Solution<T> Search(ISearchable<T> searchable)
         {
-            // update max nodes size in the FastPriorityQueue
-            UpdateMaxNodes(searchable.getMaxNodes());
+          
 
             State<T> start = searchable.GetInitialState();
             start.Cost = 0;
@@ -37,7 +36,7 @@ namespace SearchAlgorithmsLib
                     }
                     else
                     {
-                        if (OpenListContains(s) && (s.Cost < GetStateFromOpenList(s.getTypeValue()).Cost))
+                        if (OpenListContains(s) && (s.Cost < GetStateFromOpenList(s.GetTypeValue()).Cost))
                         {
                             UpdateCost(s);
                             System.Console.WriteLine("update in open: " + s.ToString());

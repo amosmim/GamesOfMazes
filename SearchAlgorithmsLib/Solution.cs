@@ -2,21 +2,20 @@
 
 namespace SearchAlgorithmsLib
 {
-    public class Solution<T>
+    public class Solution<T> 
     {
         private Stack<State<T>> states;
+       
         public Solution ()
         {
-            states = new Stack<State<T>>();
+            this.states = new Stack<State<T>>();
+            
         }
-        public void PutOneStep(State<T> state)
+        protected void PutOneStep(State<T> state)
         {
-            states.Push(state);
+            this.states.Push(state);
         }
-        public State<T> GetOneStep( )
-        {
-            return states.Pop();
-        }
+        
 
         public static Solution<T> BackTrace(State<T> goalState)
         {
@@ -25,10 +24,22 @@ namespace SearchAlgorithmsLib
             while (next.CameFrom != null)
             {
                 solution.PutOneStep(next);
+             
                 next = next.CameFrom;
 
             }
             return solution;
         }
+        public Stack<State<T>> StackCopy()
+        {
+            return new Stack<State<T>>(this.states);
+        }
+
+       
+
+       
+
+
+
     }
 }

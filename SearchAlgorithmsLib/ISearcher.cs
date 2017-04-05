@@ -7,7 +7,7 @@ namespace SearchAlgorithmsLib
         // the search method
         Solution<T> Search(ISearchable<T> searchable);
         // get how many nodes were evaluated by the algorithm
-        int getNumberOfNodesEvaluated();
+        int GetNumberOfNodesEvaluated();
 
     }
 }

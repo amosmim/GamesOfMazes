@@ -14,7 +14,7 @@ namespace SearchAlgorithmsLib
             stack = new Stack<State<T>>();
             marked = new HashSet<State<T>>();
         }
-        public int getNumberOfNodesEvaluated()
+        public int GetNumberOfNodesEvaluated()
         {
             return evaluatedNodes;
         }

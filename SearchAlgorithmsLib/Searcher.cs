@@ -6,20 +6,25 @@ namespace SearchAlgorithmsLib
     public abstract class Searcher<T> : ISearcher<T>
     {
 
-        const int DEFAULT_MAX_NODES=  100;
+        private int maxNudes;
        
         private FastPriorityQueue<State<T>> openList;
         private int evaluatedNodes;
         public Searcher()
         {
             //this priority need max node size, its shold be override with UpdateMaxNodes()
-            openList = new FastPriorityQueue<State<T>>(DEFAULT_MAX_NODES); 
-           
+            maxNudes = 100;
+            openList = new FastPriorityQueue<State<T>>(maxNudes);         
 
             evaluatedNodes = 0;
         }
         protected State<T> PopOpenList()
         {
+            if(openList.Count+1 >= this.maxNudes)
+            {
+                maxNudes *= 2;
+                openList.Resize(this.maxNudes);
+            }
             evaluatedNodes++;
             return openList.Dequeue();
         }
@@ -33,17 +38,13 @@ namespace SearchAlgorithmsLib
         {
             openList.UpdatePriority(state, state.Cost);
         }
-
-        protected void UpdateMaxNodes(int max)
-        {
-            openList.Resize(max);
-        }
+        
        
         protected State<T> GetStateFromOpenList(T state)
         {
             foreach(State<T> s in openList)
             {
-                if (s.getTypeValue().Equals(state))
+                if (s.GetTypeValue().Equals(state))
                 {
                     return s;
                 }
@@ -61,7 +62,7 @@ namespace SearchAlgorithmsLib
             get { return openList.Count; }
         }
         // ISearcher’s methods:
-        public virtual int getNumberOfNodesEvaluated()
+        public virtual int GetNumberOfNodesEvaluated()
         {
             return evaluatedNodes;
         }
