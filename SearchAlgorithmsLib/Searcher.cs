@@ -10,6 +10,7 @@ namespace SearchAlgorithmsLib
        
         private FastPriorityQueue<State<T>> openList;
         private int evaluatedNodes;
+
         public Searcher()
         {
             //this priority need max node size, its shold be override with UpdateMaxNodes()
@@ -39,6 +40,10 @@ namespace SearchAlgorithmsLib
             openList.UpdatePriority(state, state.Cost);
         }
         
+        protected void StartOver()
+        {
+            this.evaluatedNodes = 0;
+        }
        
         protected State<T> GetStateFromOpenList(T state)
         {

@@ -6,8 +6,8 @@ namespace SearchAlgorithmsLib
     {
         public override Solution<T> Search(ISearchable<T> searchable)
         {
-          
 
+            StartOver();
             State<T> start = searchable.GetInitialState();
             start.Cost = 0;
             AddToOpenList(start); // inherited from Searcher

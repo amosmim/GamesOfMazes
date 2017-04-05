@@ -21,7 +21,7 @@ namespace SearchAlgorithmsLib
 
         public Solution<T> Search(ISearchable<T> searchable)
         {
-            
+            evaluatedNodes = 0;
             stack.Push(searchable.GetInitialState());
             State<T> goal = searchable.GetGoalState();
             State<T> tamp;
