@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using MazeLib;
+using SearchAlgorithmsLib;
 
-
-namespace SearchAlgorithmsLib
+namespace SearchableMaze
 {
     class SearchableMazeAdpter : ISearchable<Position>
     {

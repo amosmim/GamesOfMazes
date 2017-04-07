@@ -6,26 +6,21 @@ namespace SearchAlgorithmsLib
         private T state; // the state represented by a string
         private float cost; // cost to reach this state (set by a setter)
         private State<T> cameFrom; // the state we came from to this state (setter)
-        private string repOfChange;
+        
 
 
         public State(T state) // CTOR
         {
             this.state = state;
             this.cameFrom = null;
-            RepOfChange = "";
+            
             
         }
 
-        
-        public string ToString(State<T> s)
-        {
-            return RepOfChange;
-
-        }
+               
         public float Cost { get => cost; set => cost = value; }
         public State<T> CameFrom { get => cameFrom; set => cameFrom = value; }
-        public string RepOfChange { get => repOfChange; set => repOfChange = value; }
+       
 
         public override int GetHashCode()
         {
