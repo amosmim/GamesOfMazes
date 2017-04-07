@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchableMaze", "Searchabl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ap2ex1_server", "ap2ex1_server\ap2ex1_server.csproj", "{C3061198-25D5-40BF-A941-E1D74F542918}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{1EFDC142-5CDB-4F15-9D5A-99CE30EC29B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{C3061198-25D5-40BF-A941-E1D74F542918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3061198-25D5-40BF-A941-E1D74F542918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3061198-25D5-40BF-A941-E1D74F542918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EFDC142-5CDB-4F15-9D5A-99CE30EC29B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EFDC142-5CDB-4F15-9D5A-99CE30EC29B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EFDC142-5CDB-4F15-9D5A-99CE30EC29B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EFDC142-5CDB-4F15-9D5A-99CE30EC29B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
