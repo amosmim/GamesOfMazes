@@ -7,9 +7,9 @@ namespace ap2ex1_server
 {
 	public class GenerateCommand : ICommandable
 	{
-		private Model model;
+		private IModel model;
 
-		public GenerateCommand(Model model)
+		public GenerateCommand(IModel model)
 		{
 			this.model = model;
 		}
@@ -33,7 +33,7 @@ namespace ap2ex1_server
 			client.Shutdown(SocketShutdown.Both);
 			client.Dispose();
 			                  
-			return maze.ToJSON();
+			return "-1";
 		}
 	}
 }

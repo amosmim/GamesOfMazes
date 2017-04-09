@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
-using MazeLib;
-using MazeGeneratorLib;
+using System.Configuration;
 
 namespace ap2ex1_server
 {
@@ -107,11 +106,16 @@ namespace ap2ex1_server
 
 		public static void Main(string[] args)
 		{
+			// port should be from app.config
 			Server server = new Server(55555);
-			Model model = new Model();
+			IModel model = new Model();
 
 			server.AddNewAction("generate", new GenerateCommand(model));
 			server.AddNewAction("list", new ListCommand(model));
+			server.AddNewAction("start", new StartCommand(model));
+			server.AddNewAction("close", new CloseCommand(model));
+			server.AddNewAction("join", new JoinCommand(model));
+
 
 			server.InitializeServer();
 

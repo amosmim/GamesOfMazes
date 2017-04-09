@@ -5,6 +5,8 @@ using MazeLib;
 using MazeGeneratorLib;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SearchAlgorithmsLib;
 
 namespace ap2ex1_server
 {
@@ -19,9 +21,20 @@ namespace ap2ex1_server
 			this.multiPlayer = new Dictionary<string, MultiplayerSessionObject>();
 		}
 
-		public string Close(string maze)
+		public string Close(Socket client)
 		{
-			throw new NotImplementedException();
+			foreach (KeyValuePair<string, MultiplayerSessionObject> entry in this.multiPlayer)
+			{
+				if ((entry.Value.guest == client) || (entry.Value.host == client))
+				{
+					// becuase someone closed the game, the game is now removed from the dictionary
+					this.multiPlayer.Remove(entry.Key);
+					return "1";
+				}
+			}
+
+			// couldn't find appropriate socket, socket wasn't playing in multiplayer mode
+			return "-1";
 		}
 
 		public Maze GenerateMaze(string mazeName, int rows, int cols)
@@ -44,12 +57,18 @@ namespace ap2ex1_server
 
 		public string JoinGame(string maze, Socket joinClient)
 		{
-			if (multiPlayer.ContainsKey(maze))
+			if (!multiPlayer.ContainsKey(maze))
 			{
-				
+				return "-1";
 			}
 
-			return "";
+			MultiplayerSessionObject temp = multiPlayer[maze];
+			multiPlayer.Remove(maze);
+
+			temp.guest = joinClient;
+			multiPlayer.Add(maze, temp);
+
+			return temp.maze.ToJSON();
 		}
 
 		public string List()
@@ -64,14 +83,64 @@ namespace ap2ex1_server
 			return JsonConvert.SerializeObject(list);
 		}
 
-		public string Play(Moves move)
+		public string Play(string move, Socket sender)
 		{
-			throw new NotImplementedException();
+			JObject msg = new JObject();
+			int mode = 0; /// determines who is the sender : host or guest
+			string mazeName = "";
+			foreach (KeyValuePair<string, MultiplayerSessionObject> entry in this.multiPlayer)
+			{
+				mazeName = entry.Key;
+				if (entry.Value.guest == sender)
+				{
+					mode = 1; // guest
+					break;
+				}
+				else if (entry.Value.host == sender)
+				{
+					mode = 2; // host
+					break;
+				}
+			}
+
+			// we need to transfer the direction
+			Socket otherClient = null;
+
+			// set correct receiver
+			if (mode == 1)
+			{
+				otherClient = this.multiPlayer[mazeName].host;
+			}
+			else if (mode == 2)
+			{
+				otherClient = this.multiPlayer[mazeName].guest;
+			}
+
+			// all ok and we found our sender
+			if (otherClient != null)
+			{
+				// prepare a json message
+				msg["Name"] = mazeName;
+				msg["Direction"] = move;
+
+				byte[] data = new byte[1024];
+
+				data = Encoding.ASCII.GetBytes(msg.ToString());
+
+				otherClient.Send(data, data.Length, SocketFlags.None);
+
+				// return ok
+				return "1";
+			}
+
+			// couldn't find the sender
+			return "-1";
 		}
 
 		public string Solve(string maze, int algorithem)
 		{
-			throw new NotImplementedException();
+			SearchableMazeAdpter shMaze = new SearchableMazeAdpter(maze);
+			Solution<Position> solution;
 		}
 
 		public Maze Start(string mazeName, int rows, int cols, Socket host)

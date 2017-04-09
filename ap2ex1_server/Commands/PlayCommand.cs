@@ -1,10 +1,36 @@
 ﻿using System;
+using System.Net.Sockets;
+
 namespace ap2ex1_server
 {
-	public class PlayCommand
+	public class PlayCommand : ICommandable
 	{
-		public PlayCommand()
+		private IModel model;
+
+		public PlayCommand(IModel model)
 		{
+			this.model = model;
+		}
+
+		private Moves parseMove(string move)
+		{
+			switch (move)
+			{
+				case "left": return Moves.LEFT;
+				case "right": return Moves.RIGHT;
+				case "up": return Moves.UP;
+				case "down": return Moves.DOWN;
+				default: return Moves.UP;
+			}
+		}
+
+		public string Execute(string[] args, Socket client)
+		{
+			string whereTo = args[1];
+
+			string answer = this.model.Play(whereTo, client);
+
+			return answer;
 		}
 	}
 }

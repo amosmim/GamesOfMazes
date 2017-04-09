@@ -11,7 +11,7 @@ namespace ap2ex1_server
 		string Solve(string maze, int algorithem);
 		Maze Start(string mazeName, int rows, int cols, Socket host);
 		string List();
-		string Play(Moves move);
-		string Close(string maze);
+		string Play(string move, Socket sender);
+		string Close(Socket client);
 	}
 }
