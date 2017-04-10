@@ -115,7 +115,7 @@ namespace ap2ex1_server
 			server.AddNewAction("start", new StartCommand(model));
 			server.AddNewAction("close", new CloseCommand(model));
 			server.AddNewAction("join", new JoinCommand(model));
-
+			server.AddNewAction("play", new PlayCommand(model));
 
 			server.InitializeServer();
 

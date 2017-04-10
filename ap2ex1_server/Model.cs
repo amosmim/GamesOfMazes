@@ -139,8 +139,9 @@ namespace ap2ex1_server
 
 		public string Solve(string maze, int algorithem)
 		{
-			SearchableMazeAdpter shMaze = new SearchableMazeAdpter(maze);
-			Solution<Position> solution;
+			//SearchableMazeAdpter shMaze = new SearchableMazeAdpter(maze);
+			//Solution<Position> solution;
+			return "!";
 		}
 
 		public Maze Start(string mazeName, int rows, int cols, Socket host)

@@ -64,13 +64,20 @@ namespace ap2ex1_server
 						{
 							Console.WriteLine("404 option not found");
 							strData = "-1";
-							client.Shutdown(SocketShutdown.Both);
-							client.Dispose();
+							//client.Shutdown(SocketShutdown.Both);
+							//client.Dispose();
 						}
 						else
 						{
 							strData = actions[actionArray[0]].Execute(actionArray, client);
 						}
+
+						// send the the client whether the socket stays open or socket is closed
+						Console.WriteLine("socket statue : " + strData);
+						Thread.Sleep(100);
+						data = new byte[1024];
+						data = Encoding.ASCII.GetBytes(strData);
+						client.Send(data, data.Length, SocketFlags.None);
 					}
 				}
 				Console.WriteLine("end of communication");

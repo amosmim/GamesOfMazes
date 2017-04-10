@@ -3,8 +3,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading;
 	public class client
 	{
+		public static bool isOnline = false;
 		public client()
 		{
 
@@ -25,60 +27,77 @@ using System.Collections.Generic;
 			Socket server;
 			//List<string> multiplayerCommands = new List<String>(new string[] { "start", "play", "join" });
 			string temp = "";
+			Thread sendThread;
+			Thread receiveThread;
 
 			server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-			while (true)
+
+			receiveThread = new Thread(() =>
 			{
-				temp = Console.ReadLine();
-				if (temp == "exit") break;
-
-				if (!IsConnected(server))
+				while (true)
 				{
-					Console.WriteLine("connecting");
-					server.Connect(ipep);
-				}
-				server.Send(Encoding.ASCII.GetBytes(temp));
-				byte[] data = new byte[1024];
-				int recv = server.Receive(data);
-				Console.WriteLine("byte rec: " + recv);
-				string stringData = Encoding.ASCII.GetString(data, 0, recv);
-				Console.WriteLine(stringData);
-			}
+					byte[] data = new byte[1024];
+					int recv;
+					try
+					{
+						recv = server.Receive(data);
+					}
+					catch (SocketException se)
+					{
+						Console.WriteLine(se.ToString());
+						break;
+					}
+					string strData = Encoding.ASCII.GetString(data, 0, recv);
 
+					// either error or server disconnect this client
+					if ((recv == 0) || (strData == "-1"))
+					{
+						client.isOnline = false;
+						break; // end thread
+					}
+					else
+					{
+						Console.WriteLine("byte rec: " + recv);
+						Console.WriteLine(strData);
+					}
+				}
+			});
+
+			sendThread = new Thread(() =>
+			{
+				while (true)
+				{
+					temp = Console.ReadLine();
+					if (temp == "exit") break;
+					if (!client.isOnline)
+					{
+						Console.WriteLine("connecting");
+						server.Connect(ipep);
+						client.isOnline = true;
+						// start read thread
+						receiveThread.Start();
+					}
+
+					try
+					{
+						server.Send(Encoding.ASCII.GetBytes(temp));
+					}
+					catch (SocketException se)
+					{
+						Console.WriteLine(se.ToString());
+						break;
+					}
+				}
+			});
+
+			sendThread.Start();
+			sendThread.Join();
+			
 			server.Dispose();
 			server.Close();
 		}
 	}
-/*
-string[] input;
-temp = Console.ReadLine();
-				input = temp.Split(' ');
-				server.Connect(ipep);
-				if (temp == "exit") break;
-				if (multiplayerCommands.Contains(input[0]))
-				{
-					while (true)
-					{
-						server.Send(Encoding.ASCII.GetBytes(temp));
-						byte[] data = new byte[1024];
-int recv = server.Receive(data);
-Console.WriteLine("byte rec: " + recv);
-						string stringData = Encoding.ASCII.GetString(data, 0, recv);
-Console.WriteLine(stringData);
-						if (input[0] == "close") break;
-						temp = Console.ReadLine();
-						input = temp.Split(' ');
-					}
-				}
-				else
-				{
-					client.ModeSinglePlayer(server, temp);
-				}
-
-
-*/
- 
 /*
  * instead of above :
  * 

@@ -33,8 +33,8 @@ namespace ap2ex1_server
 
 			client.Send(data, data.Length, SocketFlags.None);
 
-			client.Shutdown(SocketShutdown.Both);
-			client.Dispose();
+			//client.Shutdown(SocketShutdown.Both);
+			//client.Dispose();
 
 			return "-1"; // No more multiplayer
 		}

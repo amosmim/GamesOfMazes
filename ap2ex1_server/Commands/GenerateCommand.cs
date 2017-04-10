@@ -30,8 +30,8 @@ namespace ap2ex1_server
 			client.Send(data, data.Length, SocketFlags.None);
 
 			// End of service for this client
-			client.Shutdown(SocketShutdown.Both);
-			client.Dispose();
+			//client.Shutdown(SocketShutdown.Both);
+			//client.Dispose();
 			                  
 			return "-1";
 		}
