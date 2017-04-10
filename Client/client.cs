@@ -4,100 +4,110 @@ using System.Net.Sockets;
 using System.Text;
 using System.Collections.Generic;
 using System.Threading;
-	public class client
+using System.Threading.Tasks;
+public class client
+{
+	public static bool isOnline = false;
+	public client()
 	{
-		public static bool isOnline = false;
-		public client()
-		{
 
-		}
-
-		public static bool IsConnected(Socket socket)
-		{
-			try
-			{
-				return !(socket.Poll(1, SelectMode.SelectRead) && socket.Available == 0);
-			}
-			catch (SocketException) { return false; }
-		}
-
-		public static void Main(string[] args)
-		{
-			IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 55555);
-			Socket server;
-			//List<string> multiplayerCommands = new List<String>(new string[] { "start", "play", "join" });
-			string temp = "";
-			Thread sendThread;
-			Thread receiveThread;
-
-			server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-
-			receiveThread = new Thread(() =>
-			{
-				while (true)
-				{
-					byte[] data = new byte[1024];
-					int recv;
-					try
-					{
-						recv = server.Receive(data);
-					}
-					catch (SocketException se)
-					{
-						Console.WriteLine(se.ToString());
-						break;
-					}
-					string strData = Encoding.ASCII.GetString(data, 0, recv);
-
-					// either error or server disconnect this client
-					if ((recv == 0) || (strData == "-1"))
-					{
-						client.isOnline = false;
-						break; // end thread
-					}
-					else
-					{
-						Console.WriteLine("byte rec: " + recv);
-						Console.WriteLine(strData);
-					}
-				}
-			});
-
-			sendThread = new Thread(() =>
-			{
-				while (true)
-				{
-					temp = Console.ReadLine();
-					if (temp == "exit") break;
-					if (!client.isOnline)
-					{
-						Console.WriteLine("connecting");
-						server.Connect(ipep);
-						client.isOnline = true;
-						// start read thread
-						receiveThread.Start();
-					}
-
-					try
-					{
-						server.Send(Encoding.ASCII.GetBytes(temp));
-					}
-					catch (SocketException se)
-					{
-						Console.WriteLine(se.ToString());
-						break;
-					}
-				}
-			});
-
-			sendThread.Start();
-			sendThread.Join();
-			
-			server.Dispose();
-			server.Close();
-		}
 	}
+
+	public static bool IsConnected(Socket socket)
+	{
+		try
+		{
+			return !(socket.Poll(1, SelectMode.SelectRead) && socket.Available == 0);
+		}
+		catch (SocketException) { return false; }
+	}
+
+	public static void Main(string[] args)
+	{
+		IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 55555);
+		Socket server = null;
+		//List<string> multiplayerCommands = new List<String>(new string[] { "start", "play", "join" });
+		string temp = "";
+		Thread sendThread;
+		Task receiveThread;
+
+		Action receiveFunction = new Action(() =>
+		{
+			Console.WriteLine("receive thread started");
+			while (true)
+			{
+				byte[] data = new byte[1024];
+				int recv;
+				try
+				{
+					recv = server.Receive(data);
+				}
+				catch (SocketException se)
+				{
+					Console.WriteLine(se.ToString());
+					server.Shutdown(SocketShutdown.Both);
+					server.Dispose();
+					break;
+				}
+				string strData = Encoding.ASCII.GetString(data, 0, recv);
+
+				// either error or server disconnect this client
+				if ((recv <= 0) || (strData.Contains("-1")))
+				{
+					Console.WriteLine("offline !");
+					client.isOnline = false;
+					// close the socket
+					server.Shutdown(SocketShutdown.Both);
+					server.Dispose();
+					break; // end thread
+				}
+				else
+				{
+					Console.WriteLine("byte rec: " + recv);
+					Console.WriteLine(strData);
+				}
+			}
+			Console.WriteLine("receive thread ended");
+		});
+
+		sendThread = new Thread(() =>
+		{
+			Console.WriteLine("send thread started");
+			while (true)
+			{
+				temp = Console.ReadLine();
+				if (temp == "exit") break;
+				if (!client.isOnline)
+				{
+					Console.WriteLine("connecting");
+					server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+					server.Connect(ipep);
+					client.isOnline = true;
+					// add a new mission to tge thread pool - start read thread
+					// because threads can't be reusable
+					receiveThread = new Task(receiveFunction);
+					receiveThread.Start();
+				}
+				// send to the server the command
+				try
+				{
+					server.Send(Encoding.ASCII.GetBytes(temp));
+				}
+				catch (SocketException se)
+				{
+					Console.WriteLine(se.ToString());
+					break;
+				}
+			}
+			Console.WriteLine("send thread ended");
+		});
+
+		sendThread.Start();
+		sendThread.Join();
+
+		//server.Close();
+	}
+}
 /*
  * instead of above :
  * 
