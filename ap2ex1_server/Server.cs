@@ -12,24 +12,24 @@ namespace ap2ex1_server
 	{
 		private int port;
 		private bool isOnline;
-		private Dictionary<string, ICommandable> actions;
 		private List<IClientHandler> clients;
 		private Socket serverSocket;
 		private IPEndPoint endPoint;
 		private List<Task> threads;
 		private Thread acceptClients;
+		private IClientHandler clientHandler;
 
 		/*
 		 * Constructor.
 		 */
-		public Server(int port)
+		public Server(int port, IClientHandler clientHandler)
 		{
 			this.port = port;
-			this.actions = new Dictionary<string, ICommandable>();
 			this.clients = new List<IClientHandler>();
 			this.endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.port);
 			this.serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			this.threads = new List<Task>();
+			this.clientHandler = clientHandler;
 		}
 
 		/*
@@ -70,15 +70,12 @@ namespace ap2ex1_server
 					catch (SocketException se)
 					{
 						Console.WriteLine(se.ToString());
-						this.ShutDownServer();
+						//this.ShutDownServer();
 						break;
 					}
 					Console.WriteLine("new client added :" + newClient.ToString());
 
-					// handle the new client
-					ClientHandler client = new ClientHandler(this.actions);
-
-					client.HandleClient(newClient);
+					this.clientHandler.HandleClient(newClient);
 				}
 			});
 
@@ -99,24 +96,14 @@ namespace ap2ex1_server
 			this.serverSocket.Dispose();
 		}
 
-		public void AddNewAction(string actionName, ICommandable action)
-		{
-			actions.Add(actionName, action);
-		}
-
 		public static void Main(string[] args)
 		{
 			// port should be from app.config
-			Server server = new Server(55555);
-			IModel model = new Model();
+			IController controller = new Controller();
+			IClientHandler clientHandler = new ClientHandler(controller);
+			Server server = new Server(55555, clientHandler);
 
-			server.AddNewAction("generate", new GenerateCommand(model));
-			server.AddNewAction("list", new ListCommand(model));
-			server.AddNewAction("start", new StartCommand(model));
-			server.AddNewAction("close", new CloseCommand(model));
-			server.AddNewAction("join", new JoinCommand(model));
-			server.AddNewAction("play", new PlayCommand(model));
-
+			// initialize and run
 			server.InitializeServer();
 
 			string c;

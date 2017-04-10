@@ -13,15 +13,6 @@ public class client
 
 	}
 
-	public static bool IsConnected(Socket socket)
-	{
-		try
-		{
-			return !(socket.Poll(1, SelectMode.SelectRead) && socket.Available == 0);
-		}
-		catch (SocketException) { return false; }
-	}
-
 	public static void Main(string[] args)
 	{
 		IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 55555);
@@ -63,8 +54,11 @@ public class client
 				}
 				else
 				{
-					Console.WriteLine("byte rec: " + recv);
-					Console.WriteLine(strData);
+					if (recv > 1)
+					{
+						Console.WriteLine("byte rec: " + recv);
+						Console.WriteLine(strData);
+					}
 				}
 			}
 			Console.WriteLine("receive thread ended");

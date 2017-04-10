@@ -9,28 +9,17 @@ namespace ap2ex1_server
 {
 	public class ClientHandler : IClientHandler
 	{
-		private Dictionary<string, ICommandable> actions;
+		private IController controller;
 
-		public ClientHandler(Dictionary<string, ICommandable> actions)
+		public ClientHandler(IController controller)
 		{
-			this.actions = actions;
-		}
-
-		private string[] ParseCommand(string data, char delim)
-		{
-			string[] command;
-
-			command = data.Split(delim);
-
-			return command;
+			this.controller = controller;
 		}
 
 		public void HandleClient(Socket client)
 		{
 			Task newClient = Task.Factory.StartNew(() =>
 			{
-				ICommandable value;
-
 				int recv;
 				string strData = "";
 				// get new command
@@ -44,10 +33,11 @@ namespace ap2ex1_server
 					catch (SocketException se)
 					{
 						// in case of connection failed or connection inturreption
-						client.Shutdown(SocketShutdown.Both);
-						client.Dispose();
+						//client.Shutdown(SocketShutdown.Both);
+						//client.Dispose();
 						Console.WriteLine(se.ToString());
-						return;
+						strData = "-1";
+						break;
 					}
 
 					if (recv > 0)
@@ -56,21 +46,8 @@ namespace ap2ex1_server
 
 						Console.WriteLine("command :" + strData + " bytes: " + recv);
 
-						// Get parsed command
-						string[] actionArray = this.ParseCommand(strData, ' ');
-
-						// Check if command exist, if so, run it.
-						if (!actions.TryGetValue(actionArray[0], out value))
-						{
-							Console.WriteLine("404 option not found");
-							strData = "-1";
-							//client.Shutdown(SocketShutdown.Both);
-							//client.Dispose();
-						}
-						else
-						{
-							strData = actions[actionArray[0]].Execute(actionArray, client);
-						}
+						// Execute command
+						strData = controller.ExecuteCommand(strData, client);
 
 						// send the the client whether the socket stays open or socket is closed
 						Console.WriteLine("socket statue : " + strData);

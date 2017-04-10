@@ -67,6 +67,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Commands\CloseCommand.cs" />
+    <Compile Include="Interfaces\IController.cs" />
+    <Compile Include="Controller.cs" />
+    <Compile Include="Core\MazeSolutionTranslator.cs" />
+    <Compile Include="Core\SearchableMazeAdpter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
