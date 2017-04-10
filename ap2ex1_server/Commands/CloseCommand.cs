@@ -5,15 +5,29 @@ using System.Text;
 
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Close command.
+	/// </summary>
 	public class CloseCommand : ICommandable
 	{
 		private IModel model;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.CloseCommand"/> class.
+		/// </summary>
+		/// <param name="model">Model.</param>
 		public CloseCommand(IModel model)
 		{
 			this.model = model;
 		}
 
+		/// <summary>
+		/// Execute close command via model, and send appropriate closing message
+		/// to client.
+		/// </summary>
+		/// <returns>-1 to single that the connection need to be closed</returns>
+		/// <param name="args">Arguments.</param>
+		/// <param name="client">Client.</param>
 		public string Execute(string[] args, Socket client)
 		{
 			JObject msg = new JObject();

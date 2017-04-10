@@ -16,12 +16,21 @@ namespace ap2ex1_server
 		private Dictionary<string, GameObject> singlePlayer;
 		private Dictionary<string, MultiplayerSessionObject> multiPlayer;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.Model"/> class.
+		/// </summary>
 		public Model()
 		{
 			this.singlePlayer = new Dictionary<string, GameObject>();
 			this.multiPlayer = new Dictionary<string, MultiplayerSessionObject>();
 		}
 
+		/// <summary>
+		/// Close the game with the specified client.
+		/// </summary>
+		/// <returns>1 if closed properly
+		/// 		 0 if specified clint not found</returns>
+		/// <param name="client">Client.</param>
 		public string Close(Socket client)
 		{
 			foreach (KeyValuePair<string, MultiplayerSessionObject> entry in this.multiPlayer)
@@ -38,6 +47,13 @@ namespace ap2ex1_server
 			return "-1";
 		}
 
+		/// <summary>
+		/// Generates the maze.
+		/// </summary>
+		/// <returns>The maze.</returns>
+		/// <param name="mazeName">Maze name.</param>
+		/// <param name="rows">Rows.</param>
+		/// <param name="cols">Cols.</param>
 		public Maze GenerateMaze(string mazeName, int rows, int cols)
 		{
 			DFSMazeGenerator generator = new DFSMazeGenerator();
@@ -56,6 +72,12 @@ namespace ap2ex1_server
 			return newMaze;
 		}
 
+		/// <summary>
+		/// Joins the game.
+		/// </summary>
+		/// <returns>-1 if game doesn't exist else return game details</returns>
+		/// <param name="maze">Maze.</param>
+		/// <param name="joinClient">Join client.</param>
 		public string JoinGame(string maze, Socket joinClient)
 		{
 			if (!multiPlayer.ContainsKey(maze))
@@ -72,6 +94,10 @@ namespace ap2ex1_server
 			return temp.maze.ToJSON();
 		}
 
+		/// <summary>
+		/// Generate list of games.
+		/// </summary>
+		/// <returns>list of games</returns>
 		public string List()
 		{
 			List<string> list = new List<string>();
@@ -84,6 +110,12 @@ namespace ap2ex1_server
 			return JsonConvert.SerializeObject(list);
 		}
 
+		/// <summary>
+		/// Play a move in a multiplayer session.
+		/// </summary>
+		/// <returns>details of the move or -1 if error or game doesn't exist anymore</returns>
+		/// <param name="move">Move.</param>
+		/// <param name="sender">Sender.</param>
 		public string Play(string move, Socket sender)
 		{
 			JObject msg = new JObject();
@@ -138,7 +170,65 @@ namespace ap2ex1_server
 			return "-1";
 		}
 
-		public string Solve(string maze, int algorithem)
+		/// <summary>
+		/// Solve the specified maze with the specified algorithm.
+		/// </summary>
+		/// <returns>a solution to a maze or error if game doesn't exist</returns>
+		/// <param name="maze">Maze.</param>
+		/// <param name="algorithm">Algorithm. 0 - BFS 1 - DFS</param>
+		public string Solve(string maze, int algorithm)
+		{
+			// check whether input is correct
+			if (!singlePlayer.ContainsKey(maze))
+			{
+				return "Game doesn't exist !";
+			}
+
+			GameObject go = singlePlayer[maze];
+			string solution;
+
+			// check whether the solution exists in the server
+			if (algorithm == 0)
+			{
+				// game exists but solution doesn't
+				if (go.bfsSolution == null)
+				{
+				    solution = Solver(maze, algorithm);
+					go.bfsSolution = solution;
+				}
+				else
+				{
+					return go.bfsSolution;
+				}
+			}
+			else
+			{
+				// game exists but solution doesn't
+				if (go.dfsSolution == null)
+				{
+					solution = Solver(maze, algorithm);
+					go.dfsSolution = solution;
+				}
+				else
+				{
+					return go.dfsSolution;
+				}
+			}
+
+			// because this dictionary is Read Only
+			singlePlayer.Remove(maze);
+			singlePlayer.Add(maze, go);
+
+			return solution;
+		}
+
+		/// <summary>
+		/// Helper method for Solve method.
+		/// </summary>
+		/// <returns>a solution to a maze</returns>
+		/// <param name="maze">Maze.</param>
+		/// <param name="algorithm">Algorithm.</param>
+		private string Solver(string maze, int algorithm)
 		{
 			Maze mazeGame = this.singlePlayer[maze].maze;
 			SearchableMazeAdpter shMaze = new SearchableMazeAdpter(mazeGame);
@@ -146,7 +236,7 @@ namespace ap2ex1_server
 			MazeSolutionTranslator translator = new MazeSolutionTranslator();
 			ISearcher<Position> searcher;
 
-			if (algorithem == 0)
+			if (algorithm == 0)
 			{
 				searcher = new BFS<Position>();
 			}
@@ -178,6 +268,14 @@ namespace ap2ex1_server
 			return msg.ToString();
 		}
 
+		/// <summary>
+		/// Generate new maze and start an online session.
+		/// </summary>
+		/// <returns>maze details</returns>
+		/// <param name="mazeName">Maze name.</param>
+		/// <param name="rows">Rows.</param>
+		/// <param name="cols">Cols.</param>
+		/// <param name="host">Host.</param>
 		public Maze Start(string mazeName, int rows, int cols, Socket host)
 		{
 			DFSMazeGenerator generator = new DFSMazeGenerator();

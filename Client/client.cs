@@ -12,7 +12,10 @@ public class client
 	{
 
 	}
-
+	/// <summary>
+	/// The entry point of the program, where the program control starts and ends.
+	/// </summary>
+	/// <param name="args">The command-line arguments.</param>
 	public static void Main(string[] args)
 	{
 		IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 55555);

@@ -3,16 +3,28 @@ using System.Net.Sockets;
 using System.Text;
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Play command.
+	/// </summary>
 	public class PlayCommand : ICommandable
 	{
 		private IModel model;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.PlayCommand"/> class.
+		/// </summary>
+		/// <param name="model">Model.</param>
 		public PlayCommand(IModel model)
 		{
 			this.model = model;
 		}
 
-		private Moves parseMove(string move)
+		/// <summary>
+		/// Parses the move.
+		/// </summary>
+		/// <returns>The move.</returns>
+		/// <param name="move">Move.</param>
+		private Moves ParseMove(string move)
 		{
 			switch (move)
 			{
@@ -24,6 +36,13 @@ namespace ap2ex1_server
 			}
 		}
 
+		/// <summary>
+		/// Execute the play command vie model, and send the appropriate move.
+		/// </summary>
+		/// <returns>-1 if game is closed or error
+		/// 		  1 if game is alive </returns>
+		/// <param name="args">Arguments.</param>
+		/// <param name="client">Client.</param>
 		public string Execute(string[] args, Socket client)
 		{
 			string whereTo = args[1];

@@ -4,15 +4,29 @@ using System.Text;
 
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Join command.
+	/// </summary>
 	public class JoinCommand : ICommandable
 	{
 		private IModel model;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.JoinCommand"/> class.
+		/// </summary>
+		/// <param name="model">Model.</param>
 		public JoinCommand(IModel model)
 		{
 			this.model = model;
 		}
 
+		/// <summary>
+		/// Execute join command via model, and send game details.
+		/// </summary>
+		/// <returns>-1 if error or game doesn't exist
+		/// 		  1 to single that connection is alive</returns>
+		/// <param name="args">Arguments.</param>
+		/// <param name="client">Client.</param>
 		public string Execute(string[] args, Socket client)
 		{
 			string name = args[1];

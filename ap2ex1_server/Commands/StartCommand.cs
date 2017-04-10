@@ -5,14 +5,28 @@ using System.Text;
 
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Start command.
+	/// </summary>
 	public class StartCommand : ICommandable
 	{
 		private IModel model;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.StartCommand"/> class.
+		/// </summary>
+		/// <param name="model">Model.</param>
 		public StartCommand(IModel model)
 		{
 			this.model = model;
 		}
 
+		/// <summary>
+		/// Execute the start command via model, and sent game details.
+		/// </summary>
+		/// <returns>1 to single that the connection needs to be alive.</returns>
+		/// <param name="args">Arguments.</param>
+		/// <param name="client">Client.</param>
 		public string Execute(string[] args, Socket client)
 		{
 			// generate new maze
