@@ -7,6 +7,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SearchAlgorithmsLib;
+using SearchableMaze;
 
 namespace ap2ex1_server
 {
@@ -139,9 +140,42 @@ namespace ap2ex1_server
 
 		public string Solve(string maze, int algorithem)
 		{
-			//SearchableMazeAdpter shMaze = new SearchableMazeAdpter(maze);
-			//Solution<Position> solution;
-			return "!";
+			Maze mazeGame = this.singlePlayer[maze].maze;
+			SearchableMazeAdpter shMaze = new SearchableMazeAdpter(mazeGame);
+			Solution<Position> solution;
+			MazeSolutionTranslator translator = new MazeSolutionTranslator();
+			ISearcher<Position> searcher;
+
+			if (algorithem == 0)
+			{
+				searcher = new BFS<Position>();
+			}
+			else
+			{
+				searcher = new DFS<Position>();
+			}
+
+			// try solving the maze
+			try
+			{
+				solution = searcher.Search(shMaze);
+			}
+			catch (NotSolvableException)
+			{
+				// unable to solve
+				JObject err = new JObject();
+				err["Name"] = maze;
+				err["Solution"] = "Maze is unsolvable";
+				err["NodesEvaluated"] = searcher.GetNumberOfNodesEvaluated().ToString();
+				return err.ToString();
+			}
+
+			JObject msg = new JObject();
+			msg["Name"] = maze;
+			msg["Solution"] = translator.SolutionToString(solution);
+			msg["NodesEvaluated"] = searcher.GetNumberOfNodesEvaluated().ToString();
+
+			return msg.ToString();
 		}
 
 		public Maze Start(string mazeName, int rows, int cols, Socket host)

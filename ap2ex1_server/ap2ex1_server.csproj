@@ -49,6 +49,9 @@
     <Reference Include="MazeLib">
       <HintPath>Core\MazeLib.dll</HintPath>
     </Reference>
+    <Reference Include="Priority Queue">
+      <HintPath>..\packages\OptimizedPriorityQueue.4.0.4\lib\net45\Priority Queue.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientHandler.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="Controller.cs" />
     <Compile Include="Core\MazeSolutionTranslator.cs" />
     <Compile Include="Core\SearchableMazeAdpter.cs" />
+    <Compile Include="Commands\SolveCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

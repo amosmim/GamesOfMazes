@@ -18,6 +18,7 @@ namespace ap2ex1_server
 			AddNewAction("close", new CloseCommand(model));
 			AddNewAction("join", new JoinCommand(model));
 			AddNewAction("play", new PlayCommand(model));
+			AddNewAction("solve", new SolveCommand(model));
 		}
 
 		public void AddNewAction(string actionName, ICommandable action)
