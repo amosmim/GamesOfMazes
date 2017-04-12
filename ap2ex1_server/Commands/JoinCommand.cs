@@ -35,7 +35,7 @@ namespace ap2ex1_server
 			if (answer != "-1")
 			{
 				// send the maze information to the guest player
-				byte[] data = new byte[1024];
+				byte[] data = new byte[8096];
 
 				data = Encoding.ASCII.GetBytes(answer);
 

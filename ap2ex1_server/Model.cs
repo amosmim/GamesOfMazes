@@ -293,6 +293,21 @@ namespace ap2ex1_server
 
 			return newMaze;
 		}
+
+		/// <summary>
+		/// Check to see if there pairing between two players for a specified game.
+		/// </summary>
+		/// <returns><c>true</c>, if paired, <c>false</c> otherwise.</returns>
+		/// <param name="maze">Maze.</param>
+		public bool isPaired(string maze)
+		{
+			if (multiPlayer[maze].guest != null)
+			{
+				return true;
+			}
+
+			return false;
+		}
 	}
 }
 

@@ -36,7 +36,7 @@ namespace ap2ex1_server
 
 			Maze maze = model.GenerateMaze(name, rows, cols);
 
-			byte[] data = new byte[1024];
+			byte[] data = new byte[8096];
 
 			data = Encoding.ASCII.GetBytes(maze.ToJSON());
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Text;
 using System.Collections.Generic;
 namespace ap2ex1_server
 {
@@ -45,7 +46,10 @@ namespace ap2ex1_server
 			// Check if command exist, if so, run it.
 			if (!actions.TryGetValue(actionArray[0], out value))
 			{
-				Console.WriteLine("404 option not found");
+				Console.WriteLine("Server Error: 404 option not found");
+				byte[] data = new byte[1024];
+				data = Encoding.ASCII.GetBytes("Error: 404 option not found");
+				client.Send(data, data.Length, SocketFlags.None);
 				strData = "-1";
 			}
 			else

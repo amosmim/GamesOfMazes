@@ -39,7 +39,7 @@ namespace ap2ex1_server
 
 			string answer = this.model.Solve(mazeName, algoritm);
 
-			byte[] data = new byte[1024];
+			byte[] data = new byte[8096];
 			data = Encoding.ASCII.GetBytes(answer);
 			client.Send(data, data.Length, SocketFlags.None);
 

@@ -7,15 +7,26 @@ using System.Threading;
 
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Client handler (The View).
+	/// </summary>
 	public class ClientHandler : IClientHandler
 	{
 		private IController controller;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.ClientHandler"/> class.
+		/// </summary>
+		/// <param name="controller">Controller.</param>
 		public ClientHandler(IController controller)
 		{
 			this.controller = controller;
 		}
 
+		/// <summary>
+		/// Handles the client input.
+		/// </summary>
+		/// <param name="client">Client.</param>
 		public void HandleClient(Socket client)
 		{
 			Task newClient = Task.Factory.StartNew(() =>

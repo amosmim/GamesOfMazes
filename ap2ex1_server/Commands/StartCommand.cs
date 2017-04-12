@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using MazeLib;
 using System.Text;
+using System.Threading;
 
 namespace ap2ex1_server
 {
@@ -36,7 +37,21 @@ namespace ap2ex1_server
 
 			Maze maze = model.Start(name, rows, cols, client);
 
-			byte[] data = new byte[1024];
+			byte[] data = new byte[8096];
+
+			data = Encoding.ASCII.GetBytes("Waiting for another player to join...");
+
+			client.Send(data, data.Length, SocketFlags.None);
+
+			// check to see if another player did join
+			while (!this.model.isPaired(name))
+			{
+				Thread.Sleep(10);
+			} // do nothing until another player joins
+
+			Console.WriteLine("Done waiting for a player to join !");
+			// another player did joined thus sending details
+		    data = new byte[8096];
 
 			data = Encoding.ASCII.GetBytes(maze.ToJSON());
 

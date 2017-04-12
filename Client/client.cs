@@ -5,6 +5,9 @@ using System.Text;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+/// <summary>
+/// Client.
+/// </summary>
 public class client
 {
 	public static bool isOnline = false;
@@ -30,7 +33,7 @@ public class client
 			Console.WriteLine("receive thread started");
 			while (true)
 			{
-				byte[] data = new byte[1024];
+				byte[] data = new byte[8096];
 				int recv;
 				try
 				{
@@ -102,19 +105,16 @@ public class client
 		sendThread.Start();
 		sendThread.Join();
 
+		// if connection still alive while exiting
+		if (client.isOnline)
+		{
+			server.Shutdown(SocketShutdown.Both);
+			server.Dispose();
+		}
+
 		//server.Close();
 	}
 }
-/*
- * instead of above :
- * 
- * while not exit
- *  get user input
- * 	if socket is not connected then connect
- * 
- *  send and receive
- * end while
- */
 
 /*
  * 2 thread algorithm :

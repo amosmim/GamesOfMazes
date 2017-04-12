@@ -8,33 +8,34 @@ using System.Configuration;
 
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Server.
+	/// </summary>
 	public class Server
 	{
 		private int port;
 		private bool isOnline;
-		private List<IClientHandler> clients;
 		private Socket serverSocket;
 		private IPEndPoint endPoint;
-		private List<Task> threads;
 		private Thread acceptClients;
 		private IClientHandler clientHandler;
 
-		/*
-		 * Constructor.
-		 */
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.Server"/> class.
+		/// </summary>
+		/// <param name="port">Port.</param>
+		/// <param name="clientHandler">Client handler.</param>
 		public Server(int port, IClientHandler clientHandler)
 		{
 			this.port = port;
-			this.clients = new List<IClientHandler>();
 			this.endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.port);
 			this.serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-			this.threads = new List<Task>();
 			this.clientHandler = clientHandler;
 		}
 
-		/*
-		 * Initialize the server and start accepting clients. 
-		 */
+		/// <summary>
+		/// Initialize the server and start accepting clients.
+		/// </summary>
 		public void InitializeServer()
 		{
 			Console.WriteLine("start");
@@ -85,9 +86,9 @@ namespace ap2ex1_server
 
 		}
 
-		/*
-		 * Shutdown the server and clean the socket.
-		 */
+		/// <summary>
+		/// Shutdown the server and clean the socket.
+		/// </summary>
 		public void ShutDownServer()
 		{
 			Console.WriteLine("server shutting down");
@@ -96,6 +97,10 @@ namespace ap2ex1_server
 			this.serverSocket.Dispose();
 		}
 
+		/// <summary>
+		/// The entry point of the program, where the program control starts and ends.
+		/// </summary>
+		/// <param name="args">The command-line arguments.</param>
 		public static void Main(string[] args)
 		{
 			// port should be from app.config
