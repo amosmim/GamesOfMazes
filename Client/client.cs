@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Configuration;
 /// <summary>
 /// Client.
 /// </summary>
@@ -21,6 +22,8 @@ public class client
 	/// <param name="args">The command-line arguments.</param>
 	public static void Main(string[] args)
 	{
+		// take port from app.config
+		//int port = int.Parse(ConfigurationManager.AppSettings["port"]);
 		IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 55555);
 		Socket server = null;
 		//List<string> multiplayerCommands = new List<String>(new string[] { "start", "play", "join" });
@@ -83,7 +86,7 @@ public class client
 					server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 					server.Connect(ipep);
 					client.isOnline = true;
-					// add a new mission to tge thread pool - start read thread
+					// add a new mission to the thread pool - start read thread
 					// because threads can't be reusable
 					receiveThread = new Task(receiveFunction);
 					receiveThread.Start();
