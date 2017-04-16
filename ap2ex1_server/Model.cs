@@ -28,23 +28,56 @@ namespace ap2ex1_server
 		/// <summary>
 		/// Close the game with the specified client.
 		/// </summary>
-		/// <returns>1 if closed properly
-		/// 		 0 if specified clint not found</returns>
+		/// <returns>true if closed properly
+		/// 		 false if specified clint not found</returns>
 		/// <param name="client">Client.</param>
-		public string Close(Socket client)
+		public bool Close(Socket client)
 		{
+			JObject msg = new JObject();
+			int mode = 0;
+			string maze = null;
 			foreach (KeyValuePair<string, MultiplayerSessionObject> entry in this.multiPlayer)
 			{
-				if ((entry.Value.guest == client) || (entry.Value.host == client))
+				maze = entry.Key;
+				if (entry.Value.guest == client)
 				{
-					// becuase someone closed the game, the game is now removed from the dictionary
-					this.multiPlayer.Remove(entry.Key);
-					return "1";
+					mode = 1; // guest
+					break;
+				}
+				else if (entry.Value.host == client)
+				{
+					mode = 2; // host
+					break;
 				}
 			}
 
+			Socket otherPlayer = null;
+			msg["isClosed"] = true;
+			msg["Details"] = "The other player closed the game.";
+			if (mode == 1)
+			{
+				otherPlayer = this.multiPlayer[maze].host;
+			}
+			else if (mode == 2)
+			{
+				otherPlayer = this.multiPlayer[maze].guest;
+			}
+
 			// couldn't find appropriate socket, socket wasn't playing in multiplayer mode
-			return "-1";
+			if (otherPlayer == null)
+			{
+				return false;
+			}
+
+			// remove the game from the multiplayer list
+			this.multiPlayer.Remove(maze);
+
+			// send closing details to the other player
+			byte[] data = new byte[1024];
+			data = Encoding.ASCII.GetBytes(msg.ToString());
+			otherPlayer.Send(data, data.Length, SocketFlags.None);
+
+			return true;
 		}
 
 		/// <summary>

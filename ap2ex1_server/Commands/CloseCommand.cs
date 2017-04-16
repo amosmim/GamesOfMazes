@@ -32,13 +32,13 @@ namespace ap2ex1_server
 		{
 			JObject msg = new JObject();
 
-			if (model.Close(client) == "1")
+			if (model.Close(client))
 			{
 				msg["isClosed"] = true;
 			}
 			else
 			{
-				msg["isClosed"] = false;
+				msg["Error"] = "Error. You can't close a session you are not a part of.";
 			}
 
 			byte[] data = new byte[1024];

@@ -64,7 +64,7 @@ namespace ap2ex1_server
 		/// <returns>1 if closed properly
 		/// 		 0 if specified clint not found</returns>
 		/// <param name="client">Client.</param>
-		string Close(Socket client);
+		bool Close(Socket client);
 
 		/// <summary>
 		/// Check to see if there pairing between two players for a specified game.
