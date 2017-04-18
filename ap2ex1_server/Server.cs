@@ -4,38 +4,38 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
-using MazeLib;
-using MazeGeneratorLib;
+using System.Configuration;
 
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Server.
+	/// </summary>
 	public class Server
 	{
 		private int port;
 		private bool isOnline;
-		private Dictionary<string, ICommandable> actions;
-		private List<IClientHandler> clients;
 		private Socket serverSocket;
 		private IPEndPoint endPoint;
-		private List<Task> threads;
 		private Thread acceptClients;
+		private IClientHandler clientHandler;
 
-		/*
-		 * Constructor.
-		 */
-		public Server(int port)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.Server"/> class.
+		/// </summary>
+		/// <param name="port">Port.</param>
+		/// <param name="clientHandler">Client handler.</param>
+		public Server(int port, IClientHandler clientHandler)
 		{
 			this.port = port;
-			this.actions = new Dictionary<string, ICommandable>();
-			this.clients = new List<IClientHandler>();
 			this.endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.port);
 			this.serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-			this.threads = new List<Task>();
+			this.clientHandler = clientHandler;
 		}
 
-		/*
-		 * Initialize the server and start accepting clients. 
-		 */
+		/// <summary>
+		/// Initialize the server and start accepting clients.
+		/// </summary>
 		public void InitializeServer()
 		{
 			Console.WriteLine("start");
@@ -71,15 +71,12 @@ namespace ap2ex1_server
 					catch (SocketException se)
 					{
 						Console.WriteLine(se.ToString());
-						this.ShutDownServer();
+						//this.ShutDownServer();
 						break;
 					}
 					Console.WriteLine("new client added :" + newClient.ToString());
 
-					// handle the new client
-					ClientHandler client = new ClientHandler(this.actions);
-
-					client.HandleClient(newClient);
+					this.clientHandler.HandleClient(newClient);
 				}
 			});
 
@@ -89,9 +86,9 @@ namespace ap2ex1_server
 
 		}
 
-		/*
-		 * Shutdown the server and clean the socket.
-		 */
+		/// <summary>
+		/// Shutdown the server and clean the socket.
+		/// </summary>
 		public void ShutDownServer()
 		{
 			Console.WriteLine("server shutting down");
@@ -100,19 +97,19 @@ namespace ap2ex1_server
 			this.serverSocket.Dispose();
 		}
 
-		public void AddNewAction(string actionName, ICommandable action)
-		{
-			actions.Add(actionName, action);
-		}
-
+		/// <summary>
+		/// The entry point of the program, where the program control starts and ends.
+		/// </summary>
+		/// <param name="args">The command-line arguments.</param>
 		public static void Main(string[] args)
 		{
-			Server server = new Server(55555);
-			Model model = new Model();
+			// port should be from app.config
+			//int port = int.Parse(ConfigurationManager.AppSettings["port"]);
+			IController controller = new Controller();
+			IClientHandler clientHandler = new ClientHandler(controller);
+			Server server = new Server(55555, clientHandler);
 
-			server.AddNewAction("generate", new GenerateCommand(model));
-			server.AddNewAction("list", new ListCommand(model));
-
+			// initialize and run
 			server.InitializeServer();
 
 			string c;

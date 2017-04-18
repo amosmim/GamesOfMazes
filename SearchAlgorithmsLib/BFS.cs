@@ -2,11 +2,20 @@
 
 namespace SearchAlgorithmsLib
 {
+    /// <summary>
+    /// Isearcher that work on BFS algoritm.
+    /// </summary>
+    /// <typeparam name="T">type of state</typeparam>
     public class BFS<T> : Searcher<T>
     {
+        /// <summary>
+        /// solve the searchable graph.
+        /// </summary>
+        /// <param name="searchable">graph to solved</param>
+        /// <returns>solution object</returns>
         public override Solution<T> Search(ISearchable<T> searchable)
         {
-
+            // restart the counter of nodes.
             StartOver();
             State<T> start = searchable.GetInitialState();
             start.Cost = 0;
@@ -55,12 +64,10 @@ namespace SearchAlgorithmsLib
                     }
                 }
             }
+            // whan the states are ended, but never found the goal state...
             throw new NotSolvableException();
         }
             
-     
-
-
        
     }
 }

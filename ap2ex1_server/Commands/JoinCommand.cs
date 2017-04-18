@@ -1,20 +1,49 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Text;
 
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Join command.
+	/// </summary>
 	public class JoinCommand : ICommandable
 	{
-		private Model model;
+		private IModel model;
 
-		public JoinCommand(Model model)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.JoinCommand"/> class.
+		/// </summary>
+		/// <param name="model">Model.</param>
+		public JoinCommand(IModel model)
 		{
 			this.model = model;
 		}
 
+		/// <summary>
+		/// Execute join command via model, and send game details.
+		/// </summary>
+		/// <returns>-1 if error or game doesn't exist
+		/// 		  1 to single that connection is alive</returns>
+		/// <param name="args">Arguments.</param>
+		/// <param name="client">Client.</param>
 		public string Execute(string[] args, Socket client)
 		{
-			throw new NotImplementedException();
+			string name = args[1];
+			string answer = model.JoinGame(name, client);
+			// if -1 means that join is not successfull
+			if (answer != "-1")
+			{
+				// send the maze information to the guest player
+				byte[] data = new byte[8096];
+
+				data = Encoding.ASCII.GetBytes(answer);
+
+				client.Send(data, data.Length, SocketFlags.None);
+				return "1";
+			}
+			// join is not successful, kill socket
+			return "-1";
 		}
 	}
 }

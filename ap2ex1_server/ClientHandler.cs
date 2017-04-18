@@ -2,65 +2,75 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Client handler (The View).
+	/// </summary>
 	public class ClientHandler : IClientHandler
 	{
-		private Dictionary<string, ICommandable> actions;
+		private IController controller;
 
-		public ClientHandler(Dictionary<string, ICommandable> actions)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.ClientHandler"/> class.
+		/// </summary>
+		/// <param name="controller">Controller.</param>
+		public ClientHandler(IController controller)
 		{
-			this.actions = actions;
+			this.controller = controller;
 		}
 
-		private string[] ParseCommand(string data, char delim)
-		{
-			string[] command;
-
-			command = data.Split(delim);
-
-			return command;
-		}
-
+		/// <summary>
+		/// Handles the client input.
+		/// </summary>
+		/// <param name="client">Client.</param>
 		public void HandleClient(Socket client)
-		{ 
-			ICommandable value;
-
-			byte[] data = new byte[1024];
-			int recv;
-			// get new command
-			try
+		{
+			Task newClient = Task.Factory.StartNew(() =>
 			{
-				recv = client.Receive(data);
-			}
-			catch (SocketException se)
-			{
-				// in case of connection failed or connection inturreption
-				client.Shutdown(SocketShutdown.Both);
-				client.Dispose();
-				Console.WriteLine(se.ToString());
-				return;
-			}
+				int recv;
+				string strData = "";
+				// get new command
+				while (strData != "-1")
+				{
+					byte[] data = new byte[1024];
+					try
+					{
+						recv = client.Receive(data);
+					}
+					catch (SocketException se)
+					{
+						// in case of connection failed or connection inturreption
+						//client.Shutdown(SocketShutdown.Both);
+						//client.Dispose();
+						Console.WriteLine(se.ToString());
+						strData = "-1";
+						break;
+					}
 
-			string strData = Encoding.ASCII.GetString(data, 0, recv);
+					if (recv > 0)
+					{
+						strData = Encoding.ASCII.GetString(data, 0, recv);
 
-			Console.WriteLine("command :" + strData);
+						Console.WriteLine("command :" + strData + " bytes: " + recv);
 
-			// Get parsed command
-			string[] actionArray = this.ParseCommand(strData, ' ');
+						// Execute command
+						strData = controller.ExecuteCommand(strData, client);
 
-			// Check if command exist, if so, run it.
-			if (!actions.TryGetValue(actionArray[0], out value))
-			{
-				Console.WriteLine("404 option not found");
-			}
-			else
-			{
-				strData = actions[actionArray[0]].Execute(actionArray, client);
-			}
+						// send the the client whether the socket stays open or socket is closed
+						Console.WriteLine("socket statue : " + strData);
+						Thread.Sleep(100);
+						data = new byte[1024];
+						data = Encoding.ASCII.GetBytes(strData);
+						client.Send(data, data.Length, SocketFlags.None);
+					}
+				}
+				Console.WriteLine("end of communication");
+			});
 
-			Console.WriteLine("end of communication");
 		}
 	}
 }

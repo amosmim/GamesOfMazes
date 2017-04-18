@@ -13,6 +13,10 @@ namespace SearchableMaze
             CompareSolvers();
           
         }
+
+        /// <summary>
+        /// tester of BFS & DFS on Maze.
+        /// </summary>
         private static void CompareSolvers() { 
             IMazeGenerator g = new DFSMazeGenerator();
 

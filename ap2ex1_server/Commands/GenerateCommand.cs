@@ -5,15 +5,28 @@ using System.Text;
 
 namespace ap2ex1_server
 {
+	/// <summary>
+	/// Generate command.
+	/// </summary>
 	public class GenerateCommand : ICommandable
 	{
-		private Model model;
+		private IModel model;
 
-		public GenerateCommand(Model model)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.GenerateCommand"/> class.
+		/// </summary>
+		/// <param name="model">Model.</param>
+		public GenerateCommand(IModel model)
 		{
 			this.model = model;
 		}
 
+		/// <summary>
+		/// Execute generate command via model, and send game details.
+		/// </summary>
+		/// <returns>-1 to single that the connection needs to be closed.</returns>
+		/// <param name="args">Arguments.</param>
+		/// <param name="client">Client.</param>
 		public string Execute(string[] args, Socket client)
 		{
 			// generate new maze
@@ -23,17 +36,17 @@ namespace ap2ex1_server
 
 			Maze maze = model.GenerateMaze(name, rows, cols);
 
-			byte[] data = new byte[1024];
+			byte[] data = new byte[8096];
 
 			data = Encoding.ASCII.GetBytes(maze.ToJSON());
 
 			client.Send(data, data.Length, SocketFlags.None);
 
 			// End of service for this client
-			client.Shutdown(SocketShutdown.Both);
-			client.Dispose();
+			//client.Shutdown(SocketShutdown.Both);
+			//client.Dispose();
 			                  
-			return maze.ToJSON();
+			return "-1";
 		}
 	}
 }

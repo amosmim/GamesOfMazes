@@ -5,8 +5,11 @@ using MazeLib;
 using SearchAlgorithmsLib;
 namespace SearchableMaze
 {
-    class MazeSolutionTranslator
+    public class MazeSolutionTranslator
     {
+        /// <summary>
+        /// translate Solution object to string of {0,1,2,3}
+        /// </summary>
         public MazeSolutionTranslator() { }
 
         public string SolutionToString(Solution<Position> solution)

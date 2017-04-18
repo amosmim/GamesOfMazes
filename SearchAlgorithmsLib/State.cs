@@ -13,13 +13,11 @@ namespace SearchAlgorithmsLib
         {
             this.state = state;
             this.cameFrom = null;
-            
-            
         }
 
                
-        public float Cost { get => cost; set => cost = value; }
-        public State<T> CameFrom { get => cameFrom; set => cameFrom = value; }
+		public float Cost { get { return cost; } set { cost = value; }}
+		public State<T> CameFrom { get { return cameFrom; } set { cameFrom = value; } }
        
 
         public override int GetHashCode()

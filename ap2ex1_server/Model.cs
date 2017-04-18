@@ -5,6 +5,9 @@ using MazeLib;
 using MazeGeneratorLib;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SearchAlgorithmsLib;
+using SearchableMaze;
 
 namespace ap2ex1_server
 {
@@ -13,17 +16,77 @@ namespace ap2ex1_server
 		private Dictionary<string, GameObject> singlePlayer;
 		private Dictionary<string, MultiplayerSessionObject> multiPlayer;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:ap2ex1_server.Model"/> class.
+		/// </summary>
 		public Model()
 		{
 			this.singlePlayer = new Dictionary<string, GameObject>();
 			this.multiPlayer = new Dictionary<string, MultiplayerSessionObject>();
 		}
 
-		public string Close(string maze)
+		/// <summary>
+		/// Close the game with the specified client.
+		/// </summary>
+		/// <returns>true if closed properly
+		/// 		 false if specified clint not found</returns>
+		/// <param name="client">Client.</param>
+		public bool Close(Socket client)
 		{
-			throw new NotImplementedException();
+			JObject msg = new JObject();
+			int mode = 0;
+			string maze = null;
+			foreach (KeyValuePair<string, MultiplayerSessionObject> entry in this.multiPlayer)
+			{
+				maze = entry.Key;
+				if (entry.Value.guest == client)
+				{
+					mode = 1; // guest
+					break;
+				}
+				else if (entry.Value.host == client)
+				{
+					mode = 2; // host
+					break;
+				}
+			}
+
+			Socket otherPlayer = null;
+			msg["isClosed"] = true;
+			msg["Details"] = "The other player closed the game.";
+			if (mode == 1)
+			{
+				otherPlayer = this.multiPlayer[maze].host;
+			}
+			else if (mode == 2)
+			{
+				otherPlayer = this.multiPlayer[maze].guest;
+			}
+
+			// couldn't find appropriate socket, socket wasn't playing in multiplayer mode
+			if (otherPlayer == null)
+			{
+				return false;
+			}
+
+			// remove the game from the multiplayer list
+			this.multiPlayer.Remove(maze);
+
+			// send closing details to the other player
+			byte[] data = new byte[1024];
+			data = Encoding.ASCII.GetBytes(msg.ToString());
+			otherPlayer.Send(data, data.Length, SocketFlags.None);
+
+			return true;
 		}
 
+		/// <summary>
+		/// Generates the maze.
+		/// </summary>
+		/// <returns>The maze.</returns>
+		/// <param name="mazeName">Maze name.</param>
+		/// <param name="rows">Rows.</param>
+		/// <param name="cols">Cols.</param>
 		public Maze GenerateMaze(string mazeName, int rows, int cols)
 		{
 			DFSMazeGenerator generator = new DFSMazeGenerator();
@@ -42,16 +105,32 @@ namespace ap2ex1_server
 			return newMaze;
 		}
 
+		/// <summary>
+		/// Joins the game.
+		/// </summary>
+		/// <returns>-1 if game doesn't exist else return game details</returns>
+		/// <param name="maze">Maze.</param>
+		/// <param name="joinClient">Join client.</param>
 		public string JoinGame(string maze, Socket joinClient)
 		{
-			if (multiPlayer.ContainsKey(maze))
+			if (!multiPlayer.ContainsKey(maze))
 			{
-				
+				return "-1";
 			}
 
-			return "";
+			MultiplayerSessionObject temp = multiPlayer[maze];
+			multiPlayer.Remove(maze);
+
+			temp.guest = joinClient;
+			multiPlayer.Add(maze, temp);
+
+			return temp.maze.ToJSON();
 		}
 
+		/// <summary>
+		/// Generate list of games.
+		/// </summary>
+		/// <returns>list of games</returns>
 		public string List()
 		{
 			List<string> list = new List<string>();
@@ -64,16 +143,172 @@ namespace ap2ex1_server
 			return JsonConvert.SerializeObject(list);
 		}
 
-		public string Play(Moves move)
+		/// <summary>
+		/// Play a move in a multiplayer session.
+		/// </summary>
+		/// <returns>details of the move or -1 if error or game doesn't exist anymore</returns>
+		/// <param name="move">Move.</param>
+		/// <param name="sender">Sender.</param>
+		public string Play(string move, Socket sender)
 		{
-			throw new NotImplementedException();
+			JObject msg = new JObject();
+			int mode = 0; /// determines who is the sender : host or guest
+			string mazeName = "";
+			foreach (KeyValuePair<string, MultiplayerSessionObject> entry in this.multiPlayer)
+			{
+				mazeName = entry.Key;
+				if (entry.Value.guest == sender)
+				{
+					mode = 1; // guest
+					break;
+				}
+				else if (entry.Value.host == sender)
+				{
+					mode = 2; // host
+					break;
+				}
+			}
+
+			// we need to transfer the direction
+			Socket otherClient = null;
+
+			// set correct receiver
+			if (mode == 1)
+			{
+				otherClient = this.multiPlayer[mazeName].host;
+			}
+			else if (mode == 2)
+			{
+				otherClient = this.multiPlayer[mazeName].guest;
+			}
+
+			// all ok and we found our sender
+			if (otherClient != null)
+			{
+				// prepare a json message
+				msg["Name"] = mazeName;
+				msg["Direction"] = move;
+
+				byte[] data = new byte[1024];
+
+				data = Encoding.ASCII.GetBytes(msg.ToString());
+
+				otherClient.Send(data, data.Length, SocketFlags.None);
+
+				// return ok
+				return "1";
+			}
+
+			// couldn't find the sender
+			return "-1";
 		}
 
-		public string Solve(string maze, int algorithem)
+		/// <summary>
+		/// Solve the specified maze with the specified algorithm.
+		/// </summary>
+		/// <returns>a solution to a maze or error if game doesn't exist</returns>
+		/// <param name="maze">Maze.</param>
+		/// <param name="algorithm">Algorithm. 0 - BFS 1 - DFS</param>
+		public string Solve(string maze, int algorithm)
 		{
-			throw new NotImplementedException();
+			// check whether input is correct
+			if (!singlePlayer.ContainsKey(maze))
+			{
+				return "Game doesn't exist !";
+			}
+
+			GameObject go = singlePlayer[maze];
+			string solution;
+
+			// check whether the solution exists in the server
+			if (algorithm == 0)
+			{
+				// game exists but solution doesn't
+				if (go.bfsSolution == null)
+				{
+				    solution = Solver(maze, algorithm);
+					go.bfsSolution = solution;
+				}
+				else
+				{
+					return go.bfsSolution;
+				}
+			}
+			else
+			{
+				// game exists but solution doesn't
+				if (go.dfsSolution == null)
+				{
+					solution = Solver(maze, algorithm);
+					go.dfsSolution = solution;
+				}
+				else
+				{
+					return go.dfsSolution;
+				}
+			}
+
+			// because this dictionary is Read Only
+			singlePlayer.Remove(maze);
+			singlePlayer.Add(maze, go);
+
+			return solution;
 		}
 
+		/// <summary>
+		/// Helper method for Solve method.
+		/// </summary>
+		/// <returns>a solution to a maze</returns>
+		/// <param name="maze">Maze.</param>
+		/// <param name="algorithm">Algorithm.</param>
+		private string Solver(string maze, int algorithm)
+		{
+			Maze mazeGame = this.singlePlayer[maze].maze;
+			SearchableMazeAdpter shMaze = new SearchableMazeAdpter(mazeGame);
+			Solution<Position> solution;
+			MazeSolutionTranslator translator = new MazeSolutionTranslator();
+			ISearcher<Position> searcher;
+
+			if (algorithm == 0)
+			{
+				searcher = new BFS<Position>();
+			}
+			else
+			{
+				searcher = new DFS<Position>();
+			}
+
+			// try solving the maze
+			try
+			{
+				solution = searcher.Search(shMaze);
+			}
+			catch (NotSolvableException)
+			{
+				// unable to solve
+				JObject err = new JObject();
+				err["Name"] = maze;
+				err["Solution"] = "Maze is unsolvable";
+				err["NodesEvaluated"] = searcher.GetNumberOfNodesEvaluated().ToString();
+				return err.ToString();
+			}
+
+			JObject msg = new JObject();
+			msg["Name"] = maze;
+			msg["Solution"] = translator.SolutionToString(solution);
+			msg["NodesEvaluated"] = searcher.GetNumberOfNodesEvaluated().ToString();
+
+			return msg.ToString();
+		}
+
+		/// <summary>
+		/// Generate new maze and start an online session.
+		/// </summary>
+		/// <returns>maze details</returns>
+		/// <param name="mazeName">Maze name.</param>
+		/// <param name="rows">Rows.</param>
+		/// <param name="cols">Cols.</param>
+		/// <param name="host">Host.</param>
 		public Maze Start(string mazeName, int rows, int cols, Socket host)
 		{
 			DFSMazeGenerator generator = new DFSMazeGenerator();
@@ -90,6 +325,21 @@ namespace ap2ex1_server
 			multiPlayer.Add(mazeName, session);
 
 			return newMaze;
+		}
+
+		/// <summary>
+		/// Check to see if there pairing between two players for a specified game.
+		/// </summary>
+		/// <returns><c>true</c>, if paired, <c>false</c> otherwise.</returns>
+		/// <param name="maze">Maze.</param>
+		public bool isPaired(string maze)
+		{
+			if (multiPlayer[maze].guest != null)
+			{
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

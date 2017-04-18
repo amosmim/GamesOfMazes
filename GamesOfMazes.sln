@@ -11,8 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchableMaze", "Searchabl
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ap2ex1_server", "ap2ex1_server\ap2ex1_server.csproj", "{C3061198-25D5-40BF-A941-E1D74F542918}"
+	ProjectSection(ProjectDependencies) = postProject
+		{83544628-B070-484D-9153-ED0A6E69D30D} = {83544628-B070-484D-9153-ED0A6E69D30D}
+		{FA9E2983-163E-4F7C-B14C-7FA66BE7A563} = {FA9E2983-163E-4F7C-B14C-7FA66BE7A563}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{1EFDC142-5CDB-4F15-9D5A-99CE30EC29B1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3061198-25D5-40BF-A941-E1D74F542918} = {C3061198-25D5-40BF-A941-E1D74F542918}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
