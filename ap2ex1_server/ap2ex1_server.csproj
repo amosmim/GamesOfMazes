@@ -35,6 +35,14 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+
+    <Reference Include="SearchableMaze">
+      <HintPath>..\SearchableMaze\bin\Debug\SearchableMaze.exe</HintPath>
+    </Reference>
+    <Reference Include="SearchAlgorithmsLib">
+      <HintPath>..\SearchAlgorithmsLib\bin\Debug\SearchAlgorithmsLib.dll</HintPath>
+    </Reference>
+
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,15 +63,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientHandler.cs" />
+    <Compile Include="Commands\CloseCommand.cs" />
     <Compile Include="Commands\GenerateCommand.cs" />
     <Compile Include="Commands\JoinCommand.cs" />
     <Compile Include="Commands\ListCommand.cs" />
     <Compile Include="Commands\PlayCommand.cs" />
+    <Compile Include="Commands\SolveCommand.cs" />
     <Compile Include="Commands\StartCommand.cs" />
+    <Compile Include="Controller.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\MultiplayerSessionObject.cs" />
     <Compile Include="Interfaces\IClientHandler.cs" />
     <Compile Include="Interfaces\ICommandable.cs" />
+    <Compile Include="Interfaces\IController.cs" />
     <Compile Include="Interfaces\IModel.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Moves.cs" />
