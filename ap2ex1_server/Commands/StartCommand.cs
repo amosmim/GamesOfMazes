@@ -12,6 +12,8 @@ namespace ap2ex1_server
 	public class StartCommand : ICommandable
 	{
 		private IModel model;
+		public const string KEEP_CONNECTION_ALIVE = "1";
+		public const string ABORT_CONNECTION = "-1";
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:ap2ex1_server.StartCommand"/> class.
@@ -51,12 +53,12 @@ namespace ap2ex1_server
 
 			Console.WriteLine("Done waiting for a player to join !");
 			// another player did joined thus sending details
-		    data = new byte[8096];
+		   	data = new byte[8096];
 
 			data = Encoding.ASCII.GetBytes(maze.ToJSON());
 
 			client.Send(data, data.Length, SocketFlags.None);
-			return "1";
+			return KEEP_CONNECTION_ALIVE;
 		}
 	}
 }

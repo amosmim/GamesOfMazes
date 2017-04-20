@@ -11,6 +11,8 @@ namespace ap2ex1_server
 	public class GenerateCommand : ICommandable
 	{
 		private IModel model;
+		public const string KEEP_CONNECTION_ALIVE = "1";
+		public const string ABORT_CONNECTION = "-1";
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:ap2ex1_server.GenerateCommand"/> class.
@@ -46,7 +48,7 @@ namespace ap2ex1_server
 			//client.Shutdown(SocketShutdown.Both);
 			//client.Dispose();
 			                  
-			return "-1";
+			return ABORT_CONNECTION;
 		}
 	}
 }

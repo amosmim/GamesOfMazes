@@ -104,7 +104,7 @@ namespace ap2ex1_server
 		public static void Main(string[] args)
 		{
 			// port should be from app.config
-			//int port = int.Parse(ConfigurationManager.AppSettings["port"]);
+			int port = int.Parse(ConfigurationManager.AppSettings["port"]);
 			IController controller = new Controller();
 			IClientHandler clientHandler = new ClientHandler(controller);
 			Server server = new Server(55555, clientHandler);
