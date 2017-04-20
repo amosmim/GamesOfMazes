@@ -107,7 +107,7 @@ namespace ap2ex1_server
 			int port = int.Parse(ConfigurationManager.AppSettings["port"]);
 			IController controller = new Controller();
 			IClientHandler clientHandler = new ClientHandler(controller);
-			Server server = new Server(55555, clientHandler);
+			Server server = new Server(port, clientHandler);
 
 			// initialize and run
 			server.InitializeServer();
