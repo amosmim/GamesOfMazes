@@ -107,10 +107,25 @@ namespace SearchAlgorithmsLib
         }
 
         // ISearcher’s methods:
+
+        /// <summary>
+        /// get how many nodes were evaluated by the algorithm in the last Search.
+        /// </summary>
+        /// <returns>
+        /// number of the nodes that evaluated by the algorithm
+        /// </returns>
         public virtual int GetNumberOfNodesEvaluated()
         {
             return evaluatedNodes;
         }
+        /// <summary>
+        /// the search method.
+        /// should restart the NumberOfNodesEvaluated counter!
+        /// </summary>
+        /// <param name="searchable">searchable graph to solve</param>
+        /// <returns>
+        /// Solution object
+        /// </returns>
         public abstract Solution<T> Search(ISearchable<T> searchable);
 
     }

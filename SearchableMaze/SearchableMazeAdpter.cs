@@ -5,9 +5,11 @@ using SearchAlgorithmsLib;
 
 namespace SearchableMaze
 {
+
     /// <summary>
     /// Adpter of Maze as Searchable interface.
     /// </summary>
+    /// <seealso cref="SearchAlgorithmsLib.ISearchable{MazeLib.Position}" />
     public class SearchableMazeAdpter : ISearchable<Position>
     {
         private Maze maze;
