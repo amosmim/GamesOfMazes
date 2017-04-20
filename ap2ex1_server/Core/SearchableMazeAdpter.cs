@@ -5,29 +5,19 @@ using SearchAlgorithmsLib;
 
 namespace SearchableMaze
 {
-    /// <summary>
-    /// Adpter of Maze as Searchable interface.
-    /// </summary>
-    public class SearchableMazeAdpter : ISearchable<Position>
+    class SearchableMazeAdpter : ISearchable<Position>
     {
         private Maze maze;
 
-        /// <summary>
-        /// Constractor.
-        /// </summary>
-        /// <param name="maz"></param>
         public SearchableMazeAdpter(Maze maz)
         {
             this.maze = maz;
         }
 
-
-        /// <summary>
-        /// get all the passiable states from s state.
-        /// responsible to set ComeFrom of States to s state!
-        /// </summary>
-        /// <param name="s">origin state</param>
-        /// <returns>list of state objects</returns>
+        public int getMaxNodes()
+        {
+            return (maze.Cols * maze.Rows);
+        }
         public List<State<Position>> GetAllPossibleStates(State<Position> s)
         {
             List<State<Position>> list = new List<State<Position>>();
@@ -55,13 +45,6 @@ namespace SearchableMaze
             return list;
         }
 
-        /// <summary>
-        /// return new state from origin state with updated cost and CameFrom fields.
-        /// </summary>
-        /// <param name="father">origin state</param>
-        /// <param name="rowDif">change in the rows</param>
-        /// <param name="colDif">change in the colums</param>
-        /// <returns></returns>
         private State<Position> CreateNewSon(State<Position> father,  int rowDif, int colDif)
         {
             State<Position> son = new State<Position>(new Position(father.GetTypeValue().Row + rowDif,
@@ -73,33 +56,20 @@ namespace SearchableMaze
             return son;
         }
 
-        /// <summary>
-        /// gets the end state of the Maze
-        /// </summary>
-        /// <returns>state object</returns>
         public State<Position> GetGoalState()
         {
             return new State<Position> (maze.GoalPos);
         }
 
-        /// <summary>
-        /// gets the start state of the Maze
-        /// </summary>
-        /// <returns>state object</returns>
         public State<Position> GetInitialState()
         {
             return new State<Position>(maze.InitialPos);
         }
 
-        /// <summary>
-        /// console print of the Maze.
-        /// start Mark with 'S', and the goal with 'E'.
-        /// </summary>
         public void Print()
         {
             Position start = maze.InitialPos;
             Position end = maze.GoalPos;
-            Console.ForegroundColor = ConsoleColor.White;
             for (int i = -2; i < maze.Cols; i++)
                 Console.Write('-');
             Console.WriteLine();
@@ -110,17 +80,13 @@ namespace SearchableMaze
                 {
                     if ((start.Col == col) && (start.Row == row))
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write('S');
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write('?');
                     }
                     else
                     {
                         if ((end.Col == col) && (end.Row == row))
                         {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.Write('E');
-                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write('$');
                         }
                         else
                         {

@@ -10,6 +10,8 @@ namespace ap2ex1_server
 	public class JoinCommand : ICommandable
 	{
 		private IModel model;
+		public const string KEEP_CONNECTION_ALIVE = "1";
+		public const string ABORT_CONNECTION = "-1";
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:ap2ex1_server.JoinCommand"/> class.
@@ -40,10 +42,10 @@ namespace ap2ex1_server
 				data = Encoding.ASCII.GetBytes(answer);
 
 				client.Send(data, data.Length, SocketFlags.None);
-				return "1";
+				return KEEP_CONNECTION_ALIVE;
 			}
 			// join is not successful, kill socket
-			return "-1";
+			return ABORT_CONNECTION;
 		}
 	}
 }
