@@ -115,7 +115,7 @@ namespace ap2ex1_server
 		{
 			if (!multiPlayer.ContainsKey(maze))
 			{
-				return "-1";
+				return "-1"; // couldn't find the game
 			}
 
 			MultiplayerSessionObject temp = multiPlayer[maze];

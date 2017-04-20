@@ -10,6 +10,8 @@ namespace ap2ex1_server
 	public class SolveCommand : ICommandable
 	{
 		private IModel model;
+		public const string KEEP_CONNECTION_ALIVE = "1";
+		public const string ABORT_CONNECTION = "-1";
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:ap2ex1_server.SolveCommand"/> class.
@@ -43,7 +45,7 @@ namespace ap2ex1_server
 			data = Encoding.ASCII.GetBytes(answer);
 			client.Send(data, data.Length, SocketFlags.None);
 
-			return "-1"; // no need for the socket to be alive
+			return ABORT_CONNECTION; // no need for the socket to be alive
 		}
 	}
 }

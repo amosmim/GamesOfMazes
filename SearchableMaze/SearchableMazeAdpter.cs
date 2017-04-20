@@ -99,6 +99,7 @@ namespace SearchableMaze
         {
             Position start = maze.InitialPos;
             Position end = maze.GoalPos;
+            Console.ForegroundColor = ConsoleColor.White;
             for (int i = -2; i < maze.Cols; i++)
                 Console.Write('-');
             Console.WriteLine();
