@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUIClient"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="600">
+             d:DesignHeight="500" d:DesignWidth="600"
+             x:Name ="simpleController">
     <Grid x:Name="main_grid" Background="WhiteSmoke" MinWidth="600" MinHeight="500">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="bar" Height="25" />
@@ -34,9 +35,9 @@
         </Grid>
 
         <Border BorderBrush="Black" BorderThickness="3" Grid.Row="1">
-        <Canvas x:Name="space" Grid.Row="1">
+            <Canvas x:Name="space" Grid.Row="1" Width="600" Height="450" TextBlock.Foreground="Black" TextBlock.FontSize="15" DataContext="simpleController">
 
-        </Canvas>
+            </Canvas>
         </Border>
 
 

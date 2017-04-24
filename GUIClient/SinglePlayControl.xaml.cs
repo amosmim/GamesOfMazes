@@ -33,9 +33,13 @@ namespace GUIClient
         public SinglePlayControl()
         {
             GetNewMaze();
+            
+
+            InitializeComponent();
             drawer = new MazeGuiDrawer(space);
             drawer.Draw(maze, maze.InitialPos);
-            InitializeComponent();
+            
+            //drawer.Draw(null, new Position(0, 0));
 
         }
 
@@ -52,10 +56,12 @@ namespace GUIClient
             {
                 recv = server.Receive(data); 
                 string json = System.Text.Encoding.ASCII.GetString(data);
-                json = '[' + json.Substring(0, recv) + ']';
+                json =  json.Substring(0, recv) ;
 
                 // set the new maze that the server give
-                this.maze = JsonConvert.DeserializeObject<Maze>(json);
+                //this.maze = JsonConvert.DeserializeObject<Maze>(json);
+                this.maze = Maze.FromJSON(json);
+                return;
             }
             catch (SocketException se)
             {

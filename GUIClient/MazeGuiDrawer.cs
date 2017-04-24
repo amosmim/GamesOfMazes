@@ -34,29 +34,48 @@ namespace GUIClient
 
         public void Draw( Maze maze, Position playerStart)
         {
+            //Maze maze = new Maze(10, 10);
             int size = maze.Rows * maze.Cols;
             this.list = new Label[size];
             int rowDel = (int)canvas.Height /  maze.Rows;
             int colDel = (int)canvas.Width / maze.Cols;
 
             string toDrow = maze.ToString();
+            toDrow= toDrow.Replace("\r\n", string.Empty);
 
-            for (int row = 0; row < size; row += maze.Cols)
+            for (int row = 0; row < maze.Rows; row ++)
             {
-                for (int col = 0; col < size; col++)
+                for (int col = 0; col < maze.Cols; col++)
                 {
-                    int i = row + col;
-                    list[i] = new Label();
-                    list[i].Width = rowDel;
-                    list[i].Height = colDel;
+                    int i = (row * maze.Rows) + col;
+                    list[i] = new Label()
+                    {
+                        Width = rowDel,
+                        Height = colDel
+                        
+                    };
+                    
+                    canvas.Children.Add(list[i]);
+                    //list[i].SetValue(Canvas.LeftProperty, col * colDel);
+                    //list[i].SetValue(Canvas.LeftProperty, col * colDel);
                     Canvas.SetLeft(list[i], col*colDel);
+                    Canvas.SetTop(list[i], row*rowDel);
                     if (toDrow[i] == '0')
                     {
                         list[i].Content = "f";
+                       
+                    }
+                    else if (toDrow[i] == '1')
+                    {
+                        list[i].Content = "w";
+                    }
+                    else if (toDrow[i] == '#')
+                    {
+                        list[i].Content = "s";
                     }
                     else
                     {
-                        list[i].Content = "w";
+                        list[i].Content = "e";
                     }
 
                 }

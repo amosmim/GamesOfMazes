@@ -32,7 +32,7 @@ namespace GUIClient
 
         private void SinglePlayControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cont = new SinglePlayControl();
+            //cont = new SinglePlayControl();
         }
         
     }
