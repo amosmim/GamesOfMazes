@@ -24,7 +24,7 @@ public class client
 	{
 		// take port from app.config
 		int port = int.Parse(ConfigurationManager.AppSettings["port"]);
-		IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 55555);
+		IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
 		Socket server = null;
 		//List<string> multiplayerCommands = new List<String>(new string[] { "start", "play", "join" });
 		string temp = "";

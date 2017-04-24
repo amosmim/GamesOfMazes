@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="GUIClient.SinglePlayControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUIClient"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="600">
+    <Grid x:Name="main_grid" Background="WhiteSmoke" MinWidth="600" MinHeight="500">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="bar" Height="25" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="bar_grid" Grid.Row="0" Background="#FF806642" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                
+            </Grid.RowDefinitions>
+            <Button Content="Restart Game"  x:Name="restart" Width="80" Background="#FF97C24E" FontFamily="Rockwell Condensed" FontSize="16" Click="restart_Click" Grid.ColumnSpan="4" Margin="175,0,45,-0.4"/>
+            <Button Content="Back To Menu"  x:Name="back_to_main" Grid.Column="3" Width="80"  Background="#FF97C24E" FontFamily="Rockwell Condensed" FontSize="16" Click="back_to_main_Click"/>
+            <Button Content="Solve Maze"  x:Name="solve" Grid.Column="5" Width="80"  Background="#FF97C24E" FontSize="16" FontFamily="Rockwell Condensed" Click="solve_Click"/>
+        </Grid>
+
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="1">
+        <Canvas x:Name="space" Grid.Row="1">
+
+        </Canvas>
+        </Border>
+
+
+
+
+    </Grid>
+</UserControl>

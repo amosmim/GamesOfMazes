@@ -44,10 +44,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="MazeLib">
-      <HintPath>..\ap2ex1_server\Core\MazeLib.dll</HintPath>
+      <HintPath>..\..\GameOfMazes\MazeLib.dll</HintPath>
     </Reference>
     <Reference Include="MazeGeneratorLib">
-      <HintPath>..\ap2ex1_server\Core\MazeGeneratorLib.dll</HintPath>
+      <HintPath>..\..\GameOfMazes\MazeGeneratorLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
