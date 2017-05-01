@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUIClient"
+             xmlns:Controls="clr-namespace:GUIClient"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600"
              x:Name ="simpleController">
@@ -35,13 +36,7 @@
         </Grid>
 
         <Border BorderBrush="Black" BorderThickness="3" Grid.Row="1">
-            <Canvas x:Name="space" Grid.Row="1" Width="600" Height="450" TextBlock.Foreground="Black" TextBlock.FontSize="15" DataContext="simpleController">
-
-            </Canvas>
+            <Controls:MazeControl Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" x:Name="mazeControl" Grid.Column="1" Grid.Row="0" />
         </Border>
-
-
-
-
     </Grid>
 </UserControl>

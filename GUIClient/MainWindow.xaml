@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="Games of Mazes" Height="400" Width="600" Background="DarkBlue">
     <Grid >
-        <Controls:SinglePlayControl Loaded="SinglePlayControl_Loaded" x:Name="cont"/>
+       
 
     </Grid>
 </Window>

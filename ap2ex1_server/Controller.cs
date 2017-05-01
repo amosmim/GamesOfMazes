@@ -4,13 +4,13 @@ using System.Text;
 using System.Collections.Generic;
 namespace ap2ex1_server
 {
-
     /// <summary>
     /// Controller in MVC 
     /// </summary>
     /// <seealso cref="ap2ex1_server.IController" />
     public class Controller : IController
     {
+
         private Dictionary<string, ICommandable> actions;
         private IModel model;
         /// <summary>

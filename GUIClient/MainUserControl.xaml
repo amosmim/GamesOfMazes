@@ -24,8 +24,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition  Width="*" />
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition  Width="90" />
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="singleButton" Content="Single Game" Click="singleButton_Click"  Grid.Row="0" Background='#FF6C790D' Grid.ColumnSpan="2" Margin="0,0,-0.2,0.2" FontWeight="Bold" FontFamily="Rockwell Extra Bold" ></Button>
                 <Button x:Name="MultiplayButton" Content="Multiplay Game" Click="MultiplayButton_Click" Background="Azure" Grid.ColumnSpan="2" Margin="0,51,-0.2,0.4" Grid.RowSpan="2"/>

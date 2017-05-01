@@ -1,0 +1,30 @@
+﻿<Window x:Class="GUIClient.SinglePlayer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUIClient"
+        xmlns:Controls="clr-namespace:GUIClient"
+        mc:Ignorable="d"
+        Title="SinglePlayer" x:Name="SinglePlayerWin" Height="500" Width="550">
+    <Grid x:Name="main_grid" Background="WhiteSmoke" MinWidth="500" MinHeight="500">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="bar" Height="25" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Viewbox Grid.Row="0"  Width="{Binding ElementName=SinglePlayerWin, Path=ActualWidth}" Height="{Binding ElementName=SinglePlayerWin, Path=ActualHeight}">
+            <Canvas  Background="Aquamarine"  Width="{Binding ElementName=SinglePlayerWin, Path=ActualWidth}" Height="{Binding ElementName=SinglePlayerWin, Path=ActualHeight}">
+                <Button Content="Restart Game"  x:Name="restart" Width="80" Background="#FF97C24E" FontFamily="Rockwell Condensed" FontSize="16" Click="restart_Click"  Margin="175,0,45,-0.4"/>
+                <Button Content="Back To Menu" x:Name="back_to_main" Width="80"  Background="#FF97C24E" FontFamily="Rockwell Condensed" FontSize="16" Click="back_to_main_Click" Canvas.Left="90"/>
+                <Button Content="Solve Maze"  x:Name="solve"  Width="80"  Background="#FF97C24E" FontSize="16" FontFamily="Rockwell Condensed" Click="solve_Click" Canvas.Left="260"/>
+            </Canvas>
+        </Viewbox>
+
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="1">
+            <Controls:MazeControl Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" x:Name="mazeControl" Grid.Column="1" Grid.Row="0" />
+        </Border>
+    </Grid>
+</Window>
