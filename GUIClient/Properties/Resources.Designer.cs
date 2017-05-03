@@ -59,5 +59,23 @@ namespace GUIClient.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to string.
+        /// </summary>
+        public static string ServerIP {
+            get {
+                return ResourceManager.GetString("ServerIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to int.
+        /// </summary>
+        public static string ServerPort {
+            get {
+                return ResourceManager.GetString("ServerPort", resourceCulture);
+            }
+        }
     }
 }

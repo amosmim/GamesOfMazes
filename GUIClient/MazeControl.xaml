@@ -6,12 +6,11 @@
              xmlns:local="clr-namespace:GUIClient"
              mc:Ignorable="d" 
              x:Name="MazeControlElement"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="300" d:DesignWidth="300" KeyDown="MazeControlElement_KeyDown"
+             >
+    <Grid KeyDown="Grid_KeyDown">
         <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-            <Canvas x:Name="Board" Height="{Binding ElementName=MazeControlElement, Path=ActualHeight}" Width="{Binding ElementName=MazeControlElement, Path=ActualWidth}">
-
-            </Canvas>
+            <Canvas x:Name="Board" Height="{Binding ElementName=MazeControlElement, Path=ActualHeight}" Width="{Binding ElementName=MazeControlElement, Path=ActualWidth}"/>
         </Viewbox>
     </Grid>
 </UserControl>

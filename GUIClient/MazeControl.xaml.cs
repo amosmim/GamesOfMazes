@@ -35,6 +35,8 @@ namespace GUIClient
         private ImageBrush playerBrush;
         private ImageBrush exitBrush;
 
+        // add player position property and solution property
+
         public int Rows
         {
             get { return this.rows; }
@@ -186,6 +188,30 @@ namespace GUIClient
         private void MovePlayer(string direction)
         {
 
+        }
+
+        private void MazeControlElement_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Down:
+                    MessageBox.Show("down");
+                    break;
+                case Key.Left:
+                    MessageBox.Show("dow1n");
+                    break;
+                case Key.Right:
+                    break;
+                case Key.Up:
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        private void Grid_KeyDown(object sender, KeyEventArgs e)
+        {
+            MessageBox.Show("down");
         }
     }
 }

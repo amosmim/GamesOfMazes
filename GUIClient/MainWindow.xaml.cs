@@ -22,11 +22,13 @@ namespace GUIClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-        
+
+        private SPModel spModel;
+        private SPViewModel spViewModel;
+
+
         public MainWindow()
         {
-           
             InitializeComponent();
         }
 
@@ -34,6 +36,25 @@ namespace GUIClient
         {
             //cont = new SinglePlayControl();
         }
-        
+
+        private void singleButton_Click(object sender, RoutedEventArgs e)
+        {
+            SinglePlayer sp = new SinglePlayer();
+
+            sp.Show();
+        }
+
+        private void MultiplayButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            Settings settings = new Settings();
+            settings.Show();
+        }
     }
 }

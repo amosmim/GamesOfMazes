@@ -32,6 +32,8 @@ namespace GUIClient
             (this.DataContext as SPViewModel).VMSerializedGame = "0001101010010101";
             (this.DataContext as SPViewModel).VMInitialPos = "0,1";
             (this.DataContext as SPViewModel).VMGoalPos = "3,2";
+
+            mazeControl.Focus();
         }
 
         private void back_to_main_Click(object sender, RoutedEventArgs e)
@@ -42,6 +44,11 @@ namespace GUIClient
         private void solve_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void SinglePlayerWin_KeyDown(object sender, KeyEventArgs e)
+        {
+           
         }
     }
 }

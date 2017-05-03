@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GUIClient"
         xmlns:Controls="clr-namespace:GUIClient"
         mc:Ignorable="d"
-        Title="SinglePlayer" x:Name="SinglePlayerWin" Height="500" Width="550">
+        Title="SinglePlayer" x:Name="SinglePlayerWin" Height="500" Width="550" KeyDown="SinglePlayerWin_KeyDown">
     <Grid x:Name="main_grid" Background="WhiteSmoke" MinWidth="500" MinHeight="500">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="bar" Height="25" />
@@ -24,7 +24,7 @@
         </Viewbox>
 
         <Border BorderBrush="Black" BorderThickness="3" Grid.Row="1">
-            <Controls:MazeControl Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" x:Name="mazeControl" Grid.Column="1" Grid.Row="0" />
+            <Controls:MazeControl  Width="{Binding ElementName=SinglePlayerWin, Path=ActualWidth}" Height="{Binding ElementName=SinglePlayerWin, Path=ActualHeight}" Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" x:Name="mazeControl" Grid.Column="1" Grid.Row="0" />
         </Border>
     </Grid>
 </Window>

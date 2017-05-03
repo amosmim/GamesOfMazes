@@ -70,25 +70,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MainUserControl.xaml.cs">
-      <DependentUpon>MainUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MazeControl.xaml.cs">
       <DependentUpon>MazeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MazeGuiDrawer.cs" />
-    <Compile Include="SinglePlayControl.xaml.cs">
-      <DependentUpon>SinglePlayControl.xaml</DependentUpon>
+    <Compile Include="Models\SetModel.cs" />
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsData.cs" />
+    <Compile Include="ViewModels\SetViewModel.cs" />
     <Compile Include="SinglePlayer.xaml.cs">
       <DependentUpon>SinglePlayer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SPModel.cs" />
-    <Compile Include="SPViewModel.cs" />
-    <Page Include="MainUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Models\SPModel.cs" />
+    <Compile Include="ViewModels\SPViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -105,7 +100,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SinglePlayControl.xaml">
+    <Page Include="Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
