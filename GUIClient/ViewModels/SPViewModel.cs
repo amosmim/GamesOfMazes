@@ -15,7 +15,18 @@ namespace GUIClient
         private string vmGoalPos;
         private int vmRows;
         private int vmCols;
+        private string playerPos;
+        private SPModel model;
 
+        public SPViewModel(SPModel model)
+        {
+            this.model = model;
+            this.model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
+            {
+                OnPropertyChanged("VM" + e.PropertyName);
+            };
+        }
+       
         public string VMSerializedGame {
             get { return this.vmSerializedGame; }
             set {
@@ -54,6 +65,19 @@ namespace GUIClient
                 this.vmCols = value;
                 this.OnPropertyChanged("VMCols");
             }
+        }
+
+        public string VMPlayerPosition { get { return this.playerPos; }
+            set {
+                this.playerPos = value;
+                this.OnPropertyChanged("VMPlayerPositon");
+            }
+        }
+
+        public bool CheckMove(string direction)
+        {
+            return true;
+           //return this.model.CheckMove(direction);
         }
 
         protected virtual void OnPropertyChanged(string propertyName = null)

@@ -19,10 +19,16 @@ namespace GUIClient
     /// </summary>
     public partial class SinglePlayer : Window
     {
+        private SPViewModel viewModel;
         public SinglePlayer()
         {
-            this.DataContext = new SPViewModel();
+            this.viewModel = new SPViewModel(new SPModel());
+            this.DataContext = this.viewModel;
             InitializeComponent();
+
+            mazeControl.Focus();
+
+            mazeControl.DoNotifyMove += this.viewModel.CheckMove;
         }
 
         private void restart_Click(object sender, RoutedEventArgs e)
@@ -33,8 +39,11 @@ namespace GUIClient
             (this.DataContext as SPViewModel).VMInitialPos = "0,1";
             (this.DataContext as SPViewModel).VMGoalPos = "3,2";
 
-            mazeControl.Focus();
+            this.AddBoardKeyDownEvent();
         }
+
+
+
 
         private void back_to_main_Click(object sender, RoutedEventArgs e)
         {
@@ -46,9 +55,24 @@ namespace GUIClient
 
         }
 
-        private void SinglePlayerWin_KeyDown(object sender, KeyEventArgs e)
+        private void AddBoardKeyDownEvent()
         {
-           
+            this.KeyDown += mazeControl_KeyDown;
+        }
+
+        private void RemoveBoardKeyDownEvent()
+        {
+            this.KeyDown -= mazeControl_KeyDown;
+        }
+
+        private void mazeControl_LostFocus(object sender, RoutedEventArgs e)
+        {
+           mazeControl.Focus();
+        }
+
+        private void mazeControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            mazeControl.BoardKeyDown(sender, e);
         }
     }
 }

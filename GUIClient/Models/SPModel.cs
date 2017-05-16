@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using System.ComponentModel;
 
 namespace GUIClient
 {
-    class SPModel
+    class SPModel : INotifyPropertyChanged
     {
         private Socket server;
 
@@ -15,5 +16,7 @@ namespace GUIClient
         {
 
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

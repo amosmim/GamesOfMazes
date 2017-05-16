@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUIClient"
              mc:Ignorable="d" 
+             FocusManager.IsFocusScope="True"
+             FocusManager.FocusedElement="{Binding ElementName=Board}"
              x:Name="MazeControlElement"
-             d:DesignHeight="300" d:DesignWidth="300" KeyDown="MazeControlElement_KeyDown"
+             d:DesignHeight="300" d:DesignWidth="300" LostKeyboardFocus="MazeControlElement_LostKeyboardFocus"
              >
-    <Grid KeyDown="Grid_KeyDown">
-        <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+    <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             <Canvas x:Name="Board" Height="{Binding ElementName=MazeControlElement, Path=ActualHeight}" Width="{Binding ElementName=MazeControlElement, Path=ActualWidth}"/>
         </Viewbox>
-    </Grid>
 </UserControl>

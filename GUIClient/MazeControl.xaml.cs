@@ -37,6 +37,9 @@ namespace GUIClient
 
         // add player position property and solution property
 
+        public delegate bool NotifyMove(string direction);
+        public event NotifyMove DoNotifyMove;
+
         public int Rows
         {
             get { return this.rows; }
@@ -83,11 +86,31 @@ namespace GUIClient
             }
         }
 
+        public string PlayerPosition
+        {
+            get { return this.playerPos; }
+            set {
+                string oldPos = this.playerPos;
+                this.playerPos = value;
+
+                this.MovePlayer(oldPos);
+                }
+        }
+
+        // Using a DependencyProperty as the backing store for PlayPosition.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty posD = DependencyProperty.Register("PlayerPosition", typeof(string), typeof(MazeControl), new PropertyMetadata(PlayerPositionChanges));
         public static readonly DependencyProperty rowsD = DependencyProperty.Register("Rows", typeof(int), typeof(MazeControl), new PropertyMetadata(RowsChanges));
         public static readonly DependencyProperty colsD = DependencyProperty.Register("Cols", typeof(int), typeof(MazeControl), new PropertyMetadata(ColsChanges));
         public static readonly DependencyProperty gameD = DependencyProperty.Register("SerializedGame", typeof(string), typeof(MazeControl), new PropertyMetadata(SerializedGameChanges));
         public static readonly DependencyProperty initD = DependencyProperty.Register("InitialPos", typeof(string), typeof(MazeControl), new PropertyMetadata(InitialPosChanges));
         public static readonly DependencyProperty goalD = DependencyProperty.Register("GoalPos", typeof(string), typeof(MazeControl), new PropertyMetadata(GoalPosChanges));
+
+        public static void PlayerPositionChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MazeControl mC = (MazeControl)d;
+
+            mC.PlayPosition = (string)e.NewValue;
+        }
 
         public static void RowsChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -136,6 +159,9 @@ namespace GUIClient
         
             this.blockBrush = new SolidColorBrush(Colors.Black);
             this.freeBrush = new SolidColorBrush(Colors.White);
+
+            FocusManager.SetFocusedElement(this, Board);
+            Keyboard.Focus(Board);
         }
 
         private void Draw()
@@ -185,33 +211,41 @@ namespace GUIClient
             gameBoard[x][y].Fill = exitBrush;
         }
 
-        private void MovePlayer(string direction)
+        private void MovePlayer(string oldPos)
         {
 
         }
 
-        private void MazeControlElement_KeyDown(object sender, KeyEventArgs e)
+   
+        private void Board_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void MazeControlElement_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            Focus();
+        }
+
+        public void BoardKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
-                case Key.Down:
-                    MessageBox.Show("down");
+                case Key.S:
+                    this.DoNotifyMove?.Invoke("down");
                     break;
-                case Key.Left:
-                    MessageBox.Show("dow1n");
+                case Key.A:
+                    this.DoNotifyMove?.Invoke("left");
                     break;
-                case Key.Right:
+                case Key.D:
+                    this.DoNotifyMove?.Invoke("right");
                     break;
-                case Key.Up:
+                case Key.W:
+                    this.DoNotifyMove?.Invoke("up");
                     break;
                 default:
                     return;
             }
-        }
-
-        private void Grid_KeyDown(object sender, KeyEventArgs e)
-        {
-            MessageBox.Show("down");
         }
     }
 }
