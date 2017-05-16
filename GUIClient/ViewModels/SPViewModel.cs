@@ -10,12 +10,7 @@ namespace GUIClient
     class SPViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private string vmSerializedGame;
-        private string vmInitialPos;
-        private string vmGoalPos;
-        private int vmRows;
-        private int vmCols;
-        private string playerPos;
+
         private SPModel model;
 
         public SPViewModel(SPModel model)
@@ -23,55 +18,31 @@ namespace GUIClient
             this.model = model;
             this.model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
-                OnPropertyChanged("VM" + e.PropertyName);
+                this.OnPropertyChanged("VM" + e.PropertyName);
             };
         }
        
         public string VMSerializedGame {
-            get { return this.vmSerializedGame; }
-            set {
-                this.vmSerializedGame = value;
-                this.OnPropertyChanged("VMSerializedGame");
-                }
-        }
-        public string VMInitialPos {
-            get { return this.vmInitialPos; }
-            set
-            {
-                this.vmInitialPos = value;
-                this.OnPropertyChanged("VMInitialPos");
-            }
-        }
-        public string VMGoalPos {
-            get { return this.vmGoalPos; }
-            set
-            {
-                this.vmGoalPos = value;
-                this.OnPropertyChanged("VMGoalPos");
-            }
-        }
-        public int VMRows {
-            get { return this.vmRows; }
-            set
-            {
-                this.vmRows = value;
-                this.OnPropertyChanged("VMRows");
-            }
-        }
-        public int VMCols{
-            get { return this.vmCols; }
-            set
-            {
-                this.vmCols = value;
-                this.OnPropertyChanged("VMCols");
-            }
+            get { return this.model.SerializedGame; }
         }
 
-        public string VMPlayerPosition { get { return this.playerPos; }
-            set {
-                this.playerPos = value;
-                this.OnPropertyChanged("VMPlayerPositon");
-            }
+        public string VMInitialPos {
+            get { return this.model.InitialPos; }
+        }
+
+        public string VMGoalPos {
+            get { return this.model.GoalPos; }
+        }
+        public int VMRows {
+            get { return this.model.Rows; }
+        }
+
+        public int VMCols{
+            get { return this.model.Cols; }
+        }
+
+        public string VMPlayerPosition {
+            get { return this.model.PlayerPosition; }
         }
 
         public bool CheckMove(string direction)

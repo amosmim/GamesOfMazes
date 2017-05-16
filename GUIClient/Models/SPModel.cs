@@ -150,11 +150,14 @@ namespace GUIClient
                     this.maze = JObject.Parse(strData);
 
                     // assign correct values
-                    this.Rows = Convert.ToInt32(maze["Rows"]);
-                    this.Cols = Convert.ToInt32(maze["Cols"]);
-                    this.initialPos = maze.;
+                    this.Rows = Convert.ToInt32((string)maze["Rows"]);
+                    this.Cols = Convert.ToInt32((string)maze["Cols"]);
+                    this.SerializedGame = (string)maze["Maze"];
+                    string temp = (string)maze["Start"];
+                    this.InitialPos = (string)JObject.Parse(temp)["Row"] + "," + (string)JObject.Parse(temp)["Col"];
 
-
+                    temp = (string)maze["End"];
+                    this.GoalPos = (string)JObject.Parse(temp)["Row"] + "," + (string)JObject.Parse(temp)["Col"];
 
                 }).Start();
             } else
