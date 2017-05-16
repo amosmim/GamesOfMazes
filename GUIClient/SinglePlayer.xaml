@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GUIClient"
         xmlns:Controls="clr-namespace:GUIClient"
         mc:Ignorable="d"
-        Title="SinglePlayer" x:Name="SinglePlayerWin" Height="554" Width="572.5">
+        Title="SinglePlayer" x:Name="SinglePlayerWin" Height="554" Width="572.5" Loaded="SinglePlayerWin_Loaded">
     <Grid x:Name="main_grid" Background="WhiteSmoke" MinWidth="500" MinHeight="500">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="bar" Height="25" />

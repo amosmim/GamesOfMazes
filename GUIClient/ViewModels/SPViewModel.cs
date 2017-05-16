@@ -80,6 +80,12 @@ namespace GUIClient
            //return this.model.CheckMove(direction);
         }
 
+        public void StartGame(string name, int rows, int cols)
+        {
+            string command = "start " + name + " " + rows + " " + cols;
+            this.model.StartGame(command);
+        }
+
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

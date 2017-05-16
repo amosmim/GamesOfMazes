@@ -88,5 +88,10 @@ namespace GUIClient
             this.rows = rows;
             this.cols = cols;
         }
+
+        private void SinglePlayerWin_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.viewModel.StartGame(this.name, this.rows, this.cols);
+        }
     }
 }
