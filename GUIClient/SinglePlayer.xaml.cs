@@ -20,6 +20,10 @@ namespace GUIClient
     public partial class SinglePlayer : Window
     {
         private SPViewModel viewModel;
+        private string name;
+        private int rows;
+        private int cols;
+
         public SinglePlayer()
         {
             this.viewModel = new SPViewModel(new SPModel());
@@ -28,17 +32,20 @@ namespace GUIClient
 
             mazeControl.Focus();
 
+            // to check if move is possible
             mazeControl.DoNotifyMove += this.viewModel.CheckMove;
         }
 
         private void restart_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(this.name + this.rows.ToString() + this.cols.ToString());
             (this.DataContext as SPViewModel).VMCols = 4;
             (this.DataContext as SPViewModel).VMRows = 4;
             (this.DataContext as SPViewModel).VMSerializedGame = "0001101010010101";
             (this.DataContext as SPViewModel).VMInitialPos = "0,1";
             (this.DataContext as SPViewModel).VMGoalPos = "3,2";
 
+            // add event handler for user control key down
             this.AddBoardKeyDownEvent();
         }
 
@@ -73,6 +80,13 @@ namespace GUIClient
         private void mazeControl_KeyDown(object sender, KeyEventArgs e)
         {
             mazeControl.BoardKeyDown(sender, e);
+        }
+
+        public void SetDetails(string name, int rows, int cols)
+        {
+            this.name = name;
+            this.rows = rows;
+            this.cols = cols;
         }
     }
 }

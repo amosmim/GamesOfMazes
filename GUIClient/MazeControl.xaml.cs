@@ -109,7 +109,7 @@ namespace GUIClient
         {
             MazeControl mC = (MazeControl)d;
 
-            mC.PlayPosition = (string)e.NewValue;
+            mC.PlayerPosition = (string)e.NewValue;
         }
 
         public static void RowsChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -213,13 +213,19 @@ namespace GUIClient
 
         private void MovePlayer(string oldPos)
         {
+            string[] oldPosArr = oldPos.Split(',');
+            string[] newPosArr = this.playerPos.Split(',');
 
-        }
+            int oldX = Convert.ToInt32(oldPosArr[0]);
+            int oldY = Convert.ToInt32(oldPosArr[1]);
+            int newX = Convert.ToInt32(newPosArr[0]);
+            int newY = Convert.ToInt32(newPosArr[1]);
 
-   
-        private void Board_KeyDown(object sender, KeyEventArgs e)
-        {
+            // change old position to free space
+            gameBoard[oldX][oldY].Fill = this.freeBrush;
 
+            // new position to player brush
+            gameBoard[newX][newY].Fill = this.playerBrush;
         }
 
         private void MazeControlElement_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

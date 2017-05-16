@@ -73,11 +73,17 @@
     <Compile Include="MazeControl.xaml.cs">
       <DependentUpon>MazeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MazeDetails.xaml.cs">
+      <DependentUpon>MazeDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\SetModel.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsData.cs" />
+    <Compile Include="SPDialog.xaml.cs">
+      <DependentUpon>SPDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\SetViewModel.cs" />
     <Compile Include="SinglePlayer.xaml.cs">
       <DependentUpon>SinglePlayer.xaml</DependentUpon>
@@ -100,11 +106,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MazeDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SinglePlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SPDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

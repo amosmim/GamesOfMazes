@@ -22,11 +22,6 @@ namespace GUIClient
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        private SPModel spModel;
-        private SPViewModel spViewModel;
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -39,9 +34,9 @@ namespace GUIClient
 
         private void singleButton_Click(object sender, RoutedEventArgs e)
         {
-            SinglePlayer sp = new SinglePlayer();
+            SPDialog spDialog = new SPDialog();
 
-            sp.Show();
+            spDialog.ShowDialog();
         }
 
         private void MultiplayButton_Click(object sender, RoutedEventArgs e)
