@@ -11,6 +11,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using System.Threading;
+using System.Windows;
+
+using MazeGeneratorLib;
+using MazeLib;
 
 namespace GUIClient
 {
@@ -29,7 +33,7 @@ namespace GUIClient
         private int rows;
         private int cols;
 
-        private JObject maze;
+        private Maze maze;
 
         public string SerializedGame
         {
@@ -84,7 +88,7 @@ namespace GUIClient
             set
             {
                 this.playerPos = value;
-                this.OnPropertyChanged("PlayerPositon");
+                this.OnPropertyChanged("PlayerPosition");
             }
         }
 
@@ -119,10 +123,43 @@ namespace GUIClient
             server.Dispose();
         }
 
+        private string GetCorrectJSON(string data)
+        {
+            // single player command or end of communication
+            if (data.EndsWith("-1"))
+            {
+                return data.Substring(0, data.Length - 2);
+            }
+
+            // multi player command
+            if (data.EndsWith("1") && !data.EndsWith("-1"))
+            {
+                return data.Substring(0, data.Length - 1);
+            }
+
+            return data;
+        }
+
+        public int CheckMove(string direction)
+        {
+            string maze = this.maze.ToString();
+            string[] temp = this.playerPos.Split(',');
+
+            int x = Int32.Parse(temp[0]);
+            int y = Int32.Parse(temp[1]);
+
+            switch(direction)
+            {
+                case "up": int nX = x - 1;
+                           int newPlayerPos = (nX * this.rows) + y;
+                           if (this.serializedGame[newPlayerPos] == '0')
+            }
+        }
+
         public bool StartGame(string commandString)
         {
             // async job
-            if (!this.Connect())
+            if (this.Connect())
             {
                 new Thread(() =>
                 {
@@ -134,6 +171,7 @@ namespace GUIClient
                     } catch (SocketException se)
                     {
                         Console.WriteLine("error sending");
+                        return;
                     }
 
                     try
@@ -143,22 +181,22 @@ namespace GUIClient
                     catch (SocketException se)
                     {
                         Console.WriteLine("error reveining");
+                        return;
                     }
 
                     // get data and parse it to json
                     string strData = Encoding.ASCII.GetString(data, 0, recv);
-                    this.maze = JObject.Parse(strData);
+                    JObject tempJson = JObject.Parse(GetCorrectJSON(strData));
+                    
+                    this.maze = Maze.FromJSON(GetCorrectJSON(strData));
 
-                    // assign correct values
-                    this.Rows = Convert.ToInt32((string)maze["Rows"]);
-                    this.Cols = Convert.ToInt32((string)maze["Cols"]);
-                    this.SerializedGame = (string)maze["Maze"];
-                    string temp = (string)maze["Start"];
-                    this.InitialPos = (string)JObject.Parse(temp)["Row"] + "," + (string)JObject.Parse(temp)["Col"];
+                    this.SerializedGame = (string)tempJson["Maze"];
 
-                    temp = (string)maze["End"];
-                    this.GoalPos = (string)JObject.Parse(temp)["Row"] + "," + (string)JObject.Parse(temp)["Col"];
-
+                    this.Rows = this.maze.Rows;
+                    this.Cols = this.maze.Cols;
+                    this.InitialPos = this.maze.InitialPos.Row + "," + this.maze.InitialPos.Col;
+                    this.GoalPos = this.maze.GoalPos.Row + "," + this.maze.GoalPos.Col;
+                    this.PlayerPosition = this.InitialPos;
                 }).Start();
             } else
             {

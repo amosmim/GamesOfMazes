@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows;
 
 namespace GUIClient
 {
@@ -53,7 +54,7 @@ namespace GUIClient
 
         public void StartGame(string name, int rows, int cols)
         {
-            string command = "start " + name + " " + rows + " " + cols;
+            string command = "generate " + name + " " + rows + " " + cols;
             this.model.StartGame(command);
         }
 

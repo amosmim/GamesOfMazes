@@ -38,15 +38,9 @@ namespace GUIClient
 
         private void restart_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(this.name + this.rows.ToString() + this.cols.ToString());
-            (this.DataContext as SPViewModel).VMCols = 4;
-            (this.DataContext as SPViewModel).VMRows = 4;
-            (this.DataContext as SPViewModel).VMSerializedGame = "0001101010010101";
-            (this.DataContext as SPViewModel).VMInitialPos = "0,1";
-            (this.DataContext as SPViewModel).VMGoalPos = "3,2";
+           
 
-            // add event handler for user control key down
-            this.AddBoardKeyDownEvent();
+        
         }
 
 
@@ -91,6 +85,9 @@ namespace GUIClient
 
         private void SinglePlayerWin_Loaded(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(this.name + this.rows.ToString() + this.cols.ToString());
+            // add event handler for user control key down
+            this.AddBoardKeyDownEvent();
             this.viewModel.StartGame(this.name, this.rows, this.cols);
         }
     }

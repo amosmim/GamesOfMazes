@@ -64,6 +64,8 @@ namespace GUIClient
             set
             {
                 this.initialPos = value;
+                // for setting correct player starting position
+                this.playerPos = this.initialPos;
             }
         }
 
@@ -194,17 +196,10 @@ namespace GUIClient
                 }
             }
 
-            // setting player on board
-            string[] temp = this.initialPos.Split(',');
-            this.playerPos = this.initialPos;
             int x, y;
 
-            x = Int32.Parse(temp[0]);
-            y = Int32.Parse(temp[1]);
-            gameBoard[x][y].Fill = playerBrush;
-
             // setting exit icon on board
-            temp = this.goalPos.Split(',');
+            string[] temp = this.goalPos.Split(',');
 
             x = Int32.Parse(temp[0]);
             y = Int32.Parse(temp[1]);
