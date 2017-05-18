@@ -46,16 +46,21 @@ namespace GUIClient
             get { return this.model.PlayerPosition; }
         }
 
-        public bool CheckMove(string direction)
-        {
-            return true;
-           //return this.model.CheckMove(direction);
+        public int CheckMove(string direction)
+        { 
+            return this.model.CheckMove(direction); 
         }
 
-        public void StartGame(string name, int rows, int cols)
+        public bool InitiateSolution(string name, int algo)
+        {
+            string command = "solve " + name + " " + algo;
+            return this.model.InitiateSolution(command);
+        }
+
+        public bool StartGame(string name, int rows, int cols)
         {
             string command = "generate " + name + " " + rows + " " + cols;
-            this.model.StartGame(command);
+            return this.model.StartGame(command);
         }
 
         protected virtual void OnPropertyChanged(string propertyName = null)

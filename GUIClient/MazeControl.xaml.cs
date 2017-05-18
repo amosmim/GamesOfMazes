@@ -37,7 +37,7 @@ namespace GUIClient
 
         // add player position property and solution property
 
-        public delegate bool NotifyMove(string direction);
+        public delegate int NotifyMove(string direction);
         public event NotifyMove DoNotifyMove;
 
         public int Rows

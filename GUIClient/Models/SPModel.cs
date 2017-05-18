@@ -27,6 +27,7 @@ namespace GUIClient
 
         private string playerPos;
         private string serializedGame;
+        private string mazeToString;
         private string initialPos;
         private string goalPos;
         private string solution;
@@ -144,16 +145,77 @@ namespace GUIClient
         {
             string maze = this.maze.ToString();
             string[] temp = this.playerPos.Split(',');
+            int nX = 0;
+            int nY = 0;
+            int newPlayerPos;
+            int returnVal = 0;
 
             int x = Int32.Parse(temp[0]);
             int y = Int32.Parse(temp[1]);
 
             switch(direction)
             {
-                case "up": int nX = x - 1;
-                           int newPlayerPos = (nX * this.rows) + y;
-                           if (this.serializedGame[newPlayerPos] == '0')
+                case "up":
+                    nX = x - 1;
+                    newPlayerPos = (nX * this.rows) + y;
+                    if ((returnVal = Move(newPlayerPos)) != 0)
+                    {
+                        this.PlayerPosition = nX + "," + y;
+                    }
+                    break;
+                case "right":
+                    nY = y + 1;
+                    newPlayerPos = (x * this.rows) + nY;
+                    if ((returnVal = Move(newPlayerPos)) != 0)
+                    {
+                        this.PlayerPosition = x + "," + nY;
+                    }
+                    break;
+                case "down":
+                    nX = x + 1;
+                    newPlayerPos = (nX * this.rows) + y;
+                    if ((returnVal = Move(newPlayerPos)) != 0)
+                    {
+                        this.PlayerPosition = nX + "," + y;
+                    }
+                    break;
+                case "left":
+                    nY = y - 1;
+                    newPlayerPos = (x * this.rows) + nY;
+                    if ((returnVal = Move(newPlayerPos)) != 0)
+                    {
+                        this.PlayerPosition = x + "," + nY;
+                    }
+                    break;
+                default:break;
             }
+
+            return returnVal;
+        }
+
+        private int Move(int newPlayerPos)
+        {
+            if (newPlayerPos > this.mazeToString.Length || newPlayerPos < 0)
+            {
+                return 0;
+            }
+            
+            if (this.mazeToString[newPlayerPos] == '0' || this.mazeToString[newPlayerPos] == '*')
+            {
+                return 1;
+            }
+
+            if (this.mazeToString[newPlayerPos] == '#')
+            {
+                return 2;
+            }
+
+            if (this.mazeToString[newPlayerPos] == '1')
+            {
+                return 0;
+            }
+
+            return 0;
         }
 
         public bool StartGame(string commandString)
@@ -191,6 +253,7 @@ namespace GUIClient
                     this.maze = Maze.FromJSON(GetCorrectJSON(strData));
 
                     this.SerializedGame = (string)tempJson["Maze"];
+                    this.mazeToString =  maze.ToString().Replace("\r\n", string.Empty);
 
                     this.Rows = this.maze.Rows;
                     this.Cols = this.maze.Cols;
@@ -204,6 +267,87 @@ namespace GUIClient
             }
 
             return true;
+        }
+
+        public bool InitiateSolution(string commandString)
+        {
+            // async job
+            if (this.Connect())
+            {
+                new Thread(() =>
+                {
+                    byte[] data = new byte[8096];
+                    int recv = 0;
+                    try
+                    {
+                        server.Send(Encoding.ASCII.GetBytes(commandString));
+                    }
+                    catch (SocketException se)
+                    {
+                        Console.WriteLine("error sending");
+                        return;
+                    }
+
+                    try
+                    {
+                        recv = server.Receive(data);
+                    }
+                    catch (SocketException se)
+                    {
+                        Console.WriteLine("error reveining");
+                        return;
+                    }
+
+                    // get data and parse it to json
+                    string strData = Encoding.ASCII.GetString(data, 0, recv);
+                    JObject tempJson = JObject.Parse(GetCorrectJSON(strData));
+                    
+                    int k = 0;
+                    string solution = (string)tempJson["Solution"];
+
+                    Console.WriteLine(solution);
+
+                    // start animation of solution solving
+                    while(k < solution.Length)
+                    {
+                        char c = solution[k];
+                        this.CheckMove(this.IntToDirection(c));
+                        k++;
+                        Thread.Sleep(1000);
+                    }
+
+                }).Start();
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private string IntToDirection(int move)
+        {
+            string direction = null;
+
+            switch(move)
+            {
+                case '0':
+                    direction = "left";
+                    break;
+                case '1':
+                    direction = "right";
+                    break;
+                case '2':
+                    direction = "up";
+                    break;
+                case '3':
+                    direction = "down";
+                    break;
+
+            }
+
+            return direction;
         }
 
         protected virtual void OnPropertyChanged(string propertyName = null)

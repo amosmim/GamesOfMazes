@@ -23,6 +23,7 @@ namespace GUIClient
         private string name;
         private int rows;
         private int cols;
+        private int searcher;
 
         public SinglePlayer()
         {
@@ -33,7 +34,9 @@ namespace GUIClient
             mazeControl.Focus();
 
             // to check if move is possible
-            mazeControl.DoNotifyMove += this.viewModel.CheckMove;
+            mazeControl.DoNotifyMove += this.CheckMove;
+
+            this.searcher = Properties.Settings.Default.algo;
         }
 
         private void restart_Click(object sender, RoutedEventArgs e)
@@ -43,17 +46,34 @@ namespace GUIClient
         
         }
 
+        public int CheckMove(string direction)
+        {
+            int result = this.viewModel.CheckMove(direction);
 
+            if (result == 2)
+            {
+                MessageBox.Show("Great! You Win !");
+                this.RemoveBoardKeyDownEvent();
+            }
 
+            return result;
+        }
 
         private void back_to_main_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void solve_Click(object sender, RoutedEventArgs e)
         {
+            bool result;
+            this.RemoveBoardKeyDownEvent();
 
+            result = this.viewModel.InitiateSolution(this.name, this.searcher);
+            if (!result)
+            {
+                MessageBox.Show("Error solving.");
+            }
         }
 
         private void AddBoardKeyDownEvent()
@@ -85,10 +105,14 @@ namespace GUIClient
 
         private void SinglePlayerWin_Loaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(this.name + this.rows.ToString() + this.cols.ToString());
+            bool result;
             // add event handler for user control key down
             this.AddBoardKeyDownEvent();
-            this.viewModel.StartGame(this.name, this.rows, this.cols);
+            result = this.viewModel.StartGame(this.name, this.rows, this.cols);
+            if (!result)
+            {
+                MessageBox.Show("Error generating game.");
+            }
         }
     }
 }
