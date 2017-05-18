@@ -23,6 +23,9 @@ namespace GUIClient
         public delegate void PassInfo(string mazeName, int rows, int cols);
         public event PassInfo OnButtonClick;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MazeDetails()
         {
             InitializeComponent();
@@ -31,6 +34,11 @@ namespace GUIClient
             cols.Text = Properties.Settings.Default.cols.ToString();
         }
 
+        /// <summary>
+        /// Invoke related event for button clicking.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OnButtonClick?.Invoke(name.Text, Convert.ToInt32(rows.Text), Convert.ToInt32(cols.Text));

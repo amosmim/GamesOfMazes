@@ -28,7 +28,7 @@
         <TextBox x:Name="MazeCols" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,6,0,0" Grid.Row="3" TextWrapping="Wrap" Text="{Binding VMCols}" VerticalAlignment="Top" Width="193"/>
         <TextBlock HorizontalAlignment="Left" Margin="7,10,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Maze cols :" VerticalAlignment="Top" Height="16" Width="61"/>
         <TextBlock HorizontalAlignment="Left" Height="23" Margin="6,6,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Def Algo :" VerticalAlignment="Top" Width="67"/>
-        <ComboBox SelectedIndex="{Binding VMAlgo}" x:Name="AlgoChooser" Grid.Column="1" HorizontalAlignment="Left" Margin="10,8,0,0" Grid.Row="4" VerticalAlignment="Top" Width="193" SelectionChanged="AlgoChooser_SelectionChanged">
+        <ComboBox SelectedIndex="{Binding VMAlgo}" x:Name="AlgoChooser" Grid.Column="1" HorizontalAlignment="Left" Margin="10,8,0,0" Grid.Row="4" VerticalAlignment="Top" Width="193">
             <ComboBoxItem Content="BFS"/>
             <ComboBoxItem Content="DFS"/>
         </ComboBox>

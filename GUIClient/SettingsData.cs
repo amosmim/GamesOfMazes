@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GUIClient
 {
+    /// <summary>
+    /// Struct to union all settings data.
+    /// </summary>
     struct SettingsData
     {
         public string IP;

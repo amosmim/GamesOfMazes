@@ -23,6 +23,9 @@ namespace GUIClient
         private SetModel setModel;
         private SetViewModel setViewModel;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public Settings()
         {
             this.setModel = new SetModel();
@@ -34,6 +37,11 @@ namespace GUIClient
             this.setViewModel.GetData();
         }
 
+        /// <summary>
+        /// Save settings.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void Ok_Button_Click(object sender, RoutedEventArgs e)
         {
             SettingsData setData = new SettingsData();
@@ -45,12 +53,10 @@ namespace GUIClient
 
             if((AlgoChooser.SelectedItem as ComboBoxItem).Content.ToString() == "BFS")
             {
-                MessageBox.Show("0");
                 setData.algo = 0;
             }
             else
             {
-                MessageBox.Show("1");
                 setData.algo = 1;
             }
             
@@ -60,13 +66,14 @@ namespace GUIClient
             this.Close();
         }
 
+        /// <summary>
+        /// Cancel.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void AlgoChooser_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
         }
     }
 }

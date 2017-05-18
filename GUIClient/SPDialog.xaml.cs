@@ -19,6 +19,9 @@ namespace GUIClient
     /// </summary>
     public partial class SPDialog : Window
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public SPDialog()
         {
             InitializeComponent();
@@ -26,6 +29,12 @@ namespace GUIClient
             mazeDetails.OnButtonClick += LaunchGame;
         }
 
+        /// <summary>
+        /// Launch single play game.
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <param name="rows">rows</param>
+        /// <param name="cols">cols</param>
         private void LaunchGame(string name, int rows, int cols)
         {
             SinglePlayer sp = new SinglePlayer();

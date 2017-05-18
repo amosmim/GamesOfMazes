@@ -40,6 +40,9 @@ namespace GUIClient
         public delegate int NotifyMove(string direction);
         public event NotifyMove DoNotifyMove;
 
+        /// <summary>
+        /// Rows property.
+        /// </summary>
         public int Rows
         {
             get { return this.rows; }
@@ -49,6 +52,9 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// Cols property.
+        /// </summary>
         public int Cols
         {
             get { return this.cols; }
@@ -58,6 +64,9 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// InitialPos property.
+        /// </summary>
         public string InitialPos
         {
             get { return this.initialPos; }
@@ -69,6 +78,9 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// GoalPos property.
+        /// </summary>
         public string GoalPos
         {
             get { return this.goalPos; }
@@ -79,6 +91,9 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// SerializedGame property.
+        /// </summary>
         public string SerializedGame
         {
             get { return this.serializedGame; }
@@ -88,6 +103,9 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// PlayerPosition property.
+        /// </summary>
         public string PlayerPosition
         {
             get { return this.playerPos; }
@@ -107,6 +125,11 @@ namespace GUIClient
         public static readonly DependencyProperty initD = DependencyProperty.Register("InitialPos", typeof(string), typeof(MazeControl), new PropertyMetadata(InitialPosChanges));
         public static readonly DependencyProperty goalD = DependencyProperty.Register("GoalPos", typeof(string), typeof(MazeControl), new PropertyMetadata(GoalPosChanges));
 
+        /// <summary>
+        /// Handle when player position has changed.
+        /// </summary>
+        /// <param name="d">d</param>
+        /// <param name="e">e</param>
         public static void PlayerPositionChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MazeControl mC = (MazeControl)d;
@@ -114,6 +137,11 @@ namespace GUIClient
             mC.PlayerPosition = (string)e.NewValue;
         }
 
+        /// <summary>
+        /// Handle whenr rows has changed.
+        /// </summary>
+        /// <param name="d">d</param>
+        /// <param name="e">e</param>
         public static void RowsChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MazeControl mC = (MazeControl)d;
@@ -121,6 +149,11 @@ namespace GUIClient
             mC.Rows = (int) e.NewValue;
         }
 
+        /// <summary>
+        /// Handle when cols has changed.
+        /// </summary>
+        /// <param name="d">d</param>
+        /// <param name="e">e</param>
         public static void ColsChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MazeControl mC = (MazeControl)d;
@@ -128,6 +161,11 @@ namespace GUIClient
             mC.Cols = (int)e.NewValue;
         }
 
+        /// <summary>
+        /// Handle when serialized game has changed.
+        /// </summary>
+        /// <param name="d">d</param>
+        /// <param name="e">e</param>
         public static void SerializedGameChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MazeControl mC = (MazeControl)d;
@@ -135,6 +173,11 @@ namespace GUIClient
             mC.SerializedGame = (string)e.NewValue;
         }
 
+        /// <summary>
+        /// Handle when initial position has changed.
+        /// </summary>
+        /// <param name="d">d</param>
+        /// <param name="e">e</param>
         public static void InitialPosChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MazeControl mC = (MazeControl)d;
@@ -142,6 +185,11 @@ namespace GUIClient
             mC.InitialPos = (string)e.NewValue;
         }
 
+        /// <summary>
+        /// Handle when goal position has changed.
+        /// </summary>
+        /// <param name="d">d</param>
+        /// <param name="e">e</param>
         public static void GoalPosChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MazeControl mC = (MazeControl)d;
@@ -149,6 +197,9 @@ namespace GUIClient
             mC.GoalPos = (string)e.NewValue;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MazeControl()
         {
             InitializeComponent();
@@ -166,6 +217,9 @@ namespace GUIClient
             Keyboard.Focus(Board);
         }
 
+        /// <summary>
+        /// Draw the maze on the canvas.
+        /// </summary>
         private void Draw()
         {
             int rowDel = (int)Board.Height / this.rows;
@@ -206,6 +260,9 @@ namespace GUIClient
             gameBoard[x][y].Fill = exitBrush;
         }
 
+        /// <summary>
+        /// Restart the board by resetting the exit position.
+        /// </summary>
         public void Restart()
         {
             // setting exit icon on board
@@ -216,6 +273,10 @@ namespace GUIClient
             gameBoard[x][y].Fill = exitBrush;
         }
 
+        /// <summary>
+        /// Handle the player movement graphically.
+        /// </summary>
+        /// <param name="oldPos"></param>
         private void MovePlayer(string oldPos)
         {
             string[] oldPosArr = oldPos.Split(',');
@@ -233,11 +294,21 @@ namespace GUIClient
             gameBoard[newX][newY].Fill = this.playerBrush;
         }
 
+        /// <summary>
+        /// Set focus on the user control.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void MazeControlElement_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             Focus();
         }
 
+        /// <summary>
+        /// Helper function to determine key pressing.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         public void BoardKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
