@@ -39,6 +39,9 @@ namespace GUIClient
 
         private Maze maze;
 
+        /// <summary>
+        /// SerializedGame Property.
+        /// </summary>
         public string SerializedGame
         {
             get { return this.serializedGame; }
@@ -49,6 +52,9 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// Name Property.
+        /// </summary>
         public string Name
         {
             get { return this.name; }
@@ -59,6 +65,9 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// InitialPos Property.
+        /// </summary>
         public string InitialPos
         {
             get { return this.initialPos; }
@@ -69,6 +78,9 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// GoalPos Property.
+        /// </summary>
         public string GoalPos
         {
             get { return this.goalPos; }
@@ -78,6 +90,10 @@ namespace GUIClient
                 this.OnPropertyChanged("GoalPos");
             }
         }
+
+        /// <summary>
+        /// Rows Property.
+        /// </summary>
         public int Rows
         {
             get { return this.rows; }
@@ -87,6 +103,10 @@ namespace GUIClient
                 this.OnPropertyChanged("Rows");
             }
         }
+
+        /// <summary>
+        /// Cols Property.
+        /// </summary>
         public int Cols
         {
             get { return this.cols; }
@@ -97,6 +117,9 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// PlayerPosition Property.
+        /// </summary>
         public string PlayerPosition
         {
             get { return this.playerPos; }
@@ -109,6 +132,9 @@ namespace GUIClient
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public SPModel()
         {
             this.port = Properties.Settings.Default.ServerPort;
@@ -118,6 +144,10 @@ namespace GUIClient
             this.server = null;
         }
 
+        /// <summary>
+        /// Connect to the game server.
+        /// </summary>
+        /// <returns>true if success else false</returns>
         private bool Connect()
         {
             server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -132,12 +162,20 @@ namespace GUIClient
             return true;
         }
 
+        /// <summary>
+        /// Close Connection to the server.
+        /// </summary>
         private void CloseConnection()
         {
             server.Shutdown(SocketShutdown.Both);
             server.Dispose();
         }
 
+        /// <summary>
+        /// Fix json string and clean it.
+        /// </summary>
+        /// <param name="data">json string</param>
+        /// <returns>fixed json string</returns>
         private string GetCorrectJSON(string data)
         {
             // single player command or end of communication
@@ -155,6 +193,13 @@ namespace GUIClient
             return data;
         }
 
+        /// <summary>
+        /// Check if player move is valid.
+        /// </summary>
+        /// <param name="direction">direction</param>
+        /// <returns>0 - not valid
+        ///          1 - valid
+        ///          2 - win</returns>
         public int CheckMove(string direction)
         {
             string maze = this.maze.ToString();
@@ -207,6 +252,13 @@ namespace GUIClient
             return returnVal;
         }
 
+        /// <summary>
+        /// Helper function to check if player move is valid.
+        /// </summary>
+        /// <param name="newPlayerPos">the new position</param>
+        /// <returns>0 - not valid
+        ///          1 - valid
+        ///          2 - win</returns>
         private int Move(int newPlayerPos)
         {
             if (newPlayerPos > this.mazeToString.Length || newPlayerPos < 0)
@@ -232,6 +284,11 @@ namespace GUIClient
             return 0;
         }
 
+        /// <summary>
+        /// Start and asynchronous job for generating a new game.
+        /// </summary>
+        /// <param name="commandString">command</param>
+        /// <returns>true if success else false</returns>
         public bool StartGame(string commandString)
         {
             // async job
@@ -275,20 +332,31 @@ namespace GUIClient
                     this.InitialPos = this.maze.InitialPos.Row + "," + this.maze.InitialPos.Col;
                     this.GoalPos = this.maze.GoalPos.Row + "," + this.maze.GoalPos.Col;
                     this.PlayerPosition = this.InitialPos;
+
+                    this.CloseConnection();
                 }).Start();
             } else
             {
                 return false;
             }
 
+
             return true;
         }
 
+        /// <summary>
+        /// Restart game.
+        /// </summary>
         public void Restart()
         {
             this.PlayerPosition = this.maze.InitialPos.Row + "," + this.maze.InitialPos.Col;
         }
 
+        /// <summary>
+        /// Start and asynchronous job for getting solutin and animating it.
+        /// </summary>
+        /// <param name="commandString">command</param>
+        /// <returns>true if success else false</returns>
         public bool InitiateSolution(string commandString)
         {
             // async job
@@ -336,6 +404,8 @@ namespace GUIClient
                         Thread.Sleep(1000);
                     }
 
+                    this.CloseConnection();
+
                 }).Start();
             }
             else
@@ -346,6 +416,11 @@ namespace GUIClient
             return true;
         }
 
+        /// <summary>
+        /// Converting int that represnts direction to a string.
+        /// </summary>
+        /// <param name="move">int</param>
+        /// <returns>direction string</returns>
         private string IntToDirection(int move)
         {
             string direction = null;
@@ -370,6 +445,10 @@ namespace GUIClient
             return direction;
         }
 
+        /// <summary>
+        /// Notify on property changed.
+        /// </summary>
+        /// <param name="propertyName">property name</param>
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

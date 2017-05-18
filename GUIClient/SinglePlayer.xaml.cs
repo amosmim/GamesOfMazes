@@ -24,6 +24,7 @@ namespace GUIClient
         private int rows;
         private int cols;
         private int searcher;
+        private bool isEventHandled;
 
         /// <summary>
         /// Constructor.
@@ -39,6 +40,8 @@ namespace GUIClient
             // to check if move is possible
             mazeControl.DoNotifyMove += this.CheckMove;
 
+            this.isEventHandled = false;
+
             this.searcher = Properties.Settings.Default.algo;
         }
         
@@ -53,7 +56,10 @@ namespace GUIClient
 
             mazeControl.Restart();
 
-            this.AddBoardKeyDownEvent();
+            if (!this.isEventHandled)
+            {
+                this.AddBoardKeyDownEvent();
+            }
         }
 
         /// <summary>
@@ -109,6 +115,7 @@ namespace GUIClient
         private void AddBoardKeyDownEvent()
         {
             this.KeyDown += mazeControl_KeyDown;
+            this.isEventHandled = true;
         }
 
         /// <summary>
@@ -117,6 +124,7 @@ namespace GUIClient
         private void RemoveBoardKeyDownEvent()
         {
             this.KeyDown -= mazeControl_KeyDown;
+            this.isEventHandled = false;
         }
 
         /// <summary>
