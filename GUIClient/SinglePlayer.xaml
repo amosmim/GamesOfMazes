@@ -20,6 +20,7 @@
                 <Button Content="Restart Game"  x:Name="restart" Width="80" Background="#FF97C24E" FontFamily="Rockwell Condensed" FontSize="16" Click="restart_Click"  Margin="175,0,45,-0.4"/>
                 <Button Content="Back To Menu" x:Name="back_to_main" Width="80"  Background="#FF97C24E" FontFamily="Rockwell Condensed" FontSize="16" Click="back_to_main_Click" Canvas.Left="90"/>
                 <Button Content="Solve Maze"  x:Name="solve"  Width="80"  Background="#FF97C24E" FontSize="16" FontFamily="Rockwell Condensed" Click="solve_Click" Canvas.Left="260"/>
+                <TextBlock Canvas.Left="4" TextWrapping="Wrap" Text="{Binding VMName}" Canvas.Top="4"/>
             </Canvas>
         </Viewbox>
 

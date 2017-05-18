@@ -41,9 +41,11 @@ namespace GUIClient
 
         private void restart_Click(object sender, RoutedEventArgs e)
         {
-           
+            this.viewModel.Restart();
 
-        
+            mazeControl.Restart();
+
+            this.AddBoardKeyDownEvent();
         }
 
         public int CheckMove(string direction)

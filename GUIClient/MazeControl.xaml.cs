@@ -206,6 +206,16 @@ namespace GUIClient
             gameBoard[x][y].Fill = exitBrush;
         }
 
+        public void Restart()
+        {
+            // setting exit icon on board
+            string[] temp = this.goalPos.Split(',');
+
+            int x = Int32.Parse(temp[0]);
+            int y = Int32.Parse(temp[1]);
+            gameBoard[x][y].Fill = exitBrush;
+        }
+
         private void MovePlayer(string oldPos)
         {
             string[] oldPosArr = oldPos.Split(',');

@@ -27,6 +27,11 @@ namespace GUIClient
             get { return this.model.SerializedGame; }
         }
 
+        public string VMName
+        {
+            get { return this.model.Name; }
+        }
+
         public string VMInitialPos {
             get { return this.model.InitialPos; }
         }
@@ -61,6 +66,11 @@ namespace GUIClient
         {
             string command = "generate " + name + " " + rows + " " + cols;
             return this.model.StartGame(command);
+        }
+
+        public void Restart()
+        {
+            this.model.Restart();
         }
 
         protected virtual void OnPropertyChanged(string propertyName = null)

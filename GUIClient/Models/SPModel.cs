@@ -30,7 +30,7 @@ namespace GUIClient
         private string mazeToString;
         private string initialPos;
         private string goalPos;
-        private string solution;
+        private string name;
         private int rows;
         private int cols;
 
@@ -45,6 +45,17 @@ namespace GUIClient
                 this.OnPropertyChanged("SerializedGame");
             }
         }
+
+        public string Name
+        {
+            get { return this.name; }
+            set
+            {
+                this.name = value;
+                this.OnPropertyChanged("Name");
+            }
+        }
+
         public string InitialPos
         {
             get { return this.initialPos; }
@@ -253,6 +264,7 @@ namespace GUIClient
                     this.maze = Maze.FromJSON(GetCorrectJSON(strData));
 
                     this.SerializedGame = (string)tempJson["Maze"];
+                    this.Name = maze.Name;
                     this.mazeToString =  maze.ToString().Replace("\r\n", string.Empty);
 
                     this.Rows = this.maze.Rows;
@@ -267,6 +279,11 @@ namespace GUIClient
             }
 
             return true;
+        }
+
+        public void Restart()
+        {
+            this.PlayerPosition = this.maze.InitialPos.Row + "," + this.maze.InitialPos.Col;
         }
 
         public bool InitiateSolution(string commandString)
