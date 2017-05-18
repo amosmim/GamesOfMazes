@@ -7,6 +7,9 @@ using System.ComponentModel;
 
 namespace GUIClient
 {
+    /// <summary>
+    /// View model for settings.
+    /// </summary>
     class SetViewModel : INotifyPropertyChanged
     {
         private SetModel setModel;
@@ -18,6 +21,9 @@ namespace GUIClient
         private int vmCols;
         private int vmAlgo;
 
+        /// <summary>
+        /// VMIP Property.
+        /// </summary>
         public string VMIP 
         {
             get { return this.vmIP; }
@@ -27,6 +33,10 @@ namespace GUIClient
                 this.OnPropertyChanged("VMIP");
             }
         }
+
+        /// <summary>
+        /// VMPort Property.
+        /// </summary>
         public int VMPort
         {
             get { return this.vmPort; }
@@ -36,6 +46,10 @@ namespace GUIClient
                 this.OnPropertyChanged("VMPort");
             }
         }
+
+        /// <summary>
+        /// VMAlgo Property.
+        /// </summary>
         public int VMAlgo
         {
             get { return this.vmAlgo; }
@@ -45,6 +59,10 @@ namespace GUIClient
                 this.OnPropertyChanged("VMAlgo");
             }
         }
+
+        /// <summary>
+        /// VMRows Property.
+        /// </summary>
         public int VMRows
         {
             get { return this.vmRows; }
@@ -54,6 +72,10 @@ namespace GUIClient
                 this.OnPropertyChanged("VMRows");
             }
         }
+
+        /// <summary>
+        /// VMCols Property.
+        /// </summary>
         public int VMCols
         {
             get { return this.vmCols; }
@@ -64,11 +86,17 @@ namespace GUIClient
             }
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public SetViewModel(SetModel setModel)
         {
             this.setModel = setModel;
         }
 
+        /// <summary>
+        /// Get the data from the model.
+        /// </summary>
         public void GetData()
         {
             SettingsData setData = new SettingsData();
@@ -82,11 +110,19 @@ namespace GUIClient
             this.VMAlgo = setData.algo;
         }
 
+        /// <summary>
+        /// Set the changes in settings.
+        /// </summary>
+        /// <param name="setData">struct</param>
         public void SetData(SettingsData setData)
         {
             this.setModel.SetData(setData);
         }
 
+        /// <summary>
+        /// Notify on property changed.
+        /// </summary>
+        /// <param name="propertyName">property name</param>
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

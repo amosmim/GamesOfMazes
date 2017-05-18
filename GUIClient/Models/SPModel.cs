@@ -18,6 +18,9 @@ using MazeLib;
 
 namespace GUIClient
 {
+    /// <summary>
+    /// Model for single player.
+    /// </summary>
     class SPModel : INotifyPropertyChanged
     {
         private Socket server;

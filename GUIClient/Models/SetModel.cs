@@ -7,13 +7,23 @@ using System.Configuration;
 
 namespace GUIClient
 {
+    /// <summary>
+    /// Model for settings.
+    /// </summary>
     class SetModel
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public SetModel()
         {
 
         }
 
+        /// <summary>
+        /// Get data from Properties.Settings.
+        /// </summary>
+        /// <returns>struct with settings data</returns>
         public SettingsData GetData()
         {
             SettingsData setData = new SettingsData();
@@ -26,6 +36,10 @@ namespace GUIClient
             return setData;
         }
 
+        /// <summary>
+        /// Set changed data inside Properties.Settings.
+        /// </summary>
+        /// <param name="setData">struct with data</param>
         public void SetData(SettingsData setData)
         {
             Properties.Settings.Default.algo = setData.algo;
