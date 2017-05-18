@@ -16,9 +16,9 @@
                     <GradientStop Color="#FF806642" Offset="1"/>
                 </LinearGradientBrush>
             </DockPanel.Background>
-            <Image DockPanel.Dock="Left" x:Name="logo" Source="logo.png" Margin="0,0,0,267.6" Width="126" RenderTransformOrigin="-2.118,0.522"  >
+            <Rectangle DockPanel.Dock="Left" x:Name="logoRec" Margin="0,0,0,267.6" Width="126" RenderTransformOrigin="-2.118,0.522"  >
 
-            </Image>
+            </Rectangle>
             <Grid Background="Gold" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Height="145" Margin="125.6,0,162.6,0" Width="179" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>

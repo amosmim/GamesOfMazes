@@ -157,7 +157,9 @@
       <Name>ap2ex1_server</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\logo.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\exit.png" />
     <Resource Include="Resources\player.png" />

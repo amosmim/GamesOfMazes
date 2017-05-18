@@ -22,9 +22,16 @@ namespace GUIClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+
+            BitmapImage logo = new BitmapImage(new Uri("pack://application:,,,/GUIClient;component/Resources/logo.png"));
+
+            logoRec.Fill = new ImageBrush(logo);
         }
 
         private void SinglePlayControl_Loaded(object sender, RoutedEventArgs e)
@@ -32,6 +39,11 @@ namespace GUIClient
             //cont = new SinglePlayControl();
         }
 
+        /// <summary>
+        /// Initiate single player dialog.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void singleButton_Click(object sender, RoutedEventArgs e)
         {
             SPDialog spDialog = new SPDialog();
@@ -39,15 +51,23 @@ namespace GUIClient
             spDialog.ShowDialog();
         }
 
+        /// <summary>
+        /// Initiate multiplayer dialog.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void MultiplayButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Initiate settings.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void settingsButton_Click(object sender, RoutedEventArgs e)
         {
-
-
             Settings settings = new Settings();
             settings.Show();
         }
