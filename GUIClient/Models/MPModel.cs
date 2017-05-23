@@ -382,7 +382,7 @@ namespace GUIClient.Models
             }
             this.RavilPlayerPosition = x + "," + y;
 
-            if (Move(x * this.Rows + y) == 2)
+            if (Move(x * this.Cols + y) == 2)
             {
                 this.RivalWin?.Invoke();
             }

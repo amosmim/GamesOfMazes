@@ -50,8 +50,9 @@ namespace GUIClient
             };
             this.viewModel.VMRavilQuit += delegate ()
             {
-                MessageBox.Show("your ravil disconnected...");
                 this.RemoveBoardKeyDownEvent();
+                MessageBox.Show("your ravil disconnected...");
+                
             };
            
         }
