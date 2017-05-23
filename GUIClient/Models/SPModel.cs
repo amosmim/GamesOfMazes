@@ -21,7 +21,7 @@ namespace GUIClient
     /// <summary>
     /// Model for single player.
     /// </summary>
-    class SPModel : INotifyPropertyChanged
+    public class SPModel : INotifyPropertyChanged
     {
         private Socket server;
         private int port;
@@ -38,6 +38,19 @@ namespace GUIClient
         private int cols;
 
         private Maze maze;
+
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public SPModel()
+        {
+            this.port = Properties.Settings.Default.ServerPort;
+            this.ip = Properties.Settings.Default.ServerIP;
+
+            this.ipep = new IPEndPoint(IPAddress.Parse(this.ip), this.port);
+            this.server = null;
+        }
 
         /// <summary>
         /// SerializedGame Property.
@@ -133,18 +146,6 @@ namespace GUIClient
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Constructor.
-        /// </summary>
-        public SPModel()
-        {
-            this.port = Properties.Settings.Default.ServerPort;
-            this.ip = Properties.Settings.Default.ServerIP;
-
-            this.ipep = new IPEndPoint(IPAddress.Parse(this.ip), this.port);
-            this.server = null;
-        }
-
-        /// <summary>
         /// Connect to the game server.
         /// </summary>
         /// <returns>true if success else false</returns>
@@ -176,7 +177,7 @@ namespace GUIClient
         /// </summary>
         /// <param name="data">json string</param>
         /// <returns>fixed json string</returns>
-        private string GetCorrectJSON(string data)
+        protected string GetCorrectJSON(string data)
         {
             // single player command or end of communication
             if (data.EndsWith("-1"))
@@ -216,7 +217,7 @@ namespace GUIClient
             {
                 case "up":
                     nX = x - 1;
-                    newPlayerPos = (nX * this.rows) + y;
+                    newPlayerPos = (nX * this.Cols) + y;
                     if ((returnVal = Move(newPlayerPos)) != 0)
                     {
                         this.PlayerPosition = nX + "," + y;
@@ -224,7 +225,7 @@ namespace GUIClient
                     break;
                 case "right":
                     nY = y + 1;
-                    newPlayerPos = (x * this.rows) + nY;
+                    newPlayerPos = (x * this.Cols) + nY;
                     if ((returnVal = Move(newPlayerPos)) != 0)
                     {
                         this.PlayerPosition = x + "," + nY;
@@ -232,7 +233,7 @@ namespace GUIClient
                     break;
                 case "down":
                     nX = x + 1;
-                    newPlayerPos = (nX * this.rows) + y;
+                    newPlayerPos = (nX * this.Cols) + y;
                     if ((returnVal = Move(newPlayerPos)) != 0)
                     {
                         this.PlayerPosition = nX + "," + y;
@@ -240,7 +241,7 @@ namespace GUIClient
                     break;
                 case "left":
                     nY = y - 1;
-                    newPlayerPos = (x * this.rows) + nY;
+                    newPlayerPos = (x * this.Cols) + nY;
                     if ((returnVal = Move(newPlayerPos)) != 0)
                     {
                         this.PlayerPosition = x + "," + nY;
@@ -319,6 +320,11 @@ namespace GUIClient
 
                     // get data and parse it to json
                     string strData = Encoding.ASCII.GetString(data, 0, recv);
+                 
+                    if(strData == null)
+                    {
+                        return;
+                    }
                     JObject tempJson = JObject.Parse(GetCorrectJSON(strData));
                     
                     this.maze = Maze.FromJSON(GetCorrectJSON(strData));
@@ -343,7 +349,7 @@ namespace GUIClient
 
             return true;
         }
-
+        
         /// <summary>
         /// Restart game.
         /// </summary>
@@ -366,6 +372,7 @@ namespace GUIClient
                 {
                     byte[] data = new byte[8096];
                     int recv = 0;
+                    this.PlayerPosition = this.InitialPos;
                     try
                     {
                         server.Send(Encoding.ASCII.GetBytes(commandString));

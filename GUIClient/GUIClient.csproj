@@ -35,16 +35,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MazeGeneratorLib">
-      <HintPath>..\..\..\..\Desktop\ap2\MazeGeneratorLib.dll</HintPath>
+      <HintPath>..\SearchableMaze\bin\Debug\MazeGeneratorLib.dll</HintPath>
     </Reference>
     <Reference Include="MazeLib">
-      <HintPath>..\..\..\..\Desktop\ap2\MazeLib.dll</HintPath>
+      <HintPath>..\SearchableMaze\bin\Debug\MazeLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Priority Queue, Version=4.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OptimizedPriorityQueue.4.0.4\lib\net45\Priority Queue.dll</HintPath>
+    </Reference>
+    <Reference Include="SearchAlgorithmsLib">
+      <HintPath>..\SearchableMaze\bin\Debug\SearchAlgorithmsLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -76,7 +79,18 @@
     <Compile Include="MazeDetails.xaml.cs">
       <DependentUpon>MazeDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\MPModel.cs" />
     <Compile Include="Models\SetModel.cs" />
+    <Compile Include="MPDetails.xaml.cs">
+      <DependentUpon>MPDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MPDialog.xaml.cs">
+      <DependentUpon>MPDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultiPlayer.xaml.cs">
+      <DependentUpon>MultiPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -84,6 +98,7 @@
     <Compile Include="SPDialog.xaml.cs">
       <DependentUpon>SPDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MPViewModel.cs" />
     <Compile Include="ViewModels\SetViewModel.cs" />
     <Compile Include="SinglePlayer.xaml.cs">
       <DependentUpon>SinglePlayer.xaml</DependentUpon>
@@ -107,6 +122,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MazeDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MPDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MPDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultiPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

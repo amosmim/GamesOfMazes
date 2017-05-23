@@ -44,7 +44,7 @@ namespace GUIClient
 
             this.searcher = Properties.Settings.Default.algo;
         }
-        
+
         /// <summary>
         /// Restart the game.
         /// </summary>
@@ -108,7 +108,7 @@ namespace GUIClient
                 MessageBox.Show("Error solving.");
             }
         }
-        
+
         /// <summary>
         /// Helper function to add the ability to make key down actions on the user control.
         /// </summary>
@@ -134,7 +134,7 @@ namespace GUIClient
         /// <param name="e">e</param>
         private void mazeControl_LostFocus(object sender, RoutedEventArgs e)
         {
-           mazeControl.Focus();
+            mazeControl.Focus();
         }
 
         /// <summary>

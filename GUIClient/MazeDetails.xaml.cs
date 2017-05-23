@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace GUIClient
 {
     /// <summary>
@@ -29,6 +30,7 @@ namespace GUIClient
         public MazeDetails()
         {
             InitializeComponent();
+          
 
             rows.Text = Properties.Settings.Default.rows.ToString();
             cols.Text = Properties.Settings.Default.cols.ToString();

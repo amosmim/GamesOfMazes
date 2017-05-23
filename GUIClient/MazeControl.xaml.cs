@@ -74,7 +74,7 @@ namespace GUIClient
             {
                 this.initialPos = value;
                 // for setting correct player starting position
-                this.playerPos = this.initialPos;
+                PlayerPosition = this.initialPos;
             }
         }
 
@@ -227,12 +227,12 @@ namespace GUIClient
             this.gameBoard = new Rectangle[this.rows][];
             this.serializedGame = this.serializedGame.Replace("\r\n", string.Empty);
 
-            for(int i = 0; i < this.rows; i++)
+            for (int i = 0; i < this.rows; i++)
             {
                 gameBoard[i] = new Rectangle[this.cols];
                 for (int j = 0; j < this.cols; j++)
                 {
-                    int k = (i * this.rows) + j;
+                    int k = (i * this.cols) + j;
 
                     gameBoard[i][j] = new Rectangle();
                     gameBoard[i][j].Width = colDel;
@@ -279,6 +279,10 @@ namespace GUIClient
         /// <param name="oldPos"></param>
         private void MovePlayer(string oldPos)
         {
+            if (oldPos == null || !oldPos.Contains(",")||!this.playerPos.Contains(",")) 
+            {
+                return;
+            }
             string[] oldPosArr = oldPos.Split(',');
             string[] newPosArr = this.playerPos.Split(',');
 

@@ -34,10 +34,6 @@ namespace GUIClient
             logoRec.Fill = new ImageBrush(logo);
         }
 
-        private void SinglePlayControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            //cont = new SinglePlayControl();
-        }
 
         /// <summary>
         /// Initiate single player dialog.
@@ -58,7 +54,8 @@ namespace GUIClient
         /// <param name="e">e</param>
         private void MultiplayButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MPDialog multiplay = new MPDialog();
+            multiplay.ShowDialog();
         }
 
         /// <summary>
