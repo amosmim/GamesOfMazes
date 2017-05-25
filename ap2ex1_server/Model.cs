@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SearchAlgorithmsLib;
 using SearchableMaze;
-
 namespace ap2ex1_server
 {
 	public class Model : IModel
