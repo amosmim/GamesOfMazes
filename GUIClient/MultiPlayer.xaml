@@ -25,10 +25,10 @@
             <TextBlock Grid.Row="0" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Your Maze:" VerticalAlignment="Top"/>
             <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Rival Maze:" VerticalAlignment="Top"/>
             <Border BorderBrush="Black" BorderThickness="3" Grid.Row="1"  Grid.Column="0">
-                <Controls:MazeControl Width="300" HorizontalAlignment="Left" Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" PlayerPosition="{Binding VMPlayerPosition}" x:Name="mazeControl" Grid.Column="2" Grid.Row="0" LostFocus="mazeControl_LostFocus" Margin="0,0,7,7" KeyDown="mazeControl_KeyDown"  />
+                <Controls:MazeControl Width="300" HorizontalAlignment="Left" Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" PlayerPosition="{Binding VMPlayerPosition}" x:Name="mazeControl" Grid.Column="2" Grid.Row="0" LostFocus="mazeControl_LostFocus" Margin="0,0,7,7" KeyUp="mazeControl_KeyUp"  />
             </Border>
             <Border BorderBrush="Black" BorderThickness="3" Grid.Row="1" Grid.Column="1">
-                <Controls:MazeControl Width="300" HorizontalAlignment="Left" Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" PlayerPosition="{Binding VMRavilPlayerPosition}" x:Name="ravilMazeControl" Grid.Column="2" Grid.Row="1" LostFocus="mazeControl_LostFocus" Margin="0,0,7,7" KeyDown="mazeControl_KeyDown"  />
+                <Controls:MazeControl Width="300" HorizontalAlignment="Left" Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" PlayerPosition="{Binding VMRavilPlayerPosition}" x:Name="ravilMazeControl" Grid.Column="2" Grid.Row="1" LostFocus="mazeControl_LostFocus" Margin="0,0,7,7" KeyUp="mazeControl_KeyUp"  />
             </Border>
             
         </Grid>

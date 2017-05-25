@@ -21,6 +21,9 @@ namespace GUIClient
     /// </summary>
     public partial class MPDialog : Window
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MPDialog"/> class.
+        /// </summary>
         public MPDialog()
         {
             InitializeComponent();
@@ -29,8 +32,11 @@ namespace GUIClient
            
 
         }
-      
 
+
+        /// <summary>
+        /// Joins the game launch.
+        /// </summary>
         private void JoinGameLaunch()
         {
             MultiPlayer mp = new MultiPlayer();
@@ -45,6 +51,12 @@ namespace GUIClient
             mp.Show();
             this.Close();
         }
+        /// <summary>
+        /// News the multi game launch.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="rows">The rows.</param>
+        /// <param name="cols">The cols.</param>
         private void NewMultiGameLaunch(string name, int rows, int cols)
         {
             MultiPlayer mp = new MultiPlayer();

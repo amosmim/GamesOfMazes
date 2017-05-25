@@ -313,7 +313,7 @@ namespace GUIClient
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">e</param>
-        public void BoardKeyDown(object sender, KeyEventArgs e)
+        public void BoardKeyUp(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {

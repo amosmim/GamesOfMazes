@@ -28,6 +28,9 @@ namespace GUIClient
         private int cols;
         private bool isEventHandled;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MultiPlayer"/> class.
+        /// </summary>
         public MultiPlayer()
         {
      
@@ -46,28 +49,43 @@ namespace GUIClient
             this.viewModel.VMRavilWin += delegate ()
             {
                 MessageBox.Show("Sorry... You Lose!");
-                this.RemoveBoardKeyDownEvent();
+                this.RemoveBoardKeyUpEvent();
             };
             this.viewModel.VMRavilQuit += delegate ()
             {
-                this.RemoveBoardKeyDownEvent();
+                this.RemoveBoardKeyUpEvent();
                 MessageBox.Show("your ravil disconnected...");
                 
             };
            
         }
-        
+
+        /// <summary>
+        /// Starts the multi game.
+        /// </summary>
+        /// <returns></returns>
         public bool StartMultiGame()
         {
             return this.viewModel.StartGame(this.name, this.rows, this.cols);
         }
 
+        /// <summary>
+        /// Joins to game.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         public bool JoinToGame(string name)
         {
             return this.viewModel.JoinToGame(name);
         }
 
-        
+
+        /// <summary>
+        /// Sets the details.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="rows">The rows.</param>
+        /// <param name="cols">The cols.</param>
         public void SetDetails(string name, int rows, int cols)
         {
             this.name = name;
@@ -90,7 +108,7 @@ namespace GUIClient
             if (result == 2)
             {
                 MessageBox.Show("Great! You Win !");
-                this.RemoveBoardKeyDownEvent();
+                this.RemoveBoardKeyUpEvent();
             }
 
             return result;
@@ -100,9 +118,9 @@ namespace GUIClient
         /// <summary>
         /// Helper function to remove the ability to make key down actions on the user control.
         /// </summary>
-        private void RemoveBoardKeyDownEvent()
+        private void RemoveBoardKeyUpEvent()
         {
-            this.KeyDown -= mazeControl_KeyDown;
+            this.KeyUp -= mazeControl_KeyUp;
             this.isEventHandled = false;
         }
 
@@ -121,11 +139,16 @@ namespace GUIClient
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">e</param>
-        private void mazeControl_KeyDown(object sender, KeyEventArgs e)
+        private void mazeControl_KeyUp(object sender, KeyEventArgs e)
         {
-            mazeControl.BoardKeyDown(sender, e);
+            mazeControl.BoardKeyUp(sender, e);
         }
 
+        /// <summary>
+        /// Handles the Closing event of the Window control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="CancelEventArgs"/> instance containing the event data.</param>
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             MessageBox.Show("The game will close now.");
@@ -142,7 +165,7 @@ namespace GUIClient
         {
             bool result;
             // add event handler for user control key down
-            this.AddBoardKeyDownEvent();
+            this.AddBoardKeyUpEvent();
             result = this.viewModel.UpdateGame();
             if (!result)
             {
@@ -164,9 +187,9 @@ namespace GUIClient
         /// <summary>
         /// Helper function to add the ability to make key down actions on the user control.
         /// </summary>
-        private void AddBoardKeyDownEvent()
+        private void AddBoardKeyUpEvent()
         {
-            this.KeyDown += mazeControl_KeyDown;
+            this.KeyUp += mazeControl_KeyUp;
             this.isEventHandled = true;
         }
     }

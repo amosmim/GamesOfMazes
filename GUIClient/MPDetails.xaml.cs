@@ -40,22 +40,42 @@ namespace GUIClient
             this.Message = "";
             
         }
+        /// <summary>
+        /// Gets the view model.
+        /// </summary>
+        /// <returns></returns>
         public MPViewModel getViewModel()
         {
             return this.viewModel;
-        } 
+        }
 
+        /// <summary>
+        /// Gets or sets the message.
+        /// </summary>
+        /// <value>
+        /// The message.
+        /// </value>
         public string Message
         {
             get { return this.message; }
             set { this.message = value; }
         }
-        
+
+        /// <summary>
+        /// Handles the SelectionChanged event of the ComboBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Handles the Click event of the JoinButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void JoinButton_Click(object sender, RoutedEventArgs e)
         {
             OnButtonClick?.Invoke();

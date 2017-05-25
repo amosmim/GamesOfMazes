@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+/// <summary>
+/// Gui Client Class
+/// </summary>
 namespace GUIClient
 {
     /// <summary>
@@ -58,7 +61,7 @@ namespace GUIClient
 
             if (!this.isEventHandled)
             {
-                this.AddBoardKeyDownEvent();
+                this.AddBoardKeyUpEvent();
             }
         }
 
@@ -76,7 +79,7 @@ namespace GUIClient
             if (result == 2)
             {
                 MessageBox.Show("Great! You Win !");
-                this.RemoveBoardKeyDownEvent();
+                this.RemoveBoardKeyUpEvent();
             }
 
             return result;
@@ -100,7 +103,7 @@ namespace GUIClient
         private void solve_Click(object sender, RoutedEventArgs e)
         {
             bool result;
-            this.RemoveBoardKeyDownEvent();
+            this.RemoveBoardKeyUpEvent();
 
             result = this.viewModel.InitiateSolution(this.name, this.searcher);
             if (!result)
@@ -112,18 +115,18 @@ namespace GUIClient
         /// <summary>
         /// Helper function to add the ability to make key down actions on the user control.
         /// </summary>
-        private void AddBoardKeyDownEvent()
+        private void AddBoardKeyUpEvent()
         {
-            this.KeyDown += mazeControl_KeyDown;
+            this.KeyUp += mazeControl_KeyUp;
             this.isEventHandled = true;
         }
 
         /// <summary>
         /// Helper function to remove the ability to make key down actions on the user control.
         /// </summary>
-        private void RemoveBoardKeyDownEvent()
+        private void RemoveBoardKeyUpEvent()
         {
-            this.KeyDown -= mazeControl_KeyDown;
+            this.KeyUp -= mazeControl_KeyUp;
             this.isEventHandled = false;
         }
 
@@ -143,9 +146,9 @@ namespace GUIClient
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">e</param>
-        private void mazeControl_KeyDown(object sender, KeyEventArgs e)
+        private void mazeControl_KeyUp(object sender, KeyEventArgs e)
         {
-            mazeControl.BoardKeyDown(sender, e);
+            mazeControl.BoardKeyUp(sender, e);
         }
 
         /// <summary>
@@ -170,7 +173,7 @@ namespace GUIClient
         {
             bool result;
             // add event handler for user control key down
-            this.AddBoardKeyDownEvent();
+            this.AddBoardKeyUpEvent();
             result = this.viewModel.StartGame(this.name, this.rows, this.cols);
             if (!result)
             {

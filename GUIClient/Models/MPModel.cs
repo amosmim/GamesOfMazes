@@ -13,6 +13,10 @@ using System.Threading;
 
 namespace GUIClient.Models
 {
+    /// <summary>
+    /// Model for Multi play
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class MPModel : INotifyPropertyChanged
     {
         private Socket server;
@@ -139,6 +143,9 @@ namespace GUIClient.Models
             }
         }
 
+        /// <summary>
+        /// Closes the game.
+        /// </summary>
         internal void CloseGame()
         {
             byte[] data = new byte[8096];
@@ -174,6 +181,10 @@ namespace GUIClient.Models
             }
         }
         public event Action RivalQuit;
+        /// <summary>
+        /// Starts the update threads.
+        /// </summary>
+        /// <returns></returns>
         public bool StartUpdateThreads()
         {
             if (!this.connectionOn)
@@ -225,12 +236,24 @@ namespace GUIClient.Models
 
             return true;
         }
+        /// <summary>
+        /// Gets a value indicating whether this instance is start.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is start; otherwise, <c>false</c>.
+        /// </value>
         public bool IsStart
         {
             get { return this.gameIsInitilazed; }
            
         }
 
+        /// <summary>
+        /// Gets or sets the ravil player position.
+        /// </summary>
+        /// <value>
+        /// The ravil player position.
+        /// </value>
         public string RavilPlayerPosition {
             get { return this.ravilplayerPos; }
             set
@@ -360,6 +383,10 @@ namespace GUIClient.Models
         }
 
 
+        /// <summary>
+        /// Ravils the move.
+        /// </summary>
+        /// <param name="direction">The direction.</param>
         private void RavilMove(string direction)
         {
             string[] temp = this.ravilplayerPos.Split(',');
@@ -456,6 +483,11 @@ namespace GUIClient.Models
             return true;
         }
 
+        /// <summary>
+        /// Joins to game.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         public bool JoinToGame(string name)
         {
             if (this.Connect())
@@ -476,6 +508,9 @@ namespace GUIClient.Models
             return true;
         }
 
+        /// <summary>
+        /// Recives the maze.
+        /// </summary>
         private void ReciveMaze()
         {
             byte[] strDataBytes = new byte[8096];

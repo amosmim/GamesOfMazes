@@ -141,11 +141,19 @@ namespace GUIClient.ViewModels
             return this.model.StartGame(command);
         }
 
+        /// <summary>
+        /// Joins to game.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         public bool JoinToGame(string name)
         {
             return this.model.JoinToGame(name);
         }
 
+        /// <summary>
+        /// Closes the game.
+        /// </summary>
         internal void CloseGame()
         {
             this.model.CloseGame();

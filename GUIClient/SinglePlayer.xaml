@@ -25,7 +25,7 @@
         </Viewbox>
 
         <Border BorderBrush="Black" BorderThickness="3" Grid.Row="1">
-            <Controls:MazeControl Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" PlayerPosition="{Binding VMPlayerPosition}" x:Name="mazeControl" Grid.Column="1" Grid.Row="0" LostFocus="mazeControl_LostFocus" Margin="0,0,7,7" KeyDown="mazeControl_KeyDown"  />
+            <Controls:MazeControl Rows="{Binding VMRows}" Cols="{Binding VMCols}" SerializedGame="{Binding VMSerializedGame}" InitialPos="{Binding VMInitialPos}" GoalPos="{Binding VMGoalPos}" PlayerPosition="{Binding VMPlayerPosition}" x:Name="mazeControl" Grid.Column="1" Grid.Row="0" LostFocus="mazeControl_LostFocus" Margin="0,0,7,7" KeyUp="mazeControl_KeyUp"  />
         </Border>
     </Grid>
 </Window>
