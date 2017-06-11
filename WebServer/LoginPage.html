@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="GenricStyleSheet.css" rel="stylesheet" />
+    <title></title>
+</head>
+<body>
+    <nav>
+        <div id="MenuBar"></div>
+    </nav>
+    <h1>Login</h1>
+    <div style="border-bottom-color:black; border:double; width:20%">
+        <form action="/login.php">
+            <table>
+                <tr>
+                    <th>username:</th>
+                    <th><input type="text" value="" /></th>
+                </tr>
+                <tr>
+                    <th>password:</th>
+                    <th><input type="text" value="" /></th>
+                <tr />
+                <tr>
+                   <th> <input type="submit" value="Login" /></th>
+                    <th><p id="error_string"></p></th>
+                 </tr>
+            </table>
+        </form>
+        <a href="SignUpPage.html">If you never Sign-up - click here<br/> it free!</a>
+    </div>
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/*.js"></script>
+    <script> $("#MenuBar").load("x.html") </script>
+</body>
+</html>
