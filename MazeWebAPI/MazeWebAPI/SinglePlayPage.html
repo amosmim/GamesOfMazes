@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="Resources/maze.png">
+
+    <title>Game of Mazes</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="Scripts/bootstrap.min.css" rel="stylesheet">
+    <link href="signin.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="Scripts/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <script src="Scripts/jquery.min.js"></script>
+    <script src="Scripts/jquery-3.1.1.js"></script>
+    <script src="Scripts/menuBar.js"></script>
+    <title></title>
+</head>
+<body  class="bg">
+    <nav id="menuDIV" class="navbar navbar-default navbar-fixed-top"></nav>
+    <div class="jumbotron bg">
+        <div class="container">
+
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-3 col-xs-4 col-sm-3">
+                    <div class="row-md-10">
+                       
+
+                                    
+                        <form class="form" id="start_play_config">
+                                        
+                            <h1 class="form-signin-heading">Single-Play</h1>                                        
+                            <label for="in_name" class="sr-only">Name</label>                                        
+                            <input type="text" id="in_name" class="form-control" placeholder="Enter Maze Name" required autofocus>
+                                        
+                            <label for="in_rows" class="sr-only">Rows</label>                                        
+                            <input type="number" id="in_rows" class="form-control" placeholder="rows" required>
+                                        
+                            <label for="in_cols" class="sr-only">Cols</label>                                        
+                            <input type="number" id="in_cols" class="form-control" placeholder="cols" required>
+
+
+
+                                        
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Start New Game</button>
+
+                                    
+                        </form>                                
+                    </div>
+                    <div class="row-md-10">
+                       
+
+                                <form id="solve_form">
+
+                                    <label for="algo"><br />Algo:</label>
+                                    <select class="form-control" id="algo">
+                                        <option>BFS</option>
+                                        <option>DFS</option>
+
+                                    </select>
+
+                                    <button class="btn btn-lg btn-primary btn-block" type="submit">Solve Maze</button>
+
+                                </form>
+                    </div>
+                </div>
+                <div class="col-md-8 col-xs-10 col-sm-8">
+
+                    <canvas id="mazeCanvas" width="450" height="450" style="border:2px black solid; height:60%; width:60%; background-color:white;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Scripts/Maze.plugin.js"></script>
+    <script src="Scripts/singlePlayScripts.js"></script>
+
+
+</body>
+</html>

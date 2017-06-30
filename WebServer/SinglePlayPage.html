@@ -10,7 +10,7 @@
     <table>
         <tr>
             <th>
-            <form id="start_play_config">
+            <form id="start_play_config" onsubmit="return Get_Maze()">
                 <table>
                     <tr>
                         <th>Name:</th>
@@ -51,6 +51,21 @@
         </tr>
        
     </table>
+    <script >
+       
+        function Get_Maze() {
+            
+            var name = document.forms["start_play_config"]["in_name"].value;
+            var rows = document.forms["start_play_config"]["in_rows"].value;
+            var cols = document.forms["start_play_config"]["in_cols"].value;
+            var url = "api/Maze/Generate/" + name + "/" + rows + "/" + cols;
+            alert("gets maze from: " + url);
+            $.get(url, function (data, status) {
+                alert("Data: ");
+            });
+        }
+    </script>
+    
 
 </body>
 </html>

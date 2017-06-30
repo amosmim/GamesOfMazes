@@ -8,7 +8,7 @@
 <body>
     <h1>Sign-up</h1>
     <div style="border-bottom-color:black; border:double; width:40%" >
-        <form name="sign_form" action="/newuser.php" onsubmit="return validateForm()" method="post">
+        <form name="sign_form" action="http://localhost:65171/api/Users/Register" onsubmit="return validateForm()" method="post">
             <table >
                 <tr>
                     <th>Enter username:</th>
@@ -56,8 +56,21 @@
                 false_flag = false;
                 error_string = error_string + "email not valid!<br/>";
             }
+            
             document.getElementById("error_text").innerHTML = error_string;
-            return false_flag;
+            if (false_flag) {
+                var url = "http://localhost:65171/api/Users/Register";
+                var username = document.forms["sign_form"]["username"].value;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        Username: document.forms["sign_form"]["username"].value,
+                        Password: pass1,
+                        Email: email
+                    }
+                });
+            }
         }
     </script>
 </body>
