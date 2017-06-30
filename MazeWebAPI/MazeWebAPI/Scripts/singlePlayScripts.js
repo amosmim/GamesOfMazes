@@ -121,10 +121,11 @@ $(document).ready(function () {
         }
     });
 
-
+    // handler for start new single player
     $("#start_play_config").on("submit", function (e) {
-        $(window).off();
+       
         e.preventDefault();
+        // draw waiting gif
         var loadImg = new Image();
         var myCanvas = document.getElementById("mazeCanvas");
         var context = myCanvas.getContext("2d");
@@ -133,19 +134,21 @@ $(document).ready(function () {
             context.drawImage(loadImg, 0, 0, myCanvas.width, myCanvas.height);
         };
         loadImg.src = 'loading.gif';
-
+        // read inputs for client
         var name = $("#in_name").val();
+        document.title = name;
         var rows = $("#in_rows").val();
         var cols = $("#in_cols").val();
         var url = "/api/Maze/Generate/" + name + "/" + rows + "/" + cols;
-        document.title = name;
+        // send to server
         $.getJSON(url)
             .done(function (json) {
                 console.log(json);
                 MazeJson = json;
-                // playerPos = [json.Start.Row, json.Start.Col];
+            
                 playerPos = [json.Start.Col, json.Start.Row];
                 mazeArray = arrayMazeFromJson(json);
+                //give to the plugin to draw and controll user input
                 playerImage = new Image();
                 playerImage.src = '/Resources/poin.png';
                 var exitImage = new Image();
@@ -153,12 +156,8 @@ $(document).ready(function () {
 
                 var plug = $("#mazeCanvas").mazeBoard(mazeArray, json.Rows, json.Cols, json.Start.Row, json.Start.Col,
                     json.End.Row, json.End.Col, playerImage, exitImage, true, function (dir, a, b) { if (checkWin(a, b)){alert("you win!") } });
-                //initMaze(json);*/
-                //drawMaze();
-
-
-
-            })
+               
+            }) // error handle
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ", " + error;
                 console.log("Request Failed: " + err);

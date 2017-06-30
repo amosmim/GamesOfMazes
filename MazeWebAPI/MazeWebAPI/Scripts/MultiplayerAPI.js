@@ -11,6 +11,8 @@ $(function () {
     } else {
         document.forms["start_play_config"]["in_cols"].value = 20;
     }
+
+    // return maze as 2D array form maze as long string.
     function arrayMazeFromJson(json) {
         var bitMaze = json.Maze;
         var row = json.Rows;
@@ -26,10 +28,13 @@ $(function () {
         }
         return maze;
     }
+
     var rivalName = null;
     var maze = null;
     var rivalPos = null;
     var endPos = null;
+
+    // move according to string - for rival move
     function moveTo(moveAsChar) {
         var playerMove = [rivalPos[0], rivalPos[1]];
         switch (moveAsChar) {
@@ -48,7 +53,7 @@ $(function () {
             default:
                 return;
         }
-
+        // move rival icon to new place
         var canvas = document.getElementById("ravilCanvas");
         playerImage = new Image();
         playerImage.src = '/Resources/poin.png';
@@ -58,6 +63,7 @@ $(function () {
         context.clearRect(rivalPos[0] * width, rivalPos[1] * height, width, height)
         context.drawImage(playerImage, playerMove[0] * width, playerMove[1] * height, width, height);
 
+        // check if rival wins
         rivalPos = [playerMove[0], playerMove[1]];
         if (checkWin(rivalPos[0], rivalPos[1])){
             alert("You Lose!");
@@ -71,14 +77,16 @@ $(function () {
 
     var mHub = $.connection.multiplayerHub;
     var first = true;
-
+    // hanler for start new multi - game
     $("#start_play_config").on("submit", function (e) {
       
         e.preventDefault();
+        // handler when start new game before close the pervius
         if (!first) {
             mHub.server.close();
+            $(window).off();
         }
-        $(window).off();
+        
        
         var loadImg = new Image();
         var myCanvas = document.getElementById("userCanvas");
@@ -96,26 +104,31 @@ $(function () {
             alert("you need to login!");
             return;
         }
+
         var myname = sessionStorage.getItem("username");
         var name = $("#in_name").val();
         var rows = $("#in_rows").val();
         var cols = $("#in_cols").val();
         mHub.server.startMultiplayer(name, rows, cols, myname);
         first = false;
-        //mHub.server.Play(direction);
+        
     });
-    $("#join_form").on("submit", function (e) {
 
+    //handler for join game
+    $("#join_form").on("submit", function (e) {
         e.preventDefault();
+        // handler when start new game before close the pervius
+        if (!first) {
+            mHub.server.close();
+            $(window).off();
+        }
+       
         if (sessionStorage.getItem('username') == null) {
             alert("you need to login!");
             return;
         }
         var myname = sessionStorage.getItem("username");
-        if (!first) {
-            mHub.server.close();
-        }
-        $(window).off();
+       
         var loadImg = new Image();
         var myCanvas = document.getElementById("userCanvas");
         var context = myCanvas.getContext("2d");
@@ -127,12 +140,16 @@ $(function () {
             hiscontext.drawImage(loadImg, 0, 0, hisCanvas.width, hisCanvas.height);
         };
         loadImg.src = '/Resources/loading.gif';
+
+
         var mazename = $("#games :selected").text();
         console.log("send " + mazename);
 
         mHub.server.join(mazename, myname);
         first = false;
     });
+
+
     function checkWin(playercol, playerrow) {
         return (playercol == endPos[0] && playerrow == endPos[1]);
     }
@@ -140,11 +157,11 @@ $(function () {
 
     mHub.client.onJoinGame = function (message) {
         // message can be either error or the actual maze (JSON format)
-        // the method is invoked after player joins a session
+        // the method is invoked after player joins a session by hub
        
 
         var data = JSON.parse(message);
-        console.log(data);
+       
         maze = JSON.parse(data.maze);
         rivalName = data.rival;
         rivalPos = [maze.Start.Col, maze.Start.Row];
@@ -156,31 +173,36 @@ $(function () {
 
             return;
         }
-        // var myCanvas = document.getElementById("userCanvas");
+        // draw rival maze
         playerImage = new Image();
         playerImage.src = '/Resources/poin.png';
         var exitImage = new Image();
         exitImage.src = '/Resources/exit.gif';
         $("#ravilCanvas").mazeBoard(arrayMazeFromJson(maze), maze.Rows, maze.Cols, maze.Start.Row, maze.Start.Col,
             maze.End.Row, maze.End.Col, playerImage, exitImage, false, function (direction, playercol, playerrow) { });
-        $(window).off();
-        $(window).bind('beforeunload', function (e) {
-       
-            mHub.server.close();
 
+        // handler for exiting page with refersh of pass to another page.
+        $(window).bind('beforeunload', function (e) {
+            $(window).off();
+            
+            mHub.server.close();
+           
         });
+
+        //draw user maze
         playerImage = new Image();
         playerImage.src = '/Resources/poin.png';
         var exitImage = new Image();
         exitImage.src = '/Resources/exit.gif';
         $("#userCanvas").mazeBoard(arrayMazeFromJson(maze), maze.Rows, maze.Cols, maze.Start.Row, maze.Start.Col,
-            maze.End.Row, maze.End.Col, playerImage, exitImage, true, function (direction, playercol, playerrow) {
+            maze.End.Row, maze.End.Col, playerImage, exitImage, true,
+            function (direction, playercol, playerrow) { // call back function for hub -invoked in every user move
                 mHub.server.play(direction);
                 if (checkWin(playercol, playerrow)) {
                     alert("You win!");
                     var myname = sessionStorage.getItem("username");
                     var _data = { Player1: rivalName, Player2: myname, Winner: myname };
-
+                    // send results to server
                     $.ajax({
                         url: "api/Users/RegisterGame",
                         type: "POST",
@@ -198,14 +220,17 @@ $(function () {
                     });
                     mHub.server.close();
                     $(window).off();
+                    first = true;
+
                 }
             });
             
     };
-
+    // the list of games (JSON format)
+    // the method is invoked after player asks for a list
+    // fill list of games to jooin to.
     mHub.client.onListReceived = function (list) {
-        // the list of games (JSON format)
-        // the method is invoked after player asks for a list
+        
         $('select').empty();
         var x = document.getElementById("games");
         var option = document.createElement("option");
@@ -222,11 +247,12 @@ $(function () {
 
     };
 
+    // message can be either error or the actual move (JSON format)
+    // the method is invoked after the other player made a move on the board
     mHub.client.onPlay = function (message) {
-        // message can be either error or the actual move (JSON format)
-        // the method is invoked after the other player made a move on the board
+       
         console.log("rival moved! " + message);
-        //var data = JSON.parse(message);
+       
         var dirc = message.Direction;
         moveTo(dirc);
 
@@ -236,9 +262,10 @@ $(function () {
         // message can be either error or closing message (JSON format)
         // the method is invoked after the other player has closed the session
         alert("your rival exit the game...");
-        window.location.href = "index.html";
+      
     };
-  
+
+    // invoked after the other player has join
     mHub.client.onGameStart = function (message) {
         
         var data = JSON.parse(message);
@@ -247,17 +274,17 @@ $(function () {
         rivalName = data.rival;
         rivalPos = [maze.Start.Col, maze.Start.Row];
         endPos = [maze.End.Col, maze.End.Row];
-       // var myCanvas = document.getElementById("userCanvas");
-
+       
+        // draw rival canvas
         playerImage = new Image();
         playerImage.src = '/Resources/poin.png';
         var exitImage = new Image();
         exitImage.src = '/Resources/exit.gif';
         $("#ravilCanvas").mazeBoard(arrayMazeFromJson(maze), maze.Rows, maze.Cols, maze.Start.Row, maze.Start.Col,
             maze.End.Row, maze.End.Col, playerImage, exitImage, false, function (direction, playercol, playerrow) {  });
-        $(window).off();
+       
         $(window).bind('beforeunload', function (e) {
-           
+            $(window).off();
             mHub.server.close();
         });
         playerImage = new Image();
@@ -266,13 +293,13 @@ $(function () {
         exitImage.src = '/Resources/exit.gif';
         $("#userCanvas").mazeBoard(arrayMazeFromJson(maze), maze.Rows, maze.Cols, maze.Start.Row, maze.Start.Col,
             maze.End.Row, maze.End.Col, playerImage, exitImage, true,
-            function (direction, playercol, playerrow) {
+            function (direction, playercol, playerrow) { // callback function to user move
                 mHub.server.play(direction);
                 if (checkWin(playercol, playerrow)) {
                     alert("You win!");
                     var myname = sessionStorage.getItem("username");
                     var _data = { Player1: rivalName, Player2: myname, Winner: myname };
-
+                    // send result
                     $.ajax({
                         url: "api/Users/RegisterGame",
                         type: "POST",
@@ -290,29 +317,19 @@ $(function () {
                     });
                     mHub.server.close();
                     $(window).off();
+                    first = true;
                 }
-            });
-               
+            });  
 
-        
-
-        // maze is the actual maze (JSON format)
-        // the method is invoked after this client has started a session and another player joined him
     };
 
+    
 
-    // how to invoke methods on the server side ?
-
-    /*
-        consider you want to start a new session:
-        mHub.server.StartMultiplayer(string name, int rows, int cols);
-    */
-
-    // Start the connection.
+    // Start the connection with hub
     $.connection.hub.start().done(function () {
-      
+        // get open games list
         mHub.server.list();
-        // this callback is in charge of doing something when the connection with th hub is set
+       
         
     });
 });

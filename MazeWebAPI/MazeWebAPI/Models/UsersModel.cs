@@ -31,7 +31,13 @@ namespace MazeWebAPI.Models
 
                 if (connection.State != ConnectionState.Open)
                 {
-                    connection.Open();
+                    try {
+                        connection.Open();
+                    }
+                    catch
+                    {
+                        return false;
+                    }
                 }
 
                 try

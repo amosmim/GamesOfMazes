@@ -15,7 +15,7 @@
             success: function (json) {
                 console.log(json);
 
-                if (json.isLogged = "true") {
+                if (json.isLogged == "true") {
                     alert("you Sign-in!");
                     sessionStorage.setItem('username', username);
                     window.location.href = "index.html";
