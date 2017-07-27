@@ -1,0 +1,309 @@
+commit 612c29c4e2c62bd1e0c2870f2f81dc1344298ffd
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Thu May 25 22:12:33 2017 +0300
+
+    comments,  fixs bugs
+
+commit 1870bc39401566543c8ab73e80bf4bb28a5da57e
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed May 24 01:08:07 2017 +0300
+
+    small fixes
+
+commit 1c71766d4153a8f0b891297f61dd8c47f1dec017
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed May 24 00:36:09 2017 +0300
+
+    add multiplay
+    + maze control fix
+
+commit d0776ee46866c80ec158e3dc1aa7891b730468d3
+Author: User <User@USER-PC>
+Date:   Thu May 18 21:43:57 2017 +0300
+
+    Comments and changes
+
+commit 8a06018529d6ad0bae05027cb9d6bd96390a7eb0
+Author: User <User@USER-PC>
+Date:   Thu May 18 21:24:30 2017 +0300
+
+    More comments
+
+commit 97b478bf9519d901f3d52404489ff4adf7b83eea
+Author: User <User@USER-PC>
+Date:   Thu May 18 21:14:42 2017 +0300
+
+    More comments
+
+commit 73cd0e68bd40e0bc27197ca853af03b8b1c06471
+Author: User <User@USER-PC>
+Date:   Thu May 18 20:51:01 2017 +0300
+
+    Comments
+
+commit 35feb99d495b0e0243b466ba4ac5da06178fb37c
+Author: User <User@USER-PC>
+Date:   Thu May 18 20:29:51 2017 +0300
+
+    single player mode
+
+commit e05ad41343082c538d8f59bd3cac4dc956bca47a
+Author: User <User@USER-PC>
+Date:   Thu May 18 20:15:23 2017 +0300
+
+    added animation and game logic
+
+commit c0014385300715b06d9bcfa307aca273fbe45a69
+Author: User <User@USER-PC>
+Date:   Thu May 18 14:52:35 2017 +0300
+
+    changes to SPModel
+
+commit f595f83da66fe311dc5ad41c6913b7d48947b337
+Author: User <User@USER-PC>
+Date:   Tue May 16 22:23:49 2017 +0300
+
+    Changes in SPModel and SPViewModel
+
+commit 0ceda2630fd956297c12570cfa91761b2775c953
+Author: User <User@USER-PC>
+Date:   Tue May 16 21:17:29 2017 +0300
+
+    changes
+
+commit b154efa74c754a3f5f1033cc26f7b687f6404c46
+Author: User <User@USER-PC>
+Date:   Tue May 16 20:28:36 2017 +0300
+
+    Changes to MazeControl
+    Added MazeDetalils and SPDialog
+
+commit 06266e814da93a36b8e25f5b40d3f9bd053ed370
+Author: User <User@USER-PC>
+Date:   Tue May 16 19:48:54 2017 +0300
+
+    added support for keys and events
+
+commit c7ef73e9a2a5a97bab9f3211a5b9fb7dbcc86699
+Author: User <User@USER-PC>
+Date:   Wed May 3 08:27:56 2017 +0300
+
+    Added settings and changes to the maze control
+
+commit 293b76c40ef46b2308a71a37a1c3a1e4604853d5
+Author: User <User@USER-PC>
+Date:   Mon May 1 11:27:56 2017 +0300
+
+    Major Changes
+
+commit 5b17024c4e472cdca53a9e734ab3170cffd75607
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Tue Apr 25 02:37:01 2017 +0300
+
+    fix bugs in MazeGuiDrawer
+
+commit 1cd4f5eea421f2724eba5816d57284f0d9d85115
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Tue Apr 25 01:18:22 2017 +0300
+
+    first cummit-ex2
+
+commit 7fb06568120b6780971e06e986052e881e249da1
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Thu Apr 20 22:07:58 2017 +0300
+
+    add  last commonets
+
+commit 2310295f0b2088523dc84c937943793de0deeb3a
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Thu Apr 20 14:39:37 2017 +0300
+
+    fix repostory
+
+commit 006fc9cfc741f29155e566818c0f25581fd259b4
+Merge: 0925e82 c10ac56
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Thu Apr 20 14:01:00 2017 +0300
+
+    merge
+
+commit c10ac563251b6b4fd3592fc1ac64ddbb0582a169
+Merge: e41f441 4522c35
+Author: amosmim <amosmim@gmail.com>
+Date:   Thu Apr 20 13:59:56 2017 +0300
+
+    Merge pull request #3 from amosmim/Amos_Debug
+    
+    Amos debug
+
+commit 4522c35ac82e7f4c11f925eae2d491f7bcea386e
+Merge: 0444ba6 c932899
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Thu Apr 20 13:58:17 2017 +0300
+
+    Merge branch 'Amos_Debug' of https://github.com/amosmim/GamesOfMazes into Amos_Debug
+
+commit 0444ba614ec7d98f504f6148c60f414157dbc681
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Thu Apr 20 13:57:23 2017 +0300
+
+    app.config read support
+
+commit e41f4419ac604b0c3e0ec92a407797fd4471acd1
+Merge: 8040023 c932899
+Author: amosmim <amosmim@gmail.com>
+Date:   Wed Apr 19 01:39:22 2017 +0300
+
+    Merge pull request #2 from amosmim/Amos_Debug
+    
+    fixs app file
+
+commit c9328999ddcd3295daab520e61aa5814286e199f
+Merge: 2697b2b 8040023
+Author: amosmim <amosmim@gmail.com>
+Date:   Wed Apr 19 01:39:15 2017 +0300
+
+    Merge branch 'master' into Amos_Debug
+
+commit 2697b2b26cc467ade0f54d4b872270c67c32fffb
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 19 01:37:36 2017 +0300
+
+    s
+
+commit 0925e8281dad2f4d075feba82209a23e49c336aa
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 19 01:35:55 2017 +0300
+
+    client
+
+commit 8040023bc7d43ac16ef331c2cd49bdc3b8b1c576
+Merge: dc91d95 805b8a4
+Author: amosmim <amosmim@gmail.com>
+Date:   Wed Apr 19 01:34:28 2017 +0300
+
+    Merge pull request #1 from amosmim/Amos_Debug
+    
+    commants on Amos parts, and smalls changes
+
+commit 805b8a4d135c81272de5768b2cab7da080ccd718
+Merge: 9fa6fca dc91d95
+Author: amosmim <amosmim@gmail.com>
+Date:   Wed Apr 19 01:34:16 2017 +0300
+
+    Merge branch 'master' into Amos_Debug
+
+commit 9fa6fcae9c5467ddf477da3026c9ff346d753497
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 19 01:28:35 2017 +0300
+
+    commants on Amos parts, and smalls changes
+
+commit dc91d95ef3be51e1010cfe0e5185390cb454e414
+Author: OrZipori <or_zipori@walla.co.il>
+Date:   Sun Apr 16 17:03:55 2017 +0300
+
+    Now other player can receive closing message.
+
+commit fc75198c4616b9d104cdb49c0d249cca0494b7d6
+Author: OrZipori <or_zipori@walla.co.il>
+Date:   Thu Apr 13 09:16:10 2017 +0300
+
+    Read port from app.config
+
+commit 4c02cb64cbb40532c1dd8b545613c9af9ed07b75
+Author: OrZipori <or_zipori@walla.co.il>
+Date:   Wed Apr 12 18:00:19 2017 +0300
+
+    Added comments and tweaks.
+
+commit 3e62c0b966ab14b8e297701f917078171f3dd4c4
+Author: OrZipori <or_zipori@walla.co.il>
+Date:   Mon Apr 10 18:20:06 2017 +0300
+
+    Comments.
+
+commit 2c9554855e7cb00bd264a26e09ab0836e3641da1
+Author: OrZipori <or_zipori@walla.co.il>
+Date:   Mon Apr 10 16:02:06 2017 +0300
+
+    Model modifications and controller tweaks
+
+commit 30beefe8c5c6ddc4aadc6f7a012b52c5bf28c1e5
+Author: OrZipori <or_zipori@walla.co.il>
+Date:   Mon Apr 10 14:55:03 2017 +0300
+
+    Server as MVC
+
+commit 120cae08ab4ae012eebc6f5a3c952aa9840087a3
+Author: OrZipori <or_zipori@walla.co.il>
+Date:   Mon Apr 10 14:03:57 2017 +0300
+
+    2 threaded client
+
+commit 65455601b38bb8e5c4eec02d6256960d94767380
+Author: OrZipori <or_zipori@walla.co.il>
+Date:   Mon Apr 10 13:40:10 2017 +0300
+
+    Modifications
+
+commit c141a0eeec482b1f4636a2f6136f7bf3e89e123f
+Author: OrZipori <or_zipori@walla.co.il>
+Date:   Sun Apr 9 15:45:23 2017 +0300
+
+    Changes in server
+
+commit 8dedab79afce0c79b6fcc08795694b1091dd2233
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Fri Apr 7 12:41:23 2017 +0300
+
+    Client from Or files
+
+commit beaec93c634b2167d3328f63227c3593a4b93b21
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Fri Apr 7 11:48:00 2017 +0300
+
+    Server from Or files
+
+commit 129b8072ea7ee77f235adb61474ef970e93f812c
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 5 20:51:22 2017 +0300
+
+    small change in Searchers  from reuse objects
+
+commit 179b85431916b8fee752a65b77446a75beae0955
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 5 18:21:28 2017 +0300
+
+    add  maze solution to string, and
+    some more changes
+
+commit 17274aea365e79e64b2252d36cf1454e5b211735
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 5 16:00:29 2017 +0300
+
+    add SearchableMaze Adpter
+
+commit 151e9c8d095d25ca9a24c8f506a0956835a49855
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 5 15:45:39 2017 +0300
+
+    Delete Class1.cs
+
+commit df42f9cb2565231a7f0b325a8c7b44e3495301fa
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 5 15:40:24 2017 +0300
+
+    Add  SearchAlgorithmsLib Class Lib
+
+commit 425b35204895dfb2d1f234d7aa2048640b197224
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 5 15:38:05 2017 +0300
+
+    Add project files.
+
+commit c406e3352e2822c4b8585cc0758a9963e5893fb3
+Author: Amos Maimon <amosmim@gmail.com>
+Date:   Wed Apr 5 15:38:02 2017 +0300
+
+    Add .gitignore and .gitattributes.

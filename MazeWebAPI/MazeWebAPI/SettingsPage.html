@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="Resources/maze.png">
+
+    <title>Game of Mazes</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="Scripts/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="Scripts/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+    <script src="Scripts/jquery-3.1.1.js"></script>
+    <script src="Scripts/menuBar.js"></script>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="Scripts/ie-emulation-modes-warning.js"></script>
+    <title></title>
+</head>
+<body class="bg">
+    <nav id="menuDIV" class="navbar navbar-default navbar-fixed-top"></nav>
+    <div class="container  row-md-4">
+        <div class="col-md-4 col-xs-6 col-sm-4">
+            </div>
+        <div class="col-md-4 col-xs-6 col-sm-4">
+            <div class="row-md-4 row-xs-6 row-sm-4">
+                </div>
+                    <div class="row-md-4 row-xs-6 row-sm-4">
+                <form class="form" id="form-settings">
+                    <h2 class="form-signin-heading">Settings Defaults</h2>
+                    <label for="rows" class="sr-only">Rows</label>
+                    <input type="number" id="rows" class="form-control" placeholder="rows" required autofocus>
+                    <label for="cols" class="sr-only">Cols</label>
+                    <input type="number" id="cols" class="form-control" placeholder="cols" required>
+                  
+                   
+                    <label for="sel1">Algo:</label>
+                    <select class="form-control" id="sel1">
+                        <option>BFS</option>
+                        <option>DFS</option>
+                        
+                    </select>
+                   
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    <script src="Scripts/SettingsScripts.js"></script>
+</body>
+</html>

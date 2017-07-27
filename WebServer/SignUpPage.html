@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="GenricStyleSheet.css" rel="stylesheet" />
+    <title></title>
+</head>
+<body>
+    <h1>Sign-up</h1>
+    <div style="border-bottom-color:black; border:double; width:40%" >
+        <form name="sign_form" action="http://localhost:65171/api/Users/Register" onsubmit="return validateForm()" method="post">
+            <table >
+                <tr>
+                    <th>Enter username:</th>
+                    <th><input type="text" name="username" value="" required /></th>
+                <tr />
+                <tr>
+                    <th>Enter password:</th>
+                    <th><input type="password" name="password1" value="" required /></th>
+                <tr />
+                <tr>
+                    <th>Repeat your password:</th>
+                    <th>  <input type="password" name="password2" value="" required /></th>
+                <tr />
+                <tr>
+                    <th>Enter your e-mail:</th>
+                    <th><input type="email" name="email" value="" required /></th>
+                <tr />
+
+                <tr>
+                    <th>
+                        <input class="buttons" type="submit" value="Submit" style="background-color:darkgray"></th>
+                    <th><p id="error_text" style="color:red"></p></th>
+                    </tr>
+
+
+                        
+            </table>
+
+        </form>
+        
+    </div>
+    <script>
+        function validateForm() {
+            var pass1 = document.forms["sign_form"]["password1"].value;
+            var pass2 = document.forms["sign_form"]["password2"].value;
+            var error_string = "";
+            var false_flag = true;
+            if (!(pass1 === pass2)) {
+                error_string = "passwords doesn't match!<br/>";
+                false_flag = false;
+            }
+            var email = document.forms["sign_form"]["email"].value;
+            if ((email.indexOf('@') == -1) || (email.indexOf('@') + 1 === email.length)
+                || (email.indexOf('@')  === 0)|| (!(email.indexOf('@') === email.lastIndexOf('@')))) {
+                false_flag = false;
+                error_string = error_string + "email not valid!<br/>";
+            }
+            
+            document.getElementById("error_text").innerHTML = error_string;
+            if (false_flag) {
+                var url = "http://localhost:65171/api/Users/Register";
+                var username = document.forms["sign_form"]["username"].value;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        Username: document.forms["sign_form"]["username"].value,
+                        Password: pass1,
+                        Email: email
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

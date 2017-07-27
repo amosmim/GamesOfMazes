@@ -1,0 +1,32 @@
+﻿* {
+    background-color: white;
+    color: blue;
+    font-weight: bold;
+}
+
+h1, h2, h3 {
+    text-align: center; 
+    margin : auto;
+    color: mediumblue;
+}
+div {
+    width:70%;
+    margin:auto;
+    padding:2%;
+}
+input {
+    width: 100%;
+    border: double;
+    font-weight: lighter;
+    font-style: italic;
+    margin-left: 2%;
+    background-color: white;
+    padding: 0.5%;
+    color: black;
+    margin: 5%;
+}
+
+input.buttons {
+    width:50%;
+
+}
